@@ -37,9 +37,21 @@ export async function logout() {
 }
 
 export async function assignContractor(bookingId: string, contractorId: string) {
+  // Compute the platform/contractor split using the contractor's commission
+  // rate *at assignment time* — a snapshot, so a later change to their rate
+  // doesn't retroactively shift what's owed on a job already assigned.
+  const [booking, contractor] = await Promise.all([
+    prisma.booking.findUnique({ where: { id: bookingId }, select: { totalPrice: true } }),
+    prisma.contractor.findUnique({ where: { id: contractorId }, select: { commissionRate: true } }),
+  ]);
+  if (!booking || !contractor) return;
+
+  const platformCommission = Math.round((booking.totalPrice * contractor.commissionRate) / 100);
+  const contractorPayout = booking.totalPrice - platformCommission;
+
   await prisma.booking.update({
     where: { id: bookingId },
-    data: { contractorId, status: "ASSIGNED" },
+    data: { contractorId, status: "ASSIGNED", platformCommission, contractorPayout },
   });
   revalidatePath("/admin");
 }

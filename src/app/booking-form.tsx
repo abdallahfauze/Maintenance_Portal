@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { createBooking, type BookingFormState } from "@/app/actions/bookings";
-import { CITIES } from "@/lib/constants";
+import { CITIES, BOOKING_FEE_SAR } from "@/lib/constants";
 import type { CatalogCategory } from "@/lib/catalog-shared";
 import { tierBrandAndPrice, type QualityTier } from "@/lib/catalog-shared";
 import { ServiceSelector } from "@/components/service-selector";
@@ -148,9 +148,15 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
               </div>
             </div>
           ))}
-          <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-sm font-semibold text-slate-800">
-            <span>Total for this visit</span>
-            <span>{grandTotal} SAR</span>
+          <div className="space-y-1 border-t border-slate-200 pt-2 text-sm">
+            <div className="flex items-center justify-between text-slate-500">
+              <span>Booking fee</span>
+              <span>{BOOKING_FEE_SAR} SAR</span>
+            </div>
+            <div className="flex items-center justify-between font-semibold text-slate-800">
+              <span>Total for this visit</span>
+              <span>{grandTotal + BOOKING_FEE_SAR} SAR</span>
+            </div>
           </div>
         </div>
       )}
@@ -323,7 +329,7 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
           ? "Submitting…"
           : cart.length === 0
             ? "Add at least one service above"
-            : `Request a technician — ${grandTotal} SAR`}
+            : `Request a technician — ${grandTotal + BOOKING_FEE_SAR} SAR`}
       </button>
 
       <p className="text-center text-xs text-slate-500">

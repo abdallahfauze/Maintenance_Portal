@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { STATUS_COLORS, STATUS_LABELS, getTimeSlots, type BookingStatus } from "@/lib/constants";
+import {
+  STATUS_COLORS,
+  STATUS_LABELS,
+  BOOKING_FEE_SAR,
+  getTimeSlots,
+  type BookingStatus,
+} from "@/lib/constants";
 
 function friendlyDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);
@@ -36,7 +42,8 @@ export default async function RequestStatusPage({
   });
   const categoryByName = new Map(categories.map((c) => [c.name, c]));
 
-  const grandTotal = bookings.reduce((sum, b) => sum + b.totalPrice, 0);
+  const itemsTotal = bookings.reduce((sum, b) => sum + b.totalPrice, 0);
+  const grandTotal = itemsTotal + BOOKING_FEE_SAR;
   const mapHref =
     first.locationMapLink ||
     (first.locationLat != null && first.locationLng != null
@@ -92,9 +99,19 @@ export default async function RequestStatusPage({
           })}
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-3 text-sm font-semibold text-slate-800">
-          <span>Total for this visit</span>
-          <span>{grandTotal} SAR</span>
+        <div className="mt-4 space-y-1 border-t border-slate-200 pt-3 text-sm">
+          <div className="flex items-center justify-between text-slate-500">
+            <span>Services</span>
+            <span>{itemsTotal} SAR</span>
+          </div>
+          <div className="flex items-center justify-between text-slate-500">
+            <span>Booking fee</span>
+            <span>{BOOKING_FEE_SAR} SAR</span>
+          </div>
+          <div className="flex items-center justify-between font-semibold text-slate-800">
+            <span>Total for this visit</span>
+            <span>{grandTotal} SAR</span>
+          </div>
         </div>
 
         <dl className="mt-6 space-y-3 text-sm">

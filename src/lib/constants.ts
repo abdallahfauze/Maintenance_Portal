@@ -13,6 +13,11 @@ export const CLOSED_WEEKDAY = 5; // Friday
 
 export const BUSINESS_HOURS = { startHour: 8, endHour: 18 } as const;
 
+// Flat customer-facing booking/dispatch fee per Financial Plan §pricing —
+// charged once per request (visit), not per item, since it exists to
+// discourage no-shows on the appointment itself.
+export const BOOKING_FEE_SAR = 20;
+
 /** Hourly slots from 8:00 AM to 6:00 PM, e.g. "08:00" -> "8:00 AM - 9:00 AM". */
 export function getTimeSlots(): { value: string; label: string }[] {
   const slots: { value: string; label: string }[] = [];

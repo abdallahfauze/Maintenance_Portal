@@ -123,6 +123,12 @@ model Booking {
   laborFee      Int // SAR — technician labor/callout fee, per unit
   totalPrice    Int // SAR — quantity * (selectedPrice + laborFee), stored so
   // historical invoices stay accurate even if catalog prices change later
+  // Price split — set when a contractor is assigned, using that
+  // contractor's commissionRate *at assignment time* (a snapshot, so it
+  // doesn't shift under a job already in progress if the rate changes
+  // later). Null until assigned. See Financial Plan §pricing.
+  platformCommission Int?
+  contractorPayout   Int?
   description String
   // Location: captured either by dropping a pin (lat/lng) or pasting a
   // Google Maps link — at least one of the two is required (enforced in

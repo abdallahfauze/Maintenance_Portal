@@ -47,7 +47,9 @@ holds up, at a fraction of the cost and time of the full app.
     from the client-supplied `Home_Maintenance_Fixtures_Master_KSA`
     spreadsheet — see `prisma/seed.ts`. The quoted price (part + labor,
     all-inclusive, × quantity) is re-derived server-side from the database at
-    submission time, never trusted from the client.
+    submission time, never trusted from the client. A flat SR 20 booking fee
+  (per Financial Plan §pricing) is added once per request, not per item,
+  since it exists to discourage no-shows on the visit itself.
   - Each service in a request becomes its own `Booking` row (own status,
     own contractor) so different trades in the same visit can be dispatched
     independently, but all rows share a `requestId` generated once per
@@ -56,7 +58,10 @@ holds up, at a fraction of the cost and time of the full app.
   grouped by request (shared customer/visit info shown once per group),
   filterable by status, with inline controls to assign a contractor per item
   (filtered to contractors in that item's category) and update its job status
-  independently of the rest of the request.
+  independently of the rest of the request. Assigning a contractor computes
+  and snapshots the price split for that item — using that contractor's
+  commission rate *at the moment of assignment* — showing the platform's
+  commission and the contractor's payout per job and per request.
 - **`/admin/contractors`** — contractor onboarding funnel per the Partnership
   Framework doc: add an applicant (company, contact person, category,
   license numbers), then move them through Applied → Under Review → Active

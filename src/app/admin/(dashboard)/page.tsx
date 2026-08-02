@@ -3,6 +3,7 @@ import {
   STATUS_COLORS,
   STATUS_LABELS,
   BOOKING_STATUSES,
+  BOOKING_FEE_SAR,
   getTimeSlots,
   type BookingStatus,
 } from "@/lib/constants";
@@ -82,7 +83,11 @@ export default async function AdminDashboard({
 
         {groups.map((group) => {
           const first = group[0];
-          const requestTotal = group.reduce((sum, b) => sum + b.totalPrice, 0);
+          const requestTotal = group.reduce((sum, b) => sum + b.totalPrice, 0) + BOOKING_FEE_SAR;
+          const platformTake =
+            group.reduce((sum, b) => sum + (b.platformCommission ?? 0), 0) + BOOKING_FEE_SAR;
+          const contractorTotal = group.reduce((sum, b) => sum + (b.contractorPayout ?? 0), 0);
+          const allAssigned = group.every((b) => b.contractorPayout != null);
           return (
             <div key={first.requestId} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex flex-wrap items-start justify-between gap-3">
@@ -99,7 +104,15 @@ export default async function AdminDashboard({
                     {first.city} · {first.phone} · Ref {first.requestId.slice(0, 8)}
                   </p>
                 </div>
-                <span className="text-sm font-semibold text-slate-800">{requestTotal} SAR</span>
+                <div className="text-right">
+                  <span className="text-sm font-semibold text-slate-800">{requestTotal} SAR</span>
+                  <p className="text-xs text-slate-400">incl. {BOOKING_FEE_SAR} SAR booking fee</p>
+                  {allAssigned && (
+                    <p className="text-xs text-slate-500">
+                      Platform {platformTake} SAR · Contractors {contractorTotal} SAR
+                    </p>
+                  )}
+                </div>
               </div>
 
               <p className="mt-1 text-xs text-slate-500">
@@ -155,6 +168,12 @@ export default async function AdminDashboard({
                       </div>
 
                       <p className="mt-2 text-sm text-slate-700">{b.description}</p>
+                      {b.contractorPayout != null && (
+                        <p className="mt-1 text-xs text-slate-500">
+                          Payout {b.contractorPayout} SAR to contractor · {b.platformCommission} SAR
+                          platform commission ({b.contractor?.commissionRate}%)
+                        </p>
+                      )}
 
                       <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-3">
                         <AssignForm
