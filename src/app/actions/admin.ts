@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { createSessionToken, SESSION_COOKIE } from "@/lib/auth";
-import { BOOKING_STATUSES } from "@/lib/constants";
+import { BOOKING_STATUSES, ONBOARDING_STATUSES, CONTRACTOR_TIERS } from "@/lib/constants";
 
 export type LoginState = { error?: string };
 
@@ -59,22 +59,34 @@ export async function updateBookingStatus(bookingId: string, status: string) {
 
 const ContractorSchema = z.object({
   name: z.string().trim().min(2),
+  contactPerson: z.string().trim().max(200).optional().or(z.literal("")),
   category: z.string().trim().min(1),
   city: z.string().trim().min(2),
   phone: z.string().trim().min(9),
+  baladyLicenseNumber: z.string().trim().max(100).optional().or(z.literal("")),
+  baladyLicenseExpiry: z.string().trim().max(20).optional().or(z.literal("")),
+  civilDefenseLicenseNumber: z.string().trim().max(100).optional().or(z.literal("")),
 });
 
 export type ContractorFormState = { error?: string };
 
+// A new applicant always starts at the beginning of the onboarding funnel —
+// unverified and not yet offered for job assignment — regardless of what's
+// typed into the intake form. Moving them to Active is a separate, deliberate
+// admin action (see updateOnboardingStatus below).
 export async function createContractor(
   _prevState: ContractorFormState,
   formData: FormData
 ): Promise<ContractorFormState> {
   const parsed = ContractorSchema.safeParse({
     name: formData.get("name"),
+    contactPerson: formData.get("contactPerson") ?? "",
     category: formData.get("category"),
     city: formData.get("city"),
     phone: formData.get("phone"),
+    baladyLicenseNumber: formData.get("baladyLicenseNumber") ?? "",
+    baladyLicenseExpiry: formData.get("baladyLicenseExpiry") ?? "",
+    civilDefenseLicenseNumber: formData.get("civilDefenseLicenseNumber") ?? "",
   });
 
   if (!parsed.success) {
@@ -88,7 +100,23 @@ export async function createContractor(
     return { error: "Please select a valid category." };
   }
 
-  await prisma.contractor.create({ data: parsed.data });
+  const { contactPerson, baladyLicenseNumber, baladyLicenseExpiry, civilDefenseLicenseNumber, ...rest } =
+    parsed.data;
+
+  await prisma.contractor.create({
+    data: {
+      ...rest,
+      contactPerson: contactPerson || null,
+      baladyLicenseNumber: baladyLicenseNumber || null,
+      baladyLicenseExpiry: baladyLicenseExpiry || null,
+      civilDefenseLicenseNumber: civilDefenseLicenseNumber || null,
+      onboardingStatus: "APPLIED",
+      active: false,
+      tier: "Bronze",
+      licenseVerified: false,
+      insuranceVerified: false,
+    },
+  });
   revalidatePath("/admin/contractors");
   return {};
 }
@@ -100,4 +128,47 @@ export async function toggleContractorActive(contractorId: string, active: boole
   });
   revalidatePath("/admin/contractors");
   revalidatePath("/admin");
+}
+
+const OnboardingStatusEnum = z.enum(ONBOARDING_STATUSES);
+
+export async function updateOnboardingStatus(contractorId: string, status: string) {
+  const parsed = OnboardingStatusEnum.safeParse(status);
+  if (!parsed.success) return;
+
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: { onboardingStatus: parsed.data },
+  });
+  revalidatePath("/admin/contractors");
+  revalidatePath("/admin");
+}
+
+const TierEnum = z.enum(CONTRACTOR_TIERS);
+
+export async function updateContractorTier(contractorId: string, tier: string) {
+  const parsed = TierEnum.safeParse(tier);
+  if (!parsed.success) return;
+
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: { tier: parsed.data },
+  });
+  revalidatePath("/admin/contractors");
+}
+
+export async function toggleLicenseVerified(contractorId: string, verified: boolean) {
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: { licenseVerified: verified },
+  });
+  revalidatePath("/admin/contractors");
+}
+
+export async function toggleInsuranceVerified(contractorId: string, verified: boolean) {
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: { insuranceVerified: verified },
+  });
+  revalidatePath("/admin/contractors");
 }

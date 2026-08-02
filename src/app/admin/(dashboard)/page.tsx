@@ -25,7 +25,10 @@ export default async function AdminDashboard({
       include: { contractor: true },
       orderBy: { createdAt: "desc" },
     }),
-    prisma.contractor.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
+    prisma.contractor.findMany({
+      where: { active: true, onboardingStatus: "ACTIVE" },
+      orderBy: { name: "asc" },
+    }),
   ]);
 
   const [counts, totalCount] = await Promise.all([

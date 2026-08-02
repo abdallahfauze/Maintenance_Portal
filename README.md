@@ -57,9 +57,16 @@ holds up, at a fraction of the cost and time of the full app.
   filterable by status, with inline controls to assign a contractor per item
   (filtered to contractors in that item's category) and update its job status
   independently of the rest of the request.
-- **`/admin/contractors`** — simple CRUD to add contractor partners and
-  toggle them active/inactive. Only active contractors are offered for
-  assignment.
+- **`/admin/contractors`** — contractor onboarding funnel per the Partnership
+  Framework doc: add an applicant (company, contact person, category,
+  license numbers), then move them through Applied → Under Review → Active
+  (or Suspended/Rejected), ticking License/Insurance verified as admin
+  confirms them (e.g. against Balady/Wathq). A contractor is only offered
+  for job assignment once onboarding status is Active *and* the separate
+  Active toggle is on — the toggle lets you temporarily pause an otherwise
+  fully-onboarded partner (e.g. if they're overbooked) without re-running
+  the whole funnel. Each partner also has a Bronze/Silver/Gold tier field
+  for future priority routing.
 - **`/admin/feedback`** — review comments left via the floating "💬 Leave
   feedback" widget that appears on every page (public and admin). Anyone
   reviewing the site can leave a comment tied to the exact page it's about;

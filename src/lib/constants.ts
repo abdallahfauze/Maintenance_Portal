@@ -62,3 +62,43 @@ export const STATUS_COLORS: Record<BookingStatus, string> = {
   COMPLETED: "bg-green-100 text-green-800",
   CANCELLED: "bg-gray-200 text-gray-600",
 };
+
+// Contractor onboarding funnel, per the Partnership Framework doc: screening
+// -> document/license checks -> active partner, with suspend/reject as exits.
+export const ONBOARDING_STATUSES = [
+  "APPLIED",
+  "UNDER_REVIEW",
+  "ACTIVE",
+  "SUSPENDED",
+  "REJECTED",
+] as const;
+
+export type OnboardingStatus = (typeof ONBOARDING_STATUSES)[number];
+
+export const ONBOARDING_STATUS_LABELS: Record<OnboardingStatus, string> = {
+  APPLIED: "Applied",
+  UNDER_REVIEW: "Under Review",
+  ACTIVE: "Active",
+  SUSPENDED: "Suspended",
+  REJECTED: "Rejected",
+};
+
+export const ONBOARDING_STATUS_COLORS: Record<OnboardingStatus, string> = {
+  APPLIED: "bg-slate-200 text-slate-700",
+  UNDER_REVIEW: "bg-amber-100 text-amber-800",
+  ACTIVE: "bg-green-100 text-green-800",
+  SUSPENDED: "bg-red-100 text-red-800",
+  REJECTED: "bg-gray-200 text-gray-500",
+};
+
+// Simple performance tier per the Partnership Framework doc §"Tiering" —
+// better-performing partners can later get priority routing / commission
+// discounts.
+export const CONTRACTOR_TIERS = ["Bronze", "Silver", "Gold"] as const;
+export type ContractorTier = (typeof CONTRACTOR_TIERS)[number];
+
+export const TIER_COLORS: Record<ContractorTier, string> = {
+  Bronze: "bg-orange-100 text-orange-800",
+  Silver: "bg-slate-200 text-slate-700",
+  Gold: "bg-yellow-100 text-yellow-800",
+};

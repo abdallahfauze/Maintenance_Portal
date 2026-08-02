@@ -72,19 +72,31 @@ async function seedContractors() {
     return;
   }
 
+  // Seed contractors as already-vetted Active partners (Bronze tier by
+  // default) since they represent the demo/pilot partner cohort, not new
+  // applicants working through the onboarding funnel.
   const contractors = [
-    { name: "Al-Faisal Electrical Services", category: "Electrical", city: "Jeddah", phone: "0555000001" },
-    { name: "Noor Electric Est.", category: "Electrical", city: "Jeddah", phone: "0555000002" },
-    { name: "Jeddah Plumbing Pros", category: "Sanitary Fixtures", city: "Jeddah", phone: "0555000003" },
-    { name: "Al-Amin Sanitary Works", category: "Sanitary Fixtures", city: "Jeddah", phone: "0555000004" },
-    { name: "Modern Hardware & Fire Safety Co.", category: "Mechanical Fixtures", city: "Jeddah", phone: "0555000007" },
-    { name: "CoolBreeze Window AC Services", category: "Window AC", city: "Jeddah", phone: "0555000005" },
-    { name: "Gulf Split AC Maintenance", category: "Split AC", city: "Jeddah", phone: "0555000006" },
-    { name: "Jeddah Appliance Repair Co.", category: "Washing Machine", city: "Jeddah", phone: "0555000008" },
+    { name: "Al-Faisal Electrical Services", contactPerson: "Faisal Al-Ghamdi", category: "Electrical", city: "Jeddah", phone: "0555000001" },
+    { name: "Noor Electric Est.", contactPerson: "Noor Al-Zahrani", category: "Electrical", city: "Jeddah", phone: "0555000002" },
+    { name: "Jeddah Plumbing Pros", contactPerson: "Yousef Al-Harbi", category: "Sanitary Fixtures", city: "Jeddah", phone: "0555000003" },
+    { name: "Al-Amin Sanitary Works", contactPerson: "Amin Al-Qahtani", category: "Sanitary Fixtures", city: "Jeddah", phone: "0555000004" },
+    { name: "Modern Hardware & Fire Safety Co.", contactPerson: "Khalid Al-Otaibi", category: "Mechanical Fixtures", city: "Jeddah", phone: "0555000007" },
+    { name: "CoolBreeze Window AC Services", contactPerson: "Salem Al-Juhani", category: "Window AC", city: "Jeddah", phone: "0555000005" },
+    { name: "Gulf Split AC Maintenance", contactPerson: "Fahad Al-Dosari", category: "Split AC", city: "Jeddah", phone: "0555000006" },
+    { name: "Jeddah Appliance Repair Co.", contactPerson: "Turki Al-Shehri", category: "Washing Machine", city: "Jeddah", phone: "0555000008" },
   ];
 
   for (const c of contractors) {
-    await prisma.contractor.create({ data: c });
+    await prisma.contractor.create({
+      data: {
+        ...c,
+        onboardingStatus: "ACTIVE",
+        licenseVerified: true,
+        insuranceVerified: true,
+        baladyLicenseNumber: `BLD-${c.phone.slice(-6)}`,
+        baladyLicenseExpiry: "2027-06-01",
+      },
+    });
   }
 
   console.log(`Seeded ${contractors.length} contractors.`);

@@ -57,14 +57,30 @@ model ServiceAccessory {
 }
 
 model Contractor {
-  id        String    @id @default(cuid())
-  name      String
-  category  String // matches ServiceCategory.name, e.g. "Electrical"
-  city      String
-  phone     String
-  active    Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  bookings  Booking[]
+  id            String @id @default(cuid())
+  name          String // company/legal name
+  contactPerson String? // who we deal with day-to-day at this company
+  category      String // matches ServiceCategory.name, e.g. "Electrical"
+  city          String
+  phone         String
+  // Onboarding funnel per the Partnership Framework doc: screening call ->
+  // document/license checks -> active partner (or suspended/rejected).
+  // `active` is a separate manual on/off switch admin can flip even for an
+  // otherwise-Active partner (e.g. temporarily pause a partner who's overbooked).
+  onboardingStatus String  @default("APPLIED") // APPLIED | UNDER_REVIEW | ACTIVE | SUSPENDED | REJECTED
+  active           Boolean @default(true)
+  tier             String  @default("Bronze") // Bronze | Silver | Gold — see Partnership Framework §Tiering
+  // License/insurance checks required before going Active — see Feasibility
+  // Study & Risk Analysis docs (Balady municipal license is mandatory for
+  // every partner; Civil Defense/SCA only applies to some trades).
+  baladyLicenseNumber       String?
+  baladyLicenseExpiry       String? // ISO date, e.g. "2027-03-01"
+  civilDefenseLicenseNumber String?
+  licenseVerified           Boolean @default(false)
+  insuranceVerified         Boolean @default(false)
+  adminNotes                String? // internal notes, not shown to the contractor
+  createdAt                 DateTime  @default(now())
+  bookings                  Booking[]
 }
 
 model Feedback {
