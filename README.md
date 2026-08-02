@@ -91,6 +91,11 @@ holds up, at a fraction of the cost and time of the full app.
   reviewing the site can leave a comment tied to the exact page it's about;
   it's saved straight to the database instead of needing to be relayed by
   email or chat. Mark items resolved as they're addressed.
+- **`/admin/overview`** — operations KPIs at a glance: completion rate (of
+  finished jobs), on-time/SLA rate (of started jobs), average customer
+  rating, open escalations, platform revenue (commission + booking fees)
+  vs. total contractor payouts, and a per-contractor leaderboard (jobs,
+  completions, on-time %, rating) to inform future tiering decisions.
 - **`/contractor`** — each contractor company gets its own portal login
   (phone number + a password admin generates for them from the Contractors
   page and shares by phone — no self-serve signup/reset, matching the
