@@ -62,7 +62,7 @@ model Contractor {
   contactPerson String? // who we deal with day-to-day at this company
   category      String // matches ServiceCategory.name, e.g. "Electrical"
   city          String
-  phone         String
+  phone         String  @unique // also the contractor portal login identifier
   // Onboarding funnel per the Partnership Framework doc: screening call ->
   // document/license checks -> active partner (or suspended/rejected).
   // `active` is a separate manual on/off switch admin can flip even for an
@@ -88,8 +88,29 @@ model Contractor {
   agreementSigned     Boolean @default(false)
   agreementSignedDate String? // ISO date, e.g. "2026-08-01"
   adminNotes          String? // internal notes, not shown to the contractor
+  // Contractor portal login — admin generates a password (shown once) and
+  // shares it by phone; a contractor logs in with phone + this password.
+  // No self-serve signup/reset flow for Stage 0, matching the admin
+  // shared-secret auth's own simplicity (see README Security notes).
+  passwordHash String?
+  passwordSalt String?
   createdAt                 DateTime  @default(now())
   bookings                  Booking[]
+  technicians               Technician[]
+}
+
+// A contractor company's own field staff — the contractor's office assigns
+// jobs to these internally, distinct from the platform assigning a job to
+// the contractor company itself.
+model Technician {
+  id           String     @id @default(cuid())
+  contractorId String
+  contractor   Contractor @relation(fields: [contractorId], references: [id])
+  name         String
+  phone        String
+  active       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  bookings     Booking[]
 }
 
 model Feedback {
@@ -162,6 +183,10 @@ model Booking {
   escalatedAt      DateTime?
   contractorId      String?
   contractor        Contractor? @relation(fields: [contractorId], references: [id])
+  // Which of the contractor's own field staff this job is assigned to —
+  // set by the contractor themselves in their portal, not by platform admin.
+  technicianId      String?
+  technician        Technician? @relation(fields: [technicianId], references: [id])
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
 

@@ -34,7 +34,7 @@ export default async function AdminDashboard({
   const [bookings, contractors] = await Promise.all([
     prisma.booking.findMany({
       where: statusFilter ? { status: statusFilter } : undefined,
-      include: { contractor: true },
+      include: { contractor: true, technician: true },
       orderBy: { createdAt: "desc" },
     }),
     prisma.contractor.findMany({
@@ -214,6 +214,7 @@ export default async function AdminDashboard({
                         {b.contractor && (
                           <span className="text-xs text-slate-500">
                             Assigned to {b.contractor.name} ({b.contractor.phone})
+                            {b.technician && ` — technician: ${b.technician.name} (${b.technician.phone})`}
                           </span>
                         )}
                       </div>

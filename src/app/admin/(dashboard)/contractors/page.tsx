@@ -8,6 +8,7 @@ import {
   InsuranceVerifiedCheckbox,
 } from "./onboarding-controls";
 import { CommissionRateInput, AgreementControls } from "./commercial-terms-controls";
+import { PortalPasswordButton } from "./portal-password-button";
 import type { OnboardingStatus, ContractorTier } from "@/lib/constants";
 
 // Admin-only, low-traffic page whose data changes via mutations — always
@@ -101,6 +102,10 @@ export default async function ContractorsPage() {
                 signed={c.agreementSigned}
                 signedDate={c.agreementSignedDate}
               />
+            </div>
+
+            <div className="mt-3 border-t border-slate-100 pt-3">
+              <PortalPasswordButton contractorId={c.id} hasPassword={!!c.passwordHash} />
             </div>
           </div>
           );

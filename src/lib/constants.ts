@@ -75,6 +75,23 @@ export const STATUS_LABELS: Record<BookingStatus, string> = {
   CANCELLED: "Cancelled",
 };
 
+// A contractor can only push their own job forward through this subset of
+// transitions — not un-assign it or send it back to Pending, which stays an
+// admin-only dispatch call on the main Bookings page.
+export const SELF_ALLOWED_TRANSITIONS: Record<string, BookingStatus[]> = {
+  ASSIGNED: ["IN_PROGRESS", "CANCELLED"],
+  IN_PROGRESS: ["COMPLETED", "CANCELLED"],
+};
+
+// Timestamp field to stamp with "now" whenever a booking enters that status.
+export const STATUS_TIMESTAMP_FIELD = {
+  PENDING: null,
+  ASSIGNED: "assignedAt",
+  IN_PROGRESS: "startedAt",
+  COMPLETED: "completedAt",
+  CANCELLED: "cancelledAt",
+} as const;
+
 export const STATUS_COLORS: Record<BookingStatus, string> = {
   PENDING: "bg-amber-100 text-amber-800",
   ASSIGNED: "bg-blue-100 text-blue-800",

@@ -6,7 +6,13 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { createSessionToken, SESSION_COOKIE } from "@/lib/auth";
-import { BOOKING_STATUSES, ONBOARDING_STATUSES, CONTRACTOR_TIERS } from "@/lib/constants";
+import {
+  BOOKING_STATUSES,
+  ONBOARDING_STATUSES,
+  CONTRACTOR_TIERS,
+  STATUS_TIMESTAMP_FIELD,
+} from "@/lib/constants";
+import { hashPassword, generateReadablePassword } from "@/lib/contractor-auth";
 
 export type LoginState = { error?: string };
 
@@ -63,16 +69,6 @@ export async function assignContractor(bookingId: string, contractorId: string) 
 }
 
 const StatusEnum = z.enum(BOOKING_STATUSES);
-
-// Timestamp field to stamp with "now" whenever a booking enters that status
-// (re-entering a status, e.g. IN_PROGRESS after a correction, refreshes it).
-const STATUS_TIMESTAMP_FIELD = {
-  PENDING: null,
-  ASSIGNED: "assignedAt",
-  IN_PROGRESS: "startedAt",
-  COMPLETED: "completedAt",
-  CANCELLED: "cancelledAt",
-} as const;
 
 export async function updateBookingStatus(bookingId: string, status: string) {
   const parsed = StatusEnum.safeParse(status);
@@ -256,4 +252,23 @@ export async function updateAgreementStatus(contractorId: string, signed: boolea
     },
   });
   revalidatePath("/admin/contractors");
+}
+
+// Generates a fresh portal password, shown once to admin so it can be
+// shared with the contractor by phone — never stored or displayed again
+// after this (only the hash is kept). Re-running this replaces any
+// previous password, so sharing it a second time means the old one stops
+// working.
+export async function generateContractorPassword(
+  contractorId: string
+): Promise<{ password: string } | { error: string }> {
+  const password = generateReadablePassword();
+  const { hash, salt } = hashPassword(password);
+
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: { passwordHash: hash, passwordSalt: salt },
+  });
+  revalidatePath("/admin/contractors");
+  return { password };
 }
