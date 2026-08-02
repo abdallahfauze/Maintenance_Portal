@@ -17,6 +17,14 @@ export default async function ContractorPortalLayout({
   const contractor = await prisma.contractor.findUnique({ where: { id: contractorId } });
   if (!contractor) redirect("/contractor/login");
 
+  const newJobCount = await prisma.booking.count({
+    where: {
+      contractorId,
+      status: "ASSIGNED",
+      assignedAt: { gt: contractor.lastSeenAt ?? new Date(0) },
+    },
+  });
+
   return (
     <div className="min-h-screen bg-slate-50">
       <nav className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
@@ -24,6 +32,11 @@ export default async function ContractorPortalLayout({
           <span className="font-bold text-slate-900">{contractor.name} — Partner Portal</span>
           <Link href="/contractor" className="text-sm text-slate-600 hover:text-slate-900">
             Jobs
+            {newJobCount > 0 && (
+              <span className="ml-1.5 rounded-full bg-orange-500 px-1.5 py-0.5 text-xs font-semibold text-white">
+                {newJobCount} new
+              </span>
+            )}
           </Link>
           <Link href="/contractor/technicians" className="text-sm text-slate-600 hover:text-slate-900">
             Technicians

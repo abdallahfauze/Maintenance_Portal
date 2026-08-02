@@ -105,6 +105,11 @@ holds up, at a fraction of the cost and time of the full app.
     staff roster and assigns one to a job from their Jobs page, so the
     contractor's own dispatcher — not the platform — decides which of
     their technicians goes where.
+  - A "N new" badge on the Jobs nav link shows how many jobs were assigned
+    since the contractor's last visit, clearing once they open the Jobs
+    page — a lightweight in-app notification for Stage 0. Real push
+    notifications (SMS/WhatsApp Business API/email) need their own vendor
+    account and are Stage 1 scope — see the roadmap in "Next steps" below.
 
 ### Stack
 

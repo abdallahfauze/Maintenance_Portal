@@ -177,3 +177,16 @@ export async function toggleTechnicianActive(technicianId: string, active: boole
   await prisma.technician.update({ where: { id: technicianId }, data: { active } });
   revalidatePath("/contractor/technicians");
 }
+
+// Called once when the Jobs page loads, so the "N new" badge in the nav
+// clears — a lightweight in-app notification substitute until SMS/WhatsApp
+// push is wired up (see README "Next steps").
+export async function markJobsSeen() {
+  const contractorId = await getAuthedContractorId();
+  if (!contractorId) return;
+
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: { lastSeenAt: new Date() },
+  });
+}

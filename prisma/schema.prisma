@@ -94,6 +94,10 @@ model Contractor {
   // shared-secret auth's own simplicity (see README Security notes).
   passwordHash String?
   passwordSalt String?
+  // Drives the "new since last visit" badge in the portal nav — a lightweight
+  // in-app notification substitute until SMS/WhatsApp push is wired up (see
+  // README "Next steps").
+  lastSeenAt DateTime?
   createdAt                 DateTime  @default(now())
   bookings                  Booking[]
   technicians               Technician[]

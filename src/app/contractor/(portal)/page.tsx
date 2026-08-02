@@ -16,6 +16,7 @@ import {
   OwnCompletionNotesField,
   OwnEscalationControls,
 } from "./job-controls";
+import { MarkSeenOnMount } from "./mark-seen";
 
 function slotLabel(value: string): string {
   return getTimeSlots().find((s) => s.value === value)?.label ?? value;
@@ -51,6 +52,7 @@ export default async function ContractorJobsPage({
 
   return (
     <div>
+      <MarkSeenOnMount />
       <h1 className="mb-1 text-2xl font-bold text-slate-900">Your Jobs</h1>
       <p className="mb-6 text-sm text-slate-500">
         {bookings.length} job{bookings.length === 1 ? "" : "s"}
