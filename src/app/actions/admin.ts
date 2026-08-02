@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { createSessionToken, SESSION_COOKIE } from "@/lib/auth";
-import { BOOKING_STATUSES, TRADES } from "@/lib/constants";
+import { BOOKING_STATUSES } from "@/lib/constants";
 
 export type LoginState = { error?: string };
 
@@ -59,7 +59,7 @@ export async function updateBookingStatus(bookingId: string, status: string) {
 
 const ContractorSchema = z.object({
   name: z.string().trim().min(2),
-  trade: z.enum(TRADES),
+  category: z.string().trim().min(1),
   city: z.string().trim().min(2),
   phone: z.string().trim().min(9),
 });
@@ -72,13 +72,20 @@ export async function createContractor(
 ): Promise<ContractorFormState> {
   const parsed = ContractorSchema.safeParse({
     name: formData.get("name"),
-    trade: formData.get("trade"),
+    category: formData.get("category"),
     city: formData.get("city"),
     phone: formData.get("phone"),
   });
 
   if (!parsed.success) {
     return { error: "Please fill in all fields correctly." };
+  }
+
+  const categoryExists = await prisma.serviceCategory.findUnique({
+    where: { name: parsed.data.category },
+  });
+  if (!categoryExists) {
+    return { error: "Please select a valid category." };
   }
 
   await prisma.contractor.create({ data: parsed.data });

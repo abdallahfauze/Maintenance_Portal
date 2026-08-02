@@ -7,9 +7,12 @@ import { ActiveToggle } from "./active-toggle";
 export const dynamic = "force-dynamic";
 
 export default async function ContractorsPage() {
-  const contractors = await prisma.contractor.findMany({
-    orderBy: [{ trade: "asc" }, { name: "asc" }],
-  });
+  const [contractors, categories] = await Promise.all([
+    prisma.contractor.findMany({
+      orderBy: [{ category: "asc" }, { name: "asc" }],
+    }),
+    prisma.serviceCategory.findMany({ orderBy: { sortOrder: "asc" }, select: { name: true } }),
+  ]);
 
   return (
     <div>
@@ -20,7 +23,7 @@ export default async function ContractorsPage() {
 
       <div className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
         <h2 className="mb-4 text-sm font-semibold text-slate-900">Add a contractor</h2>
-        <NewContractorForm />
+        <NewContractorForm categories={categories.map((c) => c.name)} />
       </div>
 
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
@@ -28,7 +31,7 @@ export default async function ContractorsPage() {
           <thead className="bg-slate-50 text-xs uppercase text-slate-500">
             <tr>
               <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Trade</th>
+              <th className="px-4 py-3">Category</th>
               <th className="px-4 py-3">City</th>
               <th className="px-4 py-3">Phone</th>
               <th className="px-4 py-3">Active</th>
@@ -38,7 +41,7 @@ export default async function ContractorsPage() {
             {contractors.map((c) => (
               <tr key={c.id} className="border-t border-slate-100">
                 <td className="px-4 py-3 font-medium text-slate-900">{c.name}</td>
-                <td className="px-4 py-3">{c.trade}</td>
+                <td className="px-4 py-3">{c.category}</td>
                 <td className="px-4 py-3">{c.city}</td>
                 <td className="px-4 py-3">{c.phone}</td>
                 <td className="px-4 py-3">

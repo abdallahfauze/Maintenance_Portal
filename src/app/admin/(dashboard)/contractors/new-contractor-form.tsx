@@ -2,11 +2,11 @@
 
 import { useActionState, useRef, useEffect } from "react";
 import { createContractor, type ContractorFormState } from "@/app/actions/admin";
-import { CITIES, TRADES } from "@/lib/constants";
+import { CITIES } from "@/lib/constants";
 
 const initialState: ContractorFormState = {};
 
-export function NewContractorForm() {
+export function NewContractorForm({ categories }: { categories: string[] }) {
   const [state, formAction, pending] = useActionState(createContractor, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -28,14 +28,14 @@ export function NewContractorForm() {
         <input name="name" required className="input mt-1" placeholder="e.g. Noor Electric Est." />
       </label>
       <label className="text-xs text-slate-600">
-        Trade
-        <select name="trade" required className="input mt-1" defaultValue="">
+        Category
+        <select name="category" required className="input mt-1" defaultValue="">
           <option value="" disabled>
             Select
           </option>
-          {TRADES.map((t) => (
-            <option key={t} value={t}>
-              {t}
+          {categories.map((c) => (
+            <option key={c} value={c}>
+              {c}
             </option>
           ))}
         </select>

@@ -11,10 +11,50 @@ datasource db {
   provider = "postgresql"
 }
 
+// The service catalog: Category -> Subcategory -> Accessory, each accessory
+// carrying a Low/Medium/High price tier with its typical brand. Seeded from
+// prisma/data/catalog.json (sourced from the client's fixtures spreadsheet)
+// — see prisma/seed.ts.
+model ServiceCategory {
+  id            String               @id @default(cuid())
+  name          String               @unique // "Electrical", "Sanitary Fixtures", ...
+  icon          String // emoji shown in the category picker
+  gradient      String // Tailwind gradient classes for the category card
+  sortOrder     Int
+  subcategories ServiceSubcategory[]
+}
+
+model ServiceSubcategory {
+  id         String             @id @default(cuid())
+  name       String // "Lighting", "Toilet / WC", ...
+  sortOrder  Int
+  categoryId String
+  category   ServiceCategory    @relation(fields: [categoryId], references: [id])
+  accessories ServiceAccessory[]
+
+  @@unique([categoryId, name])
+}
+
+model ServiceAccessory {
+  id            String             @id @default(cuid())
+  name          String // "LED Spot / Downlight (recessed, ~12-24W)"
+  sortOrder     Int
+  subcategoryId String
+  subcategory   ServiceSubcategory @relation(fields: [subcategoryId], references: [id])
+  lowBrand      String
+  lowPrice      Int // SAR
+  mediumBrand   String
+  mediumPrice   Int // SAR
+  highBrand     String
+  highPrice     Int // SAR
+
+  @@unique([subcategoryId, name])
+}
+
 model Contractor {
   id        String    @id @default(cuid())
   name      String
-  trade     String // Electrical | Plumbing | HVAC | Civil Finishes
+  category  String // matches ServiceCategory.name, e.g. "Electrical"
   city      String
   phone     String
   active    Boolean   @default(true)
@@ -31,12 +71,19 @@ model Feedback {
 }
 
 model Booking {
-  id            String      @id @default(cuid())
-  customerName  String
-  phone         String
-  city          String
-  trade         String // Electrical | Plumbing | HVAC | Civil Finishes
-  description   String
+  id           String @id @default(cuid())
+  customerName String
+  phone        String
+  city         String
+  // Snapshot of the catalog selection at booking time (not a live FK) so
+  // historical bookings stay accurate even if catalog prices change later.
+  category    String // e.g. "Electrical"
+  subcategory String // e.g. "Lighting"
+  accessory   String // e.g. "LED Spot / Downlight (recessed, ~12-24W)"
+  qualityTier String // "Low" | "Medium" | "High"
+  selectedBrand String
+  selectedPrice Int // SAR
+  description String
   // Location: captured either by dropping a pin (lat/lng) or pasting a
   // Google Maps link — at least one of the two is required (enforced in
   // the server action, not the schema).
@@ -44,12 +91,12 @@ model Booking {
   locationLng     Float?
   locationMapLink String?
   // Fine-grained detail a map pin can't capture.
-  addressDetails String
+  addressDetails    String
   preferredDate     String // ISO date, e.g. "2026-08-10"
   preferredTimeSlot String // e.g. "08:00 AM - 08:30 AM"
-  status        String      @default("PENDING") // PENDING | ASSIGNED | IN_PROGRESS | COMPLETED | CANCELLED
-  contractorId  String?
-  contractor    Contractor? @relation(fields: [contractorId], references: [id])
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  status            String      @default("PENDING") // PENDING | ASSIGNED | IN_PROGRESS | COMPLETED | CANCELLED
+  contractorId      String?
+  contractor        Contractor? @relation(fields: [contractorId], references: [id])
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
 }

@@ -64,13 +64,13 @@ export default async function AdminDashboard({
 
         {bookings.map((b) => {
           const status = b.status as BookingStatus;
-          const eligibleContractors = contractors.filter((c) => c.trade === b.trade);
+          const eligibleContractors = contractors.filter((c) => c.category === b.category);
           return (
             <div key={b.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold text-slate-900">
-                    {b.trade} — {b.customerName}
+                    {b.category} — {b.customerName}
                   </p>
                   <p className="text-sm text-slate-500">
                     {b.city} · {b.phone} · Ref {b.id.slice(0, 8)}
@@ -82,6 +82,11 @@ export default async function AdminDashboard({
                   {STATUS_LABELS[status]}
                 </span>
               </div>
+
+              <p className="mt-2 text-xs font-medium text-orange-700">
+                {b.category} → {b.subcategory} → {b.accessory} — {b.qualityTier} ({b.selectedBrand}) ·{" "}
+                <span className="font-bold">{b.selectedPrice} SAR</span>
+              </p>
 
               <p className="mt-3 text-sm text-slate-700">{b.description}</p>
               <p className="mt-1 text-xs text-slate-500">

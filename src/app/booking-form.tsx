@@ -1,23 +1,44 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useMemo, useState } from "react";
 import { createBooking, type BookingFormState } from "@/app/actions/bookings";
 import { CITIES } from "@/lib/constants";
-import { TradeSelector } from "@/components/trade-selector";
+import type { CatalogCategory } from "@/lib/catalog-shared";
+import { tierBrandAndPrice, type QualityTier } from "@/lib/catalog-shared";
+import { ServiceSelector } from "@/components/service-selector";
 import { LocationPicker } from "@/components/location-picker";
 import { DateTimePicker } from "@/components/date-time-picker";
 
 const initialState: BookingFormState = {};
 
-export function BookingForm() {
+export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
   const [state, formAction, pending] = useActionState(createBooking, initialState);
 
-  const [trade, setTrade] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [subcategoryId, setSubcategoryId] = useState("");
+  const [accessoryId, setAccessoryId] = useState("");
+  const [qualityTier, setQualityTier] = useState<QualityTier | "">("");
+
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
   const [mapLink, setMapLink] = useState("");
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
+
+  const selection = useMemo(() => {
+    const category = catalog.find((c) => c.id === categoryId);
+    const subcategory = category?.subcategories.find((s) => s.id === subcategoryId);
+    const accessory = subcategory?.accessories.find((a) => a.id === accessoryId);
+    if (!category || !subcategory || !accessory || !qualityTier) return null;
+    const { brand, price } = tierBrandAndPrice(accessory, qualityTier);
+    return {
+      categoryName: category.name,
+      subcategoryName: subcategory.name,
+      accessoryName: accessory.name,
+      brand,
+      price,
+    };
+  }, [catalog, categoryId, subcategoryId, accessoryId, qualityTier]);
 
   return (
     <form action={formAction} className="space-y-6">
@@ -27,16 +48,46 @@ export function BookingForm() {
         </p>
       )}
 
-      <div>
-        <span className="mb-2 block text-sm font-medium text-slate-700">
-          What do you need help with?
-        </span>
-        <TradeSelector value={trade} onChange={setTrade} />
-        <input type="hidden" name="trade" value={trade} />
-        {state.fieldErrors?.trade && (
-          <p className="mt-1 text-xs text-red-600">{state.fieldErrors.trade}</p>
-        )}
-      </div>
+      <ServiceSelector
+        catalog={catalog}
+        categoryId={categoryId}
+        subcategoryId={subcategoryId}
+        accessoryId={accessoryId}
+        qualityTier={qualityTier}
+        onChange={(next) => {
+          setCategoryId(next.categoryId);
+          setSubcategoryId(next.subcategoryId);
+          setAccessoryId(next.accessoryId);
+          setQualityTier(next.qualityTier);
+        }}
+      />
+      <input type="hidden" name="category" value={selection?.categoryName ?? ""} />
+      <input type="hidden" name="subcategory" value={selection?.subcategoryName ?? ""} />
+      <input type="hidden" name="accessory" value={selection?.accessoryName ?? ""} />
+      <input type="hidden" name="qualityTier" value={qualityTier} />
+      <input type="hidden" name="selectedBrand" value={selection?.brand ?? ""} />
+      <input type="hidden" name="selectedPrice" value={selection?.price ?? ""} />
+      {(state.fieldErrors?.category ||
+        state.fieldErrors?.subcategory ||
+        state.fieldErrors?.accessory ||
+        state.fieldErrors?.qualityTier) && (
+        <p className="text-xs text-red-600">
+          {state.fieldErrors.category ||
+            state.fieldErrors.subcategory ||
+            state.fieldErrors.accessory ||
+            state.fieldErrors.qualityTier}
+        </p>
+      )}
+
+      {selection && (
+        <div className="rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900 ring-1 ring-orange-100">
+          <span className="font-semibold">{selection.accessoryName}</span> ({selection.brand}) —{" "}
+          <span className="font-bold">{selection.price} SAR</span>
+          <span className="ml-1 text-xs text-orange-700">
+            (labor/callout fee shown separately at confirmation)
+          </span>
+        </div>
+      )}
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full name" error={state.fieldErrors?.customerName}>

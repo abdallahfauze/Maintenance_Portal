@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import {
-  STATUS_COLORS,
-  STATUS_LABELS,
-  TRADE_INFO,
-  getTimeSlots,
-  type BookingStatus,
-} from "@/lib/constants";
+import { STATUS_COLORS, STATUS_LABELS, getTimeSlots, type BookingStatus } from "@/lib/constants";
 
 function friendlyDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);
@@ -26,17 +20,15 @@ export default async function BookingStatusPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const booking = await prisma.booking.findUnique({
-    where: { id },
-    include: { contractor: true },
-  });
+  const booking = await prisma.booking.findUnique({ where: { id }, include: { contractor: true } });
 
   if (!booking) {
     notFound();
   }
 
+  const categoryInfo = await prisma.serviceCategory.findUnique({ where: { name: booking.category } });
+
   const status = booking.status as BookingStatus;
-  const tradeInfo = TRADE_INFO[booking.trade as keyof typeof TRADE_INFO];
   const mapHref =
     booking.locationMapLink ||
     (booking.locationLat != null && booking.locationLng != null
@@ -52,11 +44,11 @@ export default async function BookingStatusPage({
         <p className="mb-4 font-mono text-lg font-semibold text-slate-900">{booking.id}</p>
 
         <div className="flex items-center gap-3">
-          {tradeInfo && (
+          {categoryInfo && (
             <span
-              className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br text-lg ${tradeInfo.gradient}`}
+              className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br text-lg ${categoryInfo.gradient}`}
             >
-              {tradeInfo.icon}
+              {categoryInfo.icon}
             </span>
           )}
           <span
@@ -66,8 +58,18 @@ export default async function BookingStatusPage({
           </span>
         </div>
 
+        <div className="mt-4 rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900 ring-1 ring-orange-100">
+          <p className="text-xs uppercase tracking-wide text-orange-600">
+            {booking.category} → {booking.subcategory}
+          </p>
+          <p className="font-semibold">{booking.accessory}</p>
+          <p className="text-xs text-orange-700">
+            {booking.qualityTier} quality — {booking.selectedBrand}
+          </p>
+          <p className="mt-1 text-lg font-bold">{booking.selectedPrice} SAR</p>
+        </div>
+
         <dl className="mt-6 space-y-3 text-sm">
-          <Row label="Service" value={booking.trade} />
           <Row label="City" value={booking.city} />
           <Row label="Address details" value={booking.addressDetails} />
           <Row
@@ -90,8 +92,9 @@ export default async function BookingStatusPage({
         </dl>
 
         <p className="mt-6 text-xs text-slate-500">
-          We&apos;ll contact you at {booking.phone} to confirm the visit and share an upfront
-          price estimate. Bookmark this page to check status any time.
+          We&apos;ll contact you at {booking.phone} to confirm the visit. The price above covers
+          the part/fixture — a labor or callout fee is confirmed with you before dispatch.
+          Bookmark this page to check status any time.
         </p>
 
         <Link href="/" className="mt-6 inline-block text-sm font-medium text-orange-600 underline">

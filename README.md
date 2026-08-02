@@ -31,12 +31,21 @@ holds up, at a fraction of the cost and time of the full app.
 
 ### What's here
 
-- **`/`** — the public booking form. A customer picks a service (Electrical,
-  Plumbing, HVAC, Civil Finishes), describes the issue, and submits. They're
-  redirected to a booking status page (`/booking/[id]`) they can bookmark.
+- **`/`** — the public booking form. A customer cascades through the service
+  catalog (Category → Sub-category → Item → Quality tier, e.g. Sanitary
+  Fixtures → Mixers & Taps → Kitchen Sink Mixer Tap → Medium/Ideal Standard,
+  300 SAR), pins their location or pastes a Google Maps link, picks a
+  Saturday–Thursday appointment slot, and submits. They're redirected to a
+  booking status page (`/booking/[id]`) they can bookmark.
+  - The catalog (6 categories, 24 sub-categories, 107 items, each with a
+    Low/Medium/High brand + price) is seeded from
+    `prisma/data/catalog.json`, generated from the client-supplied
+    `Home_Maintenance_Fixtures_Master_KSA` spreadsheet — see
+    `prisma/seed.ts`. The price shown is re-derived server-side from the
+    database at submission time, never trusted from the client.
 - **`/admin`** — password-protected dispatch dashboard. Lists all bookings,
   filterable by status, with inline controls to assign a contractor (filtered
-  to contractors in that trade) and update job status.
+  to contractors in that category) and update job status.
 - **`/admin/contractors`** — simple CRUD to add contractor partners and
   toggle them active/inactive. Only active contractors are offered for
   assignment.

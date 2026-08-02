@@ -3,38 +3,6 @@
 // business plan's Financial Plan §6.4 for the rollout timeline).
 export const CITIES = ["Jeddah"] as const;
 
-export const TRADES = ["Electrical", "Plumbing", "HVAC", "Civil Finishes"] as const;
-
-export const TRADE_INFO: Record<
-  (typeof TRADES)[number],
-  { icon: string; description: string; gradient: string; ring: string }
-> = {
-  Electrical: {
-    icon: "⚡",
-    description: "Sockets, breakers, lighting, cabling",
-    gradient: "from-amber-400 to-orange-500",
-    ring: "ring-amber-400",
-  },
-  Plumbing: {
-    icon: "🔧",
-    description: "Leaks, fixtures, water heaters, drainage",
-    gradient: "from-sky-400 to-blue-500",
-    ring: "ring-sky-400",
-  },
-  HVAC: {
-    icon: "❄️",
-    description: "AC service, repair & installation",
-    gradient: "from-cyan-400 to-teal-500",
-    ring: "ring-cyan-400",
-  },
-  "Civil Finishes": {
-    icon: "🎨",
-    description: "Painting, tiling & finishing work",
-    gradient: "from-fuchsia-400 to-purple-500",
-    ring: "ring-fuchsia-400",
-  },
-};
-
 // Jeddah's approximate center — used as the default map view before a
 // customer drops a pin or grants location access.
 export const DEFAULT_MAP_CENTER = { lat: 21.5433, lng: 39.1728 };

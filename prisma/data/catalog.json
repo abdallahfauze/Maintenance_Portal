@@ -1,0 +1,1264 @@
+[
+  {
+    "name": "Electrical",
+    "icon": "⚡",
+    "gradient": "from-amber-400 to-orange-500",
+    "order": 0,
+    "subcategories": [
+      {
+        "name": "Lighting",
+        "order": 0,
+        "accessories": [
+          {
+            "name": "LED Spot / Downlight (recessed, ~12-24W)",
+            "order": 0,
+            "lowBrand": "Generic / No-name Chinese",
+            "lowPrice": 35,
+            "mediumBrand": "Philips Meson / Basic",
+            "mediumPrice": 80,
+            "highBrand": "Philips Hue / Premium",
+            "highPrice": 400
+          },
+          {
+            "name": "LED Tube Light (T8, 1.2m / 4ft)",
+            "order": 1,
+            "lowBrand": "Generic LED tube",
+            "lowPrice": 18,
+            "mediumBrand": "Osram / Philips LED tube",
+            "mediumPrice": 50,
+            "highBrand": "Philips / Osram Premium",
+            "highPrice": 80
+          },
+          {
+            "name": "Ceiling / Pendant Light Fixture",
+            "order": 2,
+            "lowBrand": "Basic Chinese fixture",
+            "lowPrice": 90,
+            "mediumBrand": "Philips / Local branded",
+            "mediumPrice": 250,
+            "highBrand": "Philips Hue / Designer",
+            "highPrice": 1500
+          },
+          {
+            "name": "Wall Sconce / Decorative Light",
+            "order": 3,
+            "lowBrand": "Generic",
+            "lowPrice": 70,
+            "mediumBrand": "Philips / Local",
+            "mediumPrice": 180,
+            "highBrand": "Premium designer brands",
+            "highPrice": 800
+          },
+          {
+            "name": "Outdoor / Porch / Security Light",
+            "order": 4,
+            "lowBrand": "Basic weatherproof",
+            "lowPrice": 90,
+            "mediumBrand": "Philips / Osram outdoor",
+            "mediumPrice": 250,
+            "highBrand": "Philips / Schneider outdoor",
+            "highPrice": 700
+          },
+          {
+            "name": "LED Strip Light (per meter / kit)",
+            "order": 5,
+            "lowBrand": "Generic RGB strip",
+            "lowPrice": 30,
+            "mediumBrand": "Philips / Local branded",
+            "mediumPrice": 100,
+            "highBrand": "Philips Hue Lightstrip",
+            "highPrice": 400
+          }
+        ]
+      },
+      {
+        "name": "Switches & Controls",
+        "order": 1,
+        "accessories": [
+          {
+            "name": "1-Gang Light Switch (1-way)",
+            "order": 0,
+            "lowBrand": "Generic / Basic Alfanar entry",
+            "lowPrice": 12,
+            "mediumBrand": "Alfanar / Panasonic",
+            "mediumPrice": 25,
+            "highBrand": "Legrand / Schneider",
+            "highPrice": 60
+          },
+          {
+            "name": "2-Way / Intermediate Switch",
+            "order": 1,
+            "lowBrand": "Generic",
+            "lowPrice": 15,
+            "mediumBrand": "Alfanar / Panasonic",
+            "mediumPrice": 35,
+            "highBrand": "Legrand / Schneider",
+            "highPrice": 80
+          },
+          {
+            "name": "Dimmer Switch",
+            "order": 2,
+            "lowBrand": "Basic rotary dimmer",
+            "lowPrice": 35,
+            "mediumBrand": "Alfanar / Panasonic",
+            "mediumPrice": 80,
+            "highBrand": "Legrand / Schneider",
+            "highPrice": 180
+          },
+          {
+            "name": "Fan Regulator / Speed Controller",
+            "order": 3,
+            "lowBrand": "Generic",
+            "lowPrice": 30,
+            "mediumBrand": "Alfanar / Panasonic",
+            "mediumPrice": 70,
+            "highBrand": "Legrand / Schneider",
+            "highPrice": 150
+          },
+          {
+            "name": "Smart / Wi-Fi Switch",
+            "order": 4,
+            "lowBrand": "Generic Tuya / No-name",
+            "lowPrice": 50,
+            "mediumBrand": "Local smart brands",
+            "mediumPrice": 120,
+            "highBrand": "Schneider Wiser / Legrand Netatmo",
+            "highPrice": 350
+          }
+        ]
+      },
+      {
+        "name": "Power Outlets",
+        "order": 2,
+        "accessories": [
+          {
+            "name": "13A Single Socket (switched)",
+            "order": 0,
+            "lowBrand": "Generic / Basic Alfanar",
+            "lowPrice": 15,
+            "mediumBrand": "Alfanar / Panasonic",
+            "mediumPrice": 30,
+            "highBrand": "Legrand Mallia / Schneider",
+            "highPrice": 70
+          },
+          {
+            "name": "13A Double Socket (switched)",
+            "order": 1,
+            "lowBrand": "Generic",
+            "lowPrice": 22,
+            "mediumBrand": "Alfanar / Panasonic",
+            "mediumPrice": 45,
+            "highBrand": "Legrand / Schneider",
+            "highPrice": 100
+          },
+          {
+            "name": "USB Charging Socket",
+            "order": 2,
+            "lowBrand": "Generic USB socket",
+            "lowPrice": 40,
+            "mediumBrand": "Alfanar / Panasonic",
+            "mediumPrice": 80,
+            "highBrand": "Legrand / Schneider",
+            "highPrice": 180
+          },
+          {
+            "name": "Outdoor / Weatherproof Socket (IP44+)",
+            "order": 3,
+            "lowBrand": "Basic outdoor",
+            "lowPrice": 50,
+            "mediumBrand": "Alfanar outdoor / Panasonic",
+            "mediumPrice": 120,
+            "highBrand": "Legrand / Schneider IP rated",
+            "highPrice": 250
+          }
+        ]
+      },
+      {
+        "name": "Protection & Distribution",
+        "order": 3,
+        "accessories": [
+          {
+            "name": "MCB 1-Pole (6-40A, 6kA)",
+            "order": 0,
+            "lowBrand": "Generic / Chinese",
+            "lowPrice": 18,
+            "mediumBrand": "Schneider Easy9 / Hager entry",
+            "mediumPrice": 50,
+            "highBrand": "Schneider Acti9 / ABB / Hager",
+            "highPrice": 120
+          },
+          {
+            "name": "MCB 2-Pole / 3-Pole",
+            "order": 1,
+            "lowBrand": "Generic",
+            "lowPrice": 35,
+            "mediumBrand": "Schneider Easy9 / Hager",
+            "mediumPrice": 90,
+            "highBrand": "Schneider Acti9 / ABB",
+            "highPrice": 250
+          },
+          {
+            "name": "RCCB / ELCB (30mA, 2P/4P)",
+            "order": 2,
+            "lowBrand": "Generic",
+            "lowPrice": 80,
+            "mediumBrand": "Schneider Easy9 / Hager",
+            "mediumPrice": 180,
+            "highBrand": "Schneider Acti9 / ABB / Hager",
+            "highPrice": 450
+          },
+          {
+            "name": "Distribution Board / DB Box (consumer unit)",
+            "order": 3,
+            "lowBrand": "Basic metal/plastic",
+            "lowPrice": 180,
+            "mediumBrand": "Schneider / Hager / Alfanar",
+            "mediumPrice": 450,
+            "highBrand": "Schneider / ABB / Hager premium",
+            "highPrice": 1200
+          },
+          {
+            "name": "Main Isolator / Switch Disconnector",
+            "order": 4,
+            "lowBrand": "Generic",
+            "lowPrice": 70,
+            "mediumBrand": "Schneider / Hager",
+            "mediumPrice": 160,
+            "highBrand": "Schneider / ABB",
+            "highPrice": 400
+          }
+        ]
+      },
+      {
+        "name": "Fans & Cooling",
+        "order": 4,
+        "accessories": [
+          {
+            "name": "Ceiling Fan (56 inch typical)",
+            "order": 0,
+            "lowBrand": "Generic Chinese",
+            "lowPrice": 150,
+            "mediumBrand": "Local / Alfanar / Basic brands",
+            "mediumPrice": 350,
+            "highBrand": "Premium (KDK / National / designer)",
+            "highPrice": 900
+          },
+          {
+            "name": "Ceiling Fan Capacitor / Regulator",
+            "order": 1,
+            "lowBrand": "Generic capacitor",
+            "lowPrice": 20,
+            "mediumBrand": "Branded capacitor",
+            "mediumPrice": 40,
+            "highBrand": "OEM / Premium",
+            "highPrice": 80
+          },
+          {
+            "name": "Exhaust Fan (bathroom/kitchen)",
+            "order": 2,
+            "lowBrand": "Generic",
+            "lowPrice": 80,
+            "mediumBrand": "Local branded / Panasonic",
+            "mediumPrice": 180,
+            "highBrand": "Premium silent models",
+            "highPrice": 400
+          }
+        ]
+      },
+      {
+        "name": "Other Accessories",
+        "order": 5,
+        "accessories": [
+          {
+            "name": "Door Bell / Chime",
+            "order": 0,
+            "lowBrand": "Basic wired/wireless",
+            "lowPrice": 50,
+            "mediumBrand": "Panasonic / Local",
+            "mediumPrice": 120,
+            "highBrand": "Premium / Smart doorbell",
+            "highPrice": 400
+          },
+          {
+            "name": "Geyser / Water Heater Thermostat & Controls",
+            "order": 1,
+            "lowBrand": "Generic thermostat",
+            "lowPrice": 60,
+            "mediumBrand": "Branded (Ariston etc. related)",
+            "mediumPrice": 150,
+            "highBrand": "OEM premium",
+            "highPrice": 300
+          },
+          {
+            "name": "Inverter / UPS Changeover Switch",
+            "order": 2,
+            "lowBrand": "Basic manual",
+            "lowPrice": 100,
+            "mediumBrand": "Schneider / Local",
+            "mediumPrice": 250,
+            "highBrand": "Schneider / ABB automatic",
+            "highPrice": 700
+          },
+          {
+            "name": "Motion / PIR Sensor",
+            "order": 3,
+            "lowBrand": "Generic",
+            "lowPrice": 45,
+            "mediumBrand": "Local / basic branded",
+            "mediumPrice": 100,
+            "highBrand": "Schneider / Legrand / Philips",
+            "highPrice": 250
+          },
+          {
+            "name": "Junction Box / Conduit Accessories",
+            "order": 4,
+            "lowBrand": "Generic plastic",
+            "lowPrice": 10,
+            "mediumBrand": "Alfanar / local quality",
+            "mediumPrice": 25,
+            "highBrand": "Premium / metal / IP rated",
+            "highPrice": 60
+          }
+        ]
+      },
+      {
+        "name": "Outdoor / Special",
+        "order": 6,
+        "accessories": [
+          {
+            "name": "EV Charger Wall Point (home)",
+            "order": 0,
+            "lowBrand": "Basic portable",
+            "lowPrice": 1500,
+            "mediumBrand": "Mid-range wallbox brands",
+            "mediumPrice": 4000,
+            "highBrand": "Schneider / ABB / premium",
+            "highPrice": 9000
+          },
+          {
+            "name": "Water Pump Starter / Control Panel",
+            "order": 1,
+            "lowBrand": "Basic DOL starter",
+            "lowPrice": 180,
+            "mediumBrand": "Schneider / Local",
+            "mediumPrice": 450,
+            "highBrand": "Schneider / ABB soft starter",
+            "highPrice": 1500
+          }
+        ]
+      },
+      {
+        "name": "Fire Alarm System",
+        "order": 7,
+        "accessories": [
+          {
+            "name": "Smoke Detector (photoelectric / ionization)",
+            "order": 0,
+            "lowBrand": "Generic / basic Chinese",
+            "lowPrice": 40,
+            "mediumBrand": "System Sensor / Notifier entry / Local",
+            "mediumPrice": 90,
+            "highBrand": "Notifier / Siemens / Honeywell / Hochiki",
+            "highPrice": 220
+          },
+          {
+            "name": "Heat Detector (fixed / rate-of-rise)",
+            "order": 1,
+            "lowBrand": "Generic heat detector",
+            "lowPrice": 35,
+            "mediumBrand": "System Sensor / Local branded",
+            "mediumPrice": 80,
+            "highBrand": "Notifier / Siemens / Honeywell",
+            "highPrice": 200
+          },
+          {
+            "name": "Manual Call Point / Break Glass",
+            "order": 2,
+            "lowBrand": "Basic call point",
+            "lowPrice": 25,
+            "mediumBrand": "Local / mid brands",
+            "mediumPrice": 60,
+            "highBrand": "Notifier / Siemens / Cooper",
+            "highPrice": 150
+          },
+          {
+            "name": "Fire Alarm Control Panel (small conventional 2-4 zone)",
+            "order": 3,
+            "lowBrand": "Generic panel",
+            "lowPrice": 400,
+            "mediumBrand": "Local / mid-range conventional",
+            "mediumPrice": 900,
+            "highBrand": "Notifier / Siemens / Honeywell",
+            "highPrice": 2500
+          },
+          {
+            "name": "Fire Alarm Control Panel Battery (12V sealed lead-acid)",
+            "order": 4,
+            "lowBrand": "Generic SLA battery",
+            "lowPrice": 60,
+            "mediumBrand": "CSB / Local good quality",
+            "mediumPrice": 120,
+            "highBrand": "Yuasa / Power-Sonic / OEM",
+            "highPrice": 250
+          },
+          {
+            "name": "Fire Alarm Sounder / Bell / Strobe",
+            "order": 5,
+            "lowBrand": "Basic sounder",
+            "lowPrice": 40,
+            "mediumBrand": "Local / mid brands",
+            "mediumPrice": 90,
+            "highBrand": "Notifier / Siemens / Hochiki",
+            "highPrice": 200
+          },
+          {
+            "name": "Fire Alarm Cable / Detector Base",
+            "order": 6,
+            "lowBrand": "Generic base & cable",
+            "lowPrice": 10,
+            "mediumBrand": "Local branded",
+            "mediumPrice": 25,
+            "highBrand": "OEM / premium base",
+            "highPrice": 60
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sanitary Fixtures",
+    "icon": "🚿",
+    "gradient": "from-sky-400 to-blue-500",
+    "order": 1,
+    "subcategories": [
+      {
+        "name": "Toilet / WC",
+        "order": 0,
+        "accessories": [
+          {
+            "name": "Floor-standing Toilet (complete set)",
+            "order": 0,
+            "lowBrand": "Generic Chinese / Local basic",
+            "lowPrice": 350,
+            "mediumBrand": "Ideal Standard / Roca / American Standard",
+            "mediumPrice": 900,
+            "highBrand": "Grohe / Duravit / Kohler / TOTO",
+            "highPrice": 2500
+          },
+          {
+            "name": "Wall-hung Toilet + Concealed Cistern",
+            "order": 1,
+            "lowBrand": "Basic wall-hung kit",
+            "lowPrice": 600,
+            "mediumBrand": "Ideal Standard / Roca",
+            "mediumPrice": 1500,
+            "highBrand": "Grohe / Duravit / Geberit",
+            "highPrice": 3500
+          },
+          {
+            "name": "Soft-close Toilet Seat",
+            "order": 2,
+            "lowBrand": "Generic soft-close",
+            "lowPrice": 80,
+            "mediumBrand": "Ideal Standard / Roca",
+            "mediumPrice": 180,
+            "highBrand": "Grohe / Duravit / TOTO",
+            "highPrice": 450
+          }
+        ]
+      },
+      {
+        "name": "Washbasin",
+        "order": 1,
+        "accessories": [
+          {
+            "name": "Ceramic Washbasin (wall/pedestal)",
+            "order": 0,
+            "lowBrand": "Generic ceramic",
+            "lowPrice": 150,
+            "mediumBrand": "Ideal Standard / Roca",
+            "mediumPrice": 450,
+            "highBrand": "Duravit / Kohler / Villeroy & Boch",
+            "highPrice": 1200
+          },
+          {
+            "name": "Countertop / Vessel Basin",
+            "order": 1,
+            "lowBrand": "Basic ceramic/glass",
+            "lowPrice": 120,
+            "mediumBrand": "Ideal Standard / Local good",
+            "mediumPrice": 350,
+            "highBrand": "Duravit / Kohler",
+            "highPrice": 900
+          }
+        ]
+      },
+      {
+        "name": "Mixers & Taps",
+        "order": 2,
+        "accessories": [
+          {
+            "name": "Basin Mixer Tap (single lever)",
+            "order": 0,
+            "lowBrand": "Generic chrome",
+            "lowPrice": 80,
+            "mediumBrand": "Ideal Standard / Roca / Local",
+            "mediumPrice": 250,
+            "highBrand": "Grohe / Hansgrohe / Kohler",
+            "highPrice": 700
+          },
+          {
+            "name": "Kitchen Sink Mixer Tap",
+            "order": 1,
+            "lowBrand": "Generic",
+            "lowPrice": 100,
+            "mediumBrand": "Ideal Standard / Roca",
+            "mediumPrice": 300,
+            "highBrand": "Grohe / Hansgrohe",
+            "highPrice": 850
+          },
+          {
+            "name": "Shower Mixer (thermostatic)",
+            "order": 2,
+            "lowBrand": "Basic shower mixer",
+            "lowPrice": 150,
+            "mediumBrand": "Ideal Standard / Roca",
+            "mediumPrice": 450,
+            "highBrand": "Grohe / Hansgrohe",
+            "highPrice": 1200
+          }
+        ]
+      },
+      {
+        "name": "Shower",
+        "order": 3,
+        "accessories": [
+          {
+            "name": "Shower Head / Rain Shower",
+            "order": 0,
+            "lowBrand": "Basic chrome head",
+            "lowPrice": 60,
+            "mediumBrand": "Ideal Standard / Local",
+            "mediumPrice": 200,
+            "highBrand": "Grohe / Hansgrohe",
+            "highPrice": 600
+          },
+          {
+            "name": "Handheld Shower + Hose Set",
+            "order": 1,
+            "lowBrand": "Generic set",
+            "lowPrice": 50,
+            "mediumBrand": "Ideal Standard / Roca",
+            "mediumPrice": 150,
+            "highBrand": "Grohe / Hansgrohe",
+            "highPrice": 400
+          },
+          {
+            "name": "Shower Enclosure / Cabin (typical)",
+            "order": 2,
+            "lowBrand": "Basic aluminum/glass",
+            "lowPrice": 800,
+            "mediumBrand": "Local mid-range / Ideal",
+            "mediumPrice": 1800,
+            "highBrand": "Premium framed/frameless",
+            "highPrice": 4500
+          }
+        ]
+      },
+      {
+        "name": "Bidet",
+        "order": 4,
+        "accessories": [
+          {
+            "name": "Bidet Mixer / Bidet Spray",
+            "order": 0,
+            "lowBrand": "Generic bidet spray",
+            "lowPrice": 40,
+            "mediumBrand": "Ideal Standard / Local",
+            "mediumPrice": 120,
+            "highBrand": "Grohe / Hansgrohe",
+            "highPrice": 350
+          }
+        ]
+      },
+      {
+        "name": "Accessories",
+        "order": 5,
+        "accessories": [
+          {
+            "name": "Floor Drain / Floor Trap",
+            "order": 0,
+            "lowBrand": "Basic plastic/metal",
+            "lowPrice": 25,
+            "mediumBrand": "Local branded / Ideal",
+            "mediumPrice": 70,
+            "highBrand": "Premium stainless / Grohe",
+            "highPrice": 180
+          },
+          {
+            "name": "Towel Rail / Soap Dish Set",
+            "order": 1,
+            "lowBrand": "Generic chrome",
+            "lowPrice": 50,
+            "mediumBrand": "Ideal Standard / Local",
+            "mediumPrice": 150,
+            "highBrand": "Grohe / Hansgrohe accessories",
+            "highPrice": 400
+          },
+          {
+            "name": "Bathroom Mirror Cabinet",
+            "order": 2,
+            "lowBrand": "Basic mirrored cabinet",
+            "lowPrice": 200,
+            "mediumBrand": "Local mid-range",
+            "mediumPrice": 500,
+            "highBrand": "Premium with LED / storage",
+            "highPrice": 1500
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Mechanical Fixtures",
+    "icon": "🔩",
+    "gradient": "from-fuchsia-400 to-purple-500",
+    "order": 2,
+    "subcategories": [
+      {
+        "name": "Door Hardware",
+        "order": 0,
+        "accessories": [
+          {
+            "name": "Cylinder Door Lock (mortise)",
+            "order": 0,
+            "lowBrand": "Generic cylinder lock",
+            "lowPrice": 40,
+            "mediumBrand": "Yale / Union / Local branded",
+            "mediumPrice": 120,
+            "highBrand": "ASSA ABLOY / Mul-T-Lock / high-sec",
+            "highPrice": 350
+          },
+          {
+            "name": "Lever Door Handle Set",
+            "order": 1,
+            "lowBrand": "Basic aluminum handle",
+            "lowPrice": 30,
+            "mediumBrand": "Yale / Local mid-range",
+            "mediumPrice": 90,
+            "highBrand": "Hafele / premium designer",
+            "highPrice": 280
+          },
+          {
+            "name": "Door Hinges (pair, heavy duty)",
+            "order": 2,
+            "lowBrand": "Generic steel hinges",
+            "lowPrice": 15,
+            "mediumBrand": "Local branded / Yale",
+            "mediumPrice": 40,
+            "highBrand": "Hafele / stainless premium",
+            "highPrice": 100
+          },
+          {
+            "name": "Door Closer (hydraulic)",
+            "order": 3,
+            "lowBrand": "Basic door closer",
+            "lowPrice": 60,
+            "mediumBrand": "Yale / Local good",
+            "mediumPrice": 150,
+            "highBrand": "Dorma / Hafele / ASSA",
+            "highPrice": 400
+          },
+          {
+            "name": "Digital / Smart Door Lock",
+            "order": 4,
+            "lowBrand": "Basic keypad lock",
+            "lowPrice": 250,
+            "mediumBrand": "Yale / Local smart",
+            "mediumPrice": 600,
+            "highBrand": "ASSA ABLOY / premium smart",
+            "highPrice": 1800
+          },
+          {
+            "name": "Deadbolt / Security Bolt",
+            "order": 5,
+            "lowBrand": "Generic deadbolt",
+            "lowPrice": 35,
+            "mediumBrand": "Yale / Union",
+            "mediumPrice": 100,
+            "highBrand": "Mul-T-Lock / high-security",
+            "highPrice": 300
+          }
+        ]
+      },
+      {
+        "name": "Window Hardware",
+        "order": 1,
+        "accessories": [
+          {
+            "name": "Window Handle / Stay",
+            "order": 0,
+            "lowBrand": "Basic window handle",
+            "lowPrice": 20,
+            "mediumBrand": "Local mid-range",
+            "mediumPrice": 50,
+            "highBrand": "Hafele / premium",
+            "highPrice": 120
+          },
+          {
+            "name": "Window Hinges / Friction Stay",
+            "order": 1,
+            "lowBrand": "Generic",
+            "lowPrice": 15,
+            "mediumBrand": "Local branded",
+            "mediumPrice": 40,
+            "highBrand": "Hafele / stainless",
+            "highPrice": 90
+          }
+        ]
+      },
+      {
+        "name": "Cabinet Hardware",
+        "order": 2,
+        "accessories": [
+          {
+            "name": "Cabinet Hinges (soft-close pair)",
+            "order": 0,
+            "lowBrand": "Basic hinges",
+            "lowPrice": 10,
+            "mediumBrand": "Local / mid brands",
+            "mediumPrice": 30,
+            "highBrand": "Hafele / Blum",
+            "highPrice": 80
+          },
+          {
+            "name": "Drawer Slides (pair)",
+            "order": 1,
+            "lowBrand": "Basic slides",
+            "lowPrice": 15,
+            "mediumBrand": "Local mid-range",
+            "mediumPrice": 45,
+            "highBrand": "Hafele / Blum soft-close",
+            "highPrice": 120
+          },
+          {
+            "name": "Cabinet Handles / Knobs (set)",
+            "order": 2,
+            "lowBrand": "Generic",
+            "lowPrice": 20,
+            "mediumBrand": "Local good quality",
+            "mediumPrice": 60,
+            "highBrand": "Hafele / designer",
+            "highPrice": 150
+          }
+        ]
+      },
+      {
+        "name": "Other",
+        "order": 3,
+        "accessories": [
+          {
+            "name": "Floor Spring / Door Pivot",
+            "order": 0,
+            "lowBrand": "Basic floor spring",
+            "lowPrice": 80,
+            "mediumBrand": "Local / Yale type",
+            "mediumPrice": 200,
+            "highBrand": "Dorma / Hafele",
+            "highPrice": 500
+          },
+          {
+            "name": "Door Stopper / Buffer",
+            "order": 1,
+            "lowBrand": "Basic rubber/metal",
+            "lowPrice": 10,
+            "mediumBrand": "Local branded",
+            "mediumPrice": 25,
+            "highBrand": "Premium stainless",
+            "highPrice": 60
+          },
+          {
+            "name": "Padlock (heavy duty)",
+            "order": 2,
+            "lowBrand": "Generic padlock",
+            "lowPrice": 20,
+            "mediumBrand": "Yale / Union",
+            "mediumPrice": 60,
+            "highBrand": "ABUS / high-security",
+            "highPrice": 180
+          }
+        ]
+      },
+      {
+        "name": "Fire Fighting",
+        "order": 4,
+        "accessories": [
+          {
+            "name": "Sprinkler Head (pendant / upright, standard response)",
+            "order": 0,
+            "lowBrand": "Generic / basic",
+            "lowPrice": 25,
+            "mediumBrand": "Tyco / Viking entry / Local",
+            "mediumPrice": 60,
+            "highBrand": "Tyco / Viking / Reliable / Victaulic",
+            "highPrice": 150
+          },
+          {
+            "name": "Sprinkler Head (quick response / residential)",
+            "order": 1,
+            "lowBrand": "Basic residential head",
+            "lowPrice": 30,
+            "mediumBrand": "Tyco / Local mid",
+            "mediumPrice": 80,
+            "highBrand": "Tyco / Viking / Reliable",
+            "highPrice": 180
+          },
+          {
+            "name": "Sprinkler Spare (glass bulb / fusible link kit)",
+            "order": 2,
+            "lowBrand": "Generic spare",
+            "lowPrice": 15,
+            "mediumBrand": "Branded mid",
+            "mediumPrice": 35,
+            "highBrand": "OEM Tyco / Viking",
+            "highPrice": 70
+          },
+          {
+            "name": "Fire Hose Reel / Cabinet (basic)",
+            "order": 3,
+            "lowBrand": "Basic hose reel",
+            "lowPrice": 300,
+            "mediumBrand": "Local mid-range",
+            "mediumPrice": 700,
+            "highBrand": "Premium / approved brands",
+            "highPrice": 1500
+          },
+          {
+            "name": "Portable Fire Extinguisher ABC 6 kg",
+            "order": 4,
+            "lowBrand": "Generic / unbranded",
+            "lowPrice": 80,
+            "mediumBrand": "NAFFCO / Local approved / Gloria entry",
+            "mediumPrice": 150,
+            "highBrand": "Amerex / Ansul / Gloria premium",
+            "highPrice": 300
+          },
+          {
+            "name": "Portable Fire Extinguisher ABC 9–12 kg",
+            "order": 5,
+            "lowBrand": "Generic / unbranded",
+            "lowPrice": 120,
+            "mediumBrand": "NAFFCO / Local approved",
+            "mediumPrice": 220,
+            "highBrand": "Amerex / Ansul / Gloria",
+            "highPrice": 450
+          },
+          {
+            "name": "CO2 Fire Extinguisher 5 kg",
+            "order": 6,
+            "lowBrand": "Generic CO2",
+            "lowPrice": 150,
+            "mediumBrand": "NAFFCO / Local approved",
+            "mediumPrice": 280,
+            "highBrand": "Amerex / Ansul / Gloria",
+            "highPrice": 500
+          },
+          {
+            "name": "CO2 Fire Extinguisher 10 kg",
+            "order": 7,
+            "lowBrand": "Generic CO2",
+            "lowPrice": 250,
+            "mediumBrand": "NAFFCO / Local approved",
+            "mediumPrice": 400,
+            "highBrand": "Amerex / Ansul",
+            "highPrice": 700
+          },
+          {
+            "name": "Foam / Wet Chemical Extinguisher (kitchen)",
+            "order": 8,
+            "lowBrand": "Basic foam/wet chem",
+            "lowPrice": 180,
+            "mediumBrand": "NAFFCO / Local approved",
+            "mediumPrice": 320,
+            "highBrand": "Amerex / Ansul / Gloria",
+            "highPrice": 550
+          },
+          {
+            "name": "Fire Extinguisher Bracket / Cabinet",
+            "order": 9,
+            "lowBrand": "Basic wall bracket",
+            "lowPrice": 30,
+            "mediumBrand": "Local mid-range",
+            "mediumPrice": 70,
+            "highBrand": "Premium cabinet / stainless",
+            "highPrice": 180
+          },
+          {
+            "name": "Fire Extinguisher Refill / Service (typical)",
+            "order": 10,
+            "lowBrand": "Local service",
+            "lowPrice": 40,
+            "mediumBrand": "Authorized mid service",
+            "mediumPrice": 80,
+            "highBrand": "OEM / certified service",
+            "highPrice": 150
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Window AC",
+    "icon": "🪟",
+    "gradient": "from-cyan-400 to-teal-500",
+    "order": 3,
+    "subcategories": [
+      {
+        "name": "Window AC",
+        "order": 0,
+        "accessories": [
+          {
+            "name": "1 Ton (approx 12,000 BTU)",
+            "order": 0,
+            "lowBrand": "Generic / Super General basic",
+            "lowPrice": 1100,
+            "mediumBrand": "Gree / Midea / Local good",
+            "mediumPrice": 1600,
+            "highBrand": "LG / Samsung / Carrier / York",
+            "highPrice": 2500
+          },
+          {
+            "name": "1.5 Ton (approx 18,000 BTU)",
+            "order": 1,
+            "lowBrand": "Generic / Super General",
+            "lowPrice": 1400,
+            "mediumBrand": "Gree / Midea / Zamil / Oscar",
+            "mediumPrice": 2000,
+            "highBrand": "LG / Samsung / Carrier / York",
+            "highPrice": 3200
+          },
+          {
+            "name": "2 Ton (approx 24,000 BTU)",
+            "order": 2,
+            "lowBrand": "Generic / budget brands",
+            "lowPrice": 1800,
+            "mediumBrand": "Gree / Midea / Local",
+            "mediumPrice": 2600,
+            "highBrand": "LG / Samsung / Carrier / York",
+            "highPrice": 4000
+          },
+          {
+            "name": "Window AC Remote / Control Board",
+            "order": 3,
+            "lowBrand": "Generic replacement",
+            "lowPrice": 80,
+            "mediumBrand": "Brand compatible",
+            "mediumPrice": 150,
+            "highBrand": "OEM original",
+            "highPrice": 300
+          },
+          {
+            "name": "Window AC Compressor (replacement)",
+            "order": 4,
+            "lowBrand": "Generic compressor",
+            "lowPrice": 400,
+            "mediumBrand": "GMCC / branded mid",
+            "mediumPrice": 700,
+            "highBrand": "OEM (LG/Samsung/Carrier)",
+            "highPrice": 1200
+          },
+          {
+            "name": "Window AC Capacitor / Fan Motor",
+            "order": 5,
+            "lowBrand": "Generic parts",
+            "lowPrice": 50,
+            "mediumBrand": "Branded mid-range",
+            "mediumPrice": 120,
+            "highBrand": "OEM parts",
+            "highPrice": 250
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Split AC",
+    "icon": "❄️",
+    "gradient": "from-blue-400 to-indigo-500",
+    "order": 4,
+    "subcategories": [
+      {
+        "name": "Split AC",
+        "order": 0,
+        "accessories": [
+          {
+            "name": "1 Ton Split (12,000 BTU) – Non-Inverter",
+            "order": 0,
+            "lowBrand": "Generic / Super General / TCL",
+            "lowPrice": 1400,
+            "mediumBrand": "Gree / Midea / Hisense",
+            "mediumPrice": 2000,
+            "highBrand": "LG / Samsung / Carrier",
+            "highPrice": 3000
+          },
+          {
+            "name": "1 Ton Split – Inverter",
+            "order": 1,
+            "lowBrand": "Budget inverter brands",
+            "lowPrice": 1800,
+            "mediumBrand": "Gree / Midea inverter",
+            "mediumPrice": 2600,
+            "highBrand": "LG Dual Inverter / Samsung / Daikin",
+            "highPrice": 4200
+          },
+          {
+            "name": "1.5 Ton Split (18,000 BTU) – Non-Inverter",
+            "order": 2,
+            "lowBrand": "Generic / Super General",
+            "lowPrice": 1700,
+            "mediumBrand": "Gree / Midea / Hisense",
+            "mediumPrice": 2400,
+            "highBrand": "LG / Samsung / Carrier",
+            "highPrice": 3600
+          },
+          {
+            "name": "1.5 Ton Split – Inverter",
+            "order": 3,
+            "lowBrand": "Budget inverter",
+            "lowPrice": 2200,
+            "mediumBrand": "Gree / Midea / Carrier mid",
+            "mediumPrice": 3200,
+            "highBrand": "LG / Samsung / Daikin / Mitsubishi",
+            "highPrice": 5500
+          },
+          {
+            "name": "2 Ton Split (24,000 BTU) – Non-Inverter",
+            "order": 4,
+            "lowBrand": "Generic / budget",
+            "lowPrice": 2200,
+            "mediumBrand": "Gree / Midea",
+            "mediumPrice": 3200,
+            "highBrand": "LG / Samsung / Carrier",
+            "highPrice": 4800
+          },
+          {
+            "name": "2 Ton Split – Inverter",
+            "order": 5,
+            "lowBrand": "Budget inverter",
+            "lowPrice": 2800,
+            "mediumBrand": "Gree / Midea / Carrier",
+            "mediumPrice": 4200,
+            "highBrand": "LG / Samsung / Daikin / Mitsubishi",
+            "highPrice": 7000
+          },
+          {
+            "name": "2.5–3 Ton Split / Cassette (higher capacity)",
+            "order": 6,
+            "lowBrand": "Budget brands",
+            "lowPrice": 3500,
+            "mediumBrand": "Gree / Midea / Carrier",
+            "mediumPrice": 5500,
+            "highBrand": "Daikin / Mitsubishi / LG premium",
+            "highPrice": 10000
+          }
+        ]
+      },
+      {
+        "name": "Split AC Parts",
+        "order": 1,
+        "accessories": [
+          {
+            "name": "Indoor Unit PCB / Control Board",
+            "order": 0,
+            "lowBrand": "Generic compatible",
+            "lowPrice": 150,
+            "mediumBrand": "Brand mid-range",
+            "mediumPrice": 300,
+            "highBrand": "OEM original",
+            "highPrice": 600
+          },
+          {
+            "name": "Outdoor Compressor (1.5–2 Ton)",
+            "order": 1,
+            "lowBrand": "Generic compressor",
+            "lowPrice": 600,
+            "mediumBrand": "GMCC / branded",
+            "mediumPrice": 1000,
+            "highBrand": "OEM (LG/Daikin/Samsung)",
+            "highPrice": 2000
+          },
+          {
+            "name": "Remote Control (original type)",
+            "order": 2,
+            "lowBrand": "Universal remote",
+            "lowPrice": 40,
+            "mediumBrand": "Brand compatible",
+            "mediumPrice": 80,
+            "highBrand": "OEM original",
+            "highPrice": 150
+          },
+          {
+            "name": "Copper Pipe Set + Installation Kit",
+            "order": 3,
+            "lowBrand": "Basic copper kit",
+            "lowPrice": 200,
+            "mediumBrand": "Standard quality kit",
+            "mediumPrice": 350,
+            "highBrand": "Premium insulated kit",
+            "highPrice": 600
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Washing Machine",
+    "icon": "🧺",
+    "gradient": "from-emerald-400 to-green-500",
+    "order": 5,
+    "subcategories": [
+      {
+        "name": "Washing Machine",
+        "order": 0,
+        "accessories": [
+          {
+            "name": "Top Load 7–8 kg",
+            "order": 0,
+            "lowBrand": "Generic / Hisense / TCL basic",
+            "lowPrice": 900,
+            "mediumBrand": "Samsung / LG mid / Whirlpool",
+            "mediumPrice": 1600,
+            "highBrand": "LG / Samsung premium / Bosch",
+            "highPrice": 2800
+          },
+          {
+            "name": "Top Load 10–12 kg",
+            "order": 1,
+            "lowBrand": "Budget brands",
+            "lowPrice": 1200,
+            "mediumBrand": "Samsung / LG / Hisense good",
+            "mediumPrice": 2000,
+            "highBrand": "LG / Samsung / Bosch",
+            "highPrice": 3500
+          },
+          {
+            "name": "Front Load 7–8 kg (basic)",
+            "order": 2,
+            "lowBrand": "Budget front load",
+            "lowPrice": 1400,
+            "mediumBrand": "Samsung / LG / Whirlpool",
+            "mediumPrice": 2200,
+            "highBrand": "Bosch / Siemens / LG premium",
+            "highPrice": 3800
+          },
+          {
+            "name": "Front Load 9–10 kg (inverter / mid)",
+            "order": 3,
+            "lowBrand": "Budget inverter FL",
+            "lowPrice": 1800,
+            "mediumBrand": "Samsung / LG / Bosch entry",
+            "mediumPrice": 2800,
+            "highBrand": "LG AI DD / Samsung / Bosch Serie",
+            "highPrice": 4800
+          },
+          {
+            "name": "Front Load 12+ kg / Premium features",
+            "order": 4,
+            "lowBrand": "Mid capacity budget",
+            "lowPrice": 2500,
+            "mediumBrand": "Samsung / LG good models",
+            "mediumPrice": 3800,
+            "highBrand": "LG WashTower / Samsung / Bosch premium",
+            "highPrice": 7000
+          },
+          {
+            "name": "Washer-Dryer Combo 8–10 kg",
+            "order": 5,
+            "lowBrand": "Budget combo",
+            "lowPrice": 2800,
+            "mediumBrand": "Samsung / LG combo",
+            "mediumPrice": 4200,
+            "highBrand": "LG / Samsung / Bosch premium combo",
+            "highPrice": 7500
+          },
+          {
+            "name": "Twin Tub 10–14 kg",
+            "order": 6,
+            "lowBrand": "Generic twin tub",
+            "lowPrice": 600,
+            "mediumBrand": "Local / mid brands",
+            "mediumPrice": 1000,
+            "highBrand": "Branded twin tub",
+            "highPrice": 1600
+          }
+        ]
+      },
+      {
+        "name": "Spare Parts",
+        "order": 1,
+        "accessories": [
+          {
+            "name": "Washing Machine Drain Pump",
+            "order": 0,
+            "lowBrand": "Generic pump",
+            "lowPrice": 80,
+            "mediumBrand": "Brand compatible",
+            "mediumPrice": 150,
+            "highBrand": "OEM (LG/Samsung/Bosch)",
+            "highPrice": 280
+          },
+          {
+            "name": "Door Boot Seal / Gasket (front load)",
+            "order": 1,
+            "lowBrand": "Generic seal",
+            "lowPrice": 60,
+            "mediumBrand": "Compatible mid",
+            "mediumPrice": 120,
+            "highBrand": "OEM original",
+            "highPrice": 250
+          },
+          {
+            "name": "Control Board / PCB",
+            "order": 2,
+            "lowBrand": "Generic / refurbished",
+            "lowPrice": 150,
+            "mediumBrand": "Compatible board",
+            "mediumPrice": 300,
+            "highBrand": "OEM original",
+            "highPrice": 600
+          },
+          {
+            "name": "Inverter Motor / Drive",
+            "order": 3,
+            "lowBrand": "Generic motor",
+            "lowPrice": 250,
+            "mediumBrand": "Compatible mid",
+            "mediumPrice": 450,
+            "highBrand": "OEM (LG Direct Drive / Samsung)",
+            "highPrice": 900
+          },
+          {
+            "name": "Shock Absorbers / Suspension (pair)",
+            "order": 4,
+            "lowBrand": "Generic shocks",
+            "lowPrice": 50,
+            "mediumBrand": "Compatible",
+            "mediumPrice": 100,
+            "highBrand": "OEM",
+            "highPrice": 200
+          },
+          {
+            "name": "Water Inlet Valve",
+            "order": 5,
+            "lowBrand": "Generic valve",
+            "lowPrice": 40,
+            "mediumBrand": "Compatible",
+            "mediumPrice": 80,
+            "highBrand": "OEM",
+            "highPrice": 150
+          }
+        ]
+      }
+    ]
+  }
+]

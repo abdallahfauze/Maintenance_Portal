@@ -3,7 +3,8 @@
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { CITIES, TRADES } from "@/lib/constants";
+import { CITIES } from "@/lib/constants";
+import { QUALITY_TIERS, tierBrandAndPrice } from "@/lib/catalog";
 
 const BookingSchema = z
   .object({
@@ -14,7 +15,10 @@ const BookingSchema = z
       .min(9, "Please enter a valid phone number.")
       .max(20, "Please enter a valid phone number."),
     city: z.enum(CITIES, { error: "Please select a city." }),
-    trade: z.enum(TRADES, { error: "Please select a service type." }),
+    category: z.string().trim().min(1, "Please select a service category."),
+    subcategory: z.string().trim().min(1, "Please select a sub-category."),
+    accessory: z.string().trim().min(1, "Please select an item."),
+    qualityTier: z.enum(QUALITY_TIERS, { error: "Please choose a quality tier." }),
     description: z
       .string()
       .trim()
@@ -55,7 +59,10 @@ export async function createBooking(
     customerName: formData.get("customerName"),
     phone: formData.get("phone"),
     city: formData.get("city"),
-    trade: formData.get("trade"),
+    category: formData.get("category"),
+    subcategory: formData.get("subcategory"),
+    accessory: formData.get("accessory"),
+    qualityTier: formData.get("qualityTier"),
     description: formData.get("description"),
     locationLat: rawLat ? rawLat : undefined,
     locationLng: rawLng ? rawLng : undefined,
@@ -76,10 +83,33 @@ export async function createBooking(
     return { error: "Please fix the highlighted fields.", fieldErrors };
   }
 
-  const { locationMapLink, ...rest } = parsed.data;
+  // Re-derive brand & price from the database rather than trusting the
+  // client's hidden fields — never trust a submitted price.
+  const accessoryRecord = await prisma.serviceAccessory.findFirst({
+    where: {
+      name: parsed.data.accessory,
+      subcategory: { name: parsed.data.subcategory, category: { name: parsed.data.category } },
+    },
+  });
+
+  if (!accessoryRecord) {
+    return {
+      error: "That selection is no longer available — please pick again.",
+      fieldErrors: { accessory: "This item couldn't be found in the catalog." },
+    };
+  }
+
+  const { brand, price } = tierBrandAndPrice(accessoryRecord, parsed.data.qualityTier);
+  const { locationMapLink, qualityTier, ...rest } = parsed.data;
 
   const booking = await prisma.booking.create({
-    data: { ...rest, locationMapLink: locationMapLink || null },
+    data: {
+      ...rest,
+      qualityTier,
+      selectedBrand: brand,
+      selectedPrice: price,
+      locationMapLink: locationMapLink || null,
+    },
   });
 
   redirect(`/booking/${booking.id}`);

@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { BookingForm } from "@/app/booking-form";
+import { getCatalog } from "@/lib/catalog";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const catalog = await getCatalog();
+
   return (
     <div className="mx-auto min-h-screen max-w-2xl px-6 py-12">
       <div className="app-backdrop" aria-hidden />
@@ -19,7 +24,7 @@ export default function Home() {
       </header>
 
       <main className="rounded-3xl border border-white/60 bg-white/90 p-6 shadow-xl shadow-orange-900/5 backdrop-blur sm:p-8">
-        <BookingForm />
+        <BookingForm catalog={catalog} />
       </main>
 
       <footer className="mt-10 text-center text-xs text-slate-400">
