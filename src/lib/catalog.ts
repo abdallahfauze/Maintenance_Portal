@@ -7,7 +7,7 @@ export type {
   CatalogCategory,
   QualityTier,
 } from "@/lib/catalog-shared";
-export { QUALITY_TIERS, tierBrandAndPrice } from "@/lib/catalog-shared";
+export { QUALITY_TIERS, tierBrandAndPrice, computeQuote } from "@/lib/catalog-shared";
 
 /** The whole service catalog, small enough (a few hundred rows) to fetch in
  * one shot and let the booking form cascade through it client-side with no
@@ -38,6 +38,7 @@ export async function getCatalog(): Promise<CatalogCategory[]> {
               highBrand: true,
               highPrice: true,
               laborFee: true,
+              laborBatchSize: true,
             },
           },
         },

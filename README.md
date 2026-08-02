@@ -45,11 +45,20 @@ holds up, at a fraction of the cost and time of the full app.
     fee per item — SR 100 floor for a quick swap up to SR 350-500 for a full
     split AC install) is seeded from `prisma/data/catalog.json`, generated
     from the client-supplied `Home_Maintenance_Fixtures_Master_KSA`
-    spreadsheet — see `prisma/seed.ts`. The quoted price (part + labor,
-    all-inclusive, × quantity) is re-derived server-side from the database at
-    submission time, never trusted from the client. A flat SR 20 booking fee
-  (per Financial Plan §pricing) is added once per request, not per item,
-  since it exists to discourage no-shows on the visit itself.
+    spreadsheet — see `prisma/seed.ts`. The quoted price (part × quantity,
+    all-inclusive) is re-derived server-side from the database at submission
+    time, never trusted from the client. A flat SR 20 booking fee (per
+    Financial Plan §pricing) is added once per request, not per item, since
+    it exists to discourage no-shows on the visit itself.
+  - Labor is batched per item via `laborBatchSize` (default 1): a technician
+    can realistically swap several quick items — e.g. up to 5 light
+    switches — in one visit, so labor is only charged
+    `ceil(quantity / laborBatchSize)` times, not once per unit. Heavy
+    installs (split/window AC, washing machines, toilets, DB boards) keep
+    `laborBatchSize = 1`, since batching doesn't apply to real per-unit
+    install time. See `computeQuote()` in `src/lib/catalog-shared.ts` — the
+    one place this math lives, used by the live preview, the cart, and the
+    server action alike.
   - Each service in a request becomes its own `Booking` row (own status,
     own contractor) so different trades in the same visit can be dispatched
     independently, but all rows share a `requestId` generated once per

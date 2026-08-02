@@ -1,10 +1,10 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { createBooking, type BookingFormState } from "@/app/actions/bookings";
 import { CITIES, BOOKING_FEE_SAR } from "@/lib/constants";
 import type { CatalogCategory } from "@/lib/catalog-shared";
-import { tierBrandAndPrice, type QualityTier } from "@/lib/catalog-shared";
+import { computeQuote, type QualityTier } from "@/lib/catalog-shared";
 import { ServiceSelector } from "@/components/service-selector";
 import { LocationPicker } from "@/components/location-picker";
 import { DateTimePicker } from "@/components/date-time-picker";
@@ -22,7 +22,8 @@ type CartItem = {
   description: string;
   brand: string;
   unitPrice: number;
-  unitLabor: number;
+  laborFee: number;
+  laborUnits: number;
   lineTotal: number;
 };
 
@@ -38,6 +39,8 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
   const [addError, setAddError] = useState("");
 
   const [cart, setCart] = useState<CartItem[]>([]);
+  const addPanelRef = useRef<HTMLDivElement>(null);
+  const cartLengthRef = useRef(0);
 
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
@@ -50,7 +53,7 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
   const accessory = subcategory?.accessories.find((a) => a.id === accessoryId);
   const currentSelection =
     category && subcategory && accessory && qualityTier
-      ? { category, subcategory, accessory, ...tierBrandAndPrice(accessory, qualityTier) }
+      ? { category, subcategory, accessory, quote: computeQuote(accessory, qualityTier, quantity) }
       : null;
 
   function handleAddToRequest() {
@@ -74,10 +77,11 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
         qualityTier: qualityTier as QualityTier,
         quantity,
         description: itemDescription.trim(),
-        brand: currentSelection.brand,
-        unitPrice: currentSelection.price,
-        unitLabor: currentSelection.laborFee,
-        lineTotal: quantity * currentSelection.total,
+        brand: currentSelection.quote.brand,
+        unitPrice: currentSelection.quote.unitPrice,
+        laborFee: currentSelection.quote.laborFee,
+        laborUnits: currentSelection.quote.laborUnits,
+        lineTotal: currentSelection.quote.total,
       },
     ]);
     setCategoryId("");
@@ -91,6 +95,17 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
   function removeCartItem(key: string) {
     setCart((prev) => prev.filter((item) => item.key !== key));
   }
+
+  // Adding (or removing) an item reflows a lot of content above the "Add
+  // another service" panel; without this the browser's scroll position can
+  // land anywhere, including well past the bottom. Snap back to the panel
+  // so the customer can keep adding items without losing their place.
+  useEffect(() => {
+    if (cart.length !== cartLengthRef.current) {
+      cartLengthRef.current = cart.length;
+      addPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [cart.length]);
 
   const grandTotal = cart.reduce((sum, item) => sum + item.lineTotal, 0);
 
@@ -132,7 +147,10 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
                   {item.categoryName} → {item.subcategoryName} · {item.qualityTier} ({item.brand})
                 </p>
                 <p className="text-xs text-orange-700">
-                  {item.quantity} × ({item.unitPrice} part + {item.unitLabor} labor)
+                  {item.quantity} × {item.unitPrice} part + {item.laborUnits} × {item.laborFee} labor
+                  {item.laborUnits < item.quantity && (
+                    <span className="text-orange-500"> (batched)</span>
+                  )}
                 </p>
               </div>
               <div className="flex shrink-0 items-center gap-2">
@@ -161,7 +179,10 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
         </div>
       )}
 
-      <div className="rounded-2xl border border-dashed border-orange-300 bg-orange-50/30 p-4">
+      <div
+        ref={addPanelRef}
+        className="scroll-mt-4 rounded-2xl border border-dashed border-orange-300 bg-orange-50/30 p-4"
+      >
         <span className="mb-2 block text-sm font-semibold text-slate-800">
           {cart.length > 0 ? "Add another service" : "What do you need help with?"}
         </span>
@@ -221,14 +242,21 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
 
             <div className="rounded-xl bg-orange-100 px-4 py-3 text-sm text-orange-900">
               <span className="font-semibold">{currentSelection.accessory.name}</span> (
-              {currentSelection.brand})
+              {currentSelection.quote.brand})
               <div className="mt-1 flex items-baseline gap-2">
-                <span className="text-lg font-bold">{quantity * currentSelection.total} SAR</span>
+                <span className="text-lg font-bold">{currentSelection.quote.total} SAR</span>
                 <span className="text-xs text-orange-700">
-                  ({quantity} × {currentSelection.price} part + {currentSelection.laborFee} labor —
-                  all-inclusive)
+                  ({quantity} × {currentSelection.quote.unitPrice} part + {currentSelection.quote.laborUnits}{" "}
+                  × {currentSelection.quote.laborFee} labor — all-inclusive)
                 </span>
               </div>
+              {currentSelection.quote.laborUnits < quantity && (
+                <p className="mt-1 text-xs text-orange-700">
+                  One technician visit covers up to {currentSelection.accessory.laborBatchSize} of
+                  this item, so labor is only charged {currentSelection.quote.laborUnits} time
+                  {currentSelection.quote.laborUnits === 1 ? "" : "s"} for {quantity}.
+                </p>
+              )}
             </div>
 
             {addError && <p className="text-xs text-red-600">{addError}</p>}

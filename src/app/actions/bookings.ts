@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { CITIES } from "@/lib/constants";
-import { QUALITY_TIERS, tierBrandAndPrice } from "@/lib/catalog";
+import { QUALITY_TIERS, computeQuote } from "@/lib/catalog";
 import type { Prisma } from "@/generated/prisma/client";
 
 const ItemSchema = z.object({
@@ -116,7 +116,7 @@ export async function createBooking(
       };
     }
 
-    const { brand, price, laborFee } = tierBrandAndPrice(accessoryRecord, item.qualityTier);
+    const quote = computeQuote(accessoryRecord, item.qualityTier, item.quantity);
 
     bookingsData.push({
       ...shared,
@@ -127,10 +127,11 @@ export async function createBooking(
       qualityTier: item.qualityTier,
       quantity: item.quantity,
       description: item.description,
-      selectedBrand: brand,
-      selectedPrice: price,
-      laborFee,
-      totalPrice: item.quantity * (price + laborFee),
+      selectedBrand: quote.brand,
+      selectedPrice: quote.unitPrice,
+      laborFee: quote.laborFee,
+      laborUnits: quote.laborUnits,
+      totalPrice: quote.total,
       locationMapLink: locationMapLink || null,
     });
   }

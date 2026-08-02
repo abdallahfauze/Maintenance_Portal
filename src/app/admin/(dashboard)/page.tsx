@@ -169,7 +169,8 @@ export default async function AdminDashboard({
                           {b.qualityTier} ({b.selectedBrand}) ·{" "}
                           <span className="font-bold">{b.totalPrice} SAR</span>{" "}
                           <span className="font-normal text-orange-600">
-                            ({b.quantity} × {b.selectedPrice} part + {b.laborFee} labor)
+                            ({b.quantity} × {b.selectedPrice} part + {b.laborUnits} ×{" "}
+                            {b.laborFee} labor)
                           </span>
                         </p>
                         <div className="flex shrink-0 items-center gap-1.5">

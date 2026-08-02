@@ -87,7 +87,7 @@ export default async function RequestStatusPage({
                 </p>
                 <p className="mt-1 text-lg font-bold">{b.totalPrice} SAR</p>
                 <p className="text-xs text-orange-700">
-                  {b.quantity} × ({b.selectedPrice} part + {b.laborFee} labor)
+                  {b.quantity} × {b.selectedPrice} part + {b.laborUnits} × {b.laborFee} labor
                 </p>
                 {b.contractor && (
                   <p className="mt-1 text-xs text-orange-700">

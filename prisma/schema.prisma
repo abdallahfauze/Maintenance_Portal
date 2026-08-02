@@ -52,6 +52,12 @@ model ServiceAccessory {
   // Market-researched: SR 100 floor for quick swaps, scaling up to SR 350-500
   // for heavy jobs like split AC installs. See prisma/data/catalog.json.
   laborFee      Int // SAR
+  // How many units one labor charge covers in a single visit, e.g. a
+  // technician can realistically swap up to 5 light switches in about the
+  // time it takes to do one, so laborBatchSize=5 there — but a split AC
+  // install is laborBatchSize=1 (no batching; each unit is real dedicated
+  // time). Total labor = ceil(quantity / laborBatchSize) * laborFee.
+  laborBatchSize Int @default(1)
 
   @@unique([subcategoryId, name])
 }
@@ -145,9 +151,13 @@ model Booking {
   quantity      Int    @default(1)
   selectedBrand String
   selectedPrice Int // SAR — part/fixture cost, per unit
-  laborFee      Int // SAR — technician labor/callout fee, per unit
-  totalPrice    Int // SAR — quantity * (selectedPrice + laborFee), stored so
-  // historical invoices stay accurate even if catalog prices change later
+  laborFee      Int // SAR — technician labor/callout fee, per labor charge
+  // How many labor charges were actually applied — ceil(quantity /
+  // accessory.laborBatchSize) at booking time, snapshotted so a later
+  // change to the catalog's batch size doesn't alter a past invoice.
+  laborUnits    Int @default(1)
+  totalPrice    Int // SAR — quantity * selectedPrice + laborUnits * laborFee,
+  // stored so historical invoices stay accurate even if catalog prices change later
   // Price split — set when a contractor is assigned, using that
   // contractor's commissionRate *at assignment time* (a snapshot, so it
   // doesn't shift under a job already in progress if the rate changes

@@ -12,6 +12,7 @@ export type CatalogAccessory = {
   highBrand: string;
   highPrice: number;
   laborFee: number;
+  laborBatchSize: number;
 };
 
 export type CatalogSubcategory = {
@@ -43,4 +44,37 @@ export function tierBrandAndPrice(accessory: CatalogAccessory, tier: QualityTier
         : { brand: accessory.highBrand, price: accessory.highPrice };
   const laborFee = accessory.laborFee;
   return { brand, price, laborFee, total: price + laborFee };
+}
+
+export type Quote = {
+  brand: string;
+  unitPrice: number;
+  quantity: number;
+  partTotal: number;
+  laborFee: number;
+  laborUnits: number;
+  laborTotal: number;
+  total: number;
+};
+
+/** Full quantity-aware quote: parts scale linearly, but labor is charged
+ * once per laborBatchSize units (a technician can realistically knock out
+ * several quick swaps — e.g. up to 5 light switches — in one visit, but a
+ * split AC install is laborBatchSize=1, so every unit gets its own charge). */
+export function computeQuote(accessory: CatalogAccessory, tier: QualityTier, quantity: number): Quote {
+  const { brand, price } = tierBrandAndPrice(accessory, tier);
+  const batchSize = Math.max(1, accessory.laborBatchSize);
+  const laborUnits = Math.ceil(quantity / batchSize);
+  const partTotal = quantity * price;
+  const laborTotal = laborUnits * accessory.laborFee;
+  return {
+    brand,
+    unitPrice: price,
+    quantity,
+    partTotal,
+    laborFee: accessory.laborFee,
+    laborUnits,
+    laborTotal,
+    total: partTotal + laborTotal,
+  };
 }
