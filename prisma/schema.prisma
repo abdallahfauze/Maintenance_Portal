@@ -129,6 +129,12 @@ model Booking {
   // later). Null until assigned. See Financial Plan §pricing.
   platformCommission Int?
   contractorPayout   Int?
+  // Customer satisfaction — collected on the request page once a job is
+  // Completed. Distinct from the sitewide Feedback model above, which is
+  // about the website itself, not job quality.
+  customerRating        Int? // 1-5
+  customerFeedback       String?
+  feedbackSubmittedAt    DateTime?
   description String
   // Location: captured either by dropping a pin (lat/lng) or pasting a
   // Google Maps link — at least one of the two is required (enforced in

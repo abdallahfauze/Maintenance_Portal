@@ -68,6 +68,10 @@ holds up, at a fraction of the cost and time of the full app.
   completion notes, and a delay/escalation flag with a reason — visible to
   admin, with a soft "may be running behind schedule" notice (no internal
   reason text) shown to the customer on their request page while it's open.
+  Once a job is Completed, the customer can rate it 1-5 stars with an
+  optional comment right on the request page — separate from the sitewide
+  feedback widget, this is per-job quality feedback. Each contractor's
+  average rating (from their completed jobs) shows on the Contractors page.
 - **`/admin/contractors`** — contractor onboarding funnel per the Partnership
   Framework doc: add an applicant (company, contact person, category,
   license numbers), then move them through Applied → Under Review → Active

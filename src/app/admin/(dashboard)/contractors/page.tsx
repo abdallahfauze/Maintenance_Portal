@@ -15,12 +15,21 @@ import type { OnboardingStatus, ContractorTier } from "@/lib/constants";
 export const dynamic = "force-dynamic";
 
 export default async function ContractorsPage() {
-  const [contractors, categories] = await Promise.all([
+  const [contractors, categories, ratings] = await Promise.all([
     prisma.contractor.findMany({
       orderBy: [{ onboardingStatus: "asc" }, { category: "asc" }, { name: "asc" }],
     }),
     prisma.serviceCategory.findMany({ orderBy: { sortOrder: "asc" }, select: { name: true } }),
+    prisma.booking.groupBy({
+      by: ["contractorId"],
+      where: { contractorId: { not: null }, customerRating: { not: null } },
+      _avg: { customerRating: true },
+      _count: { customerRating: true },
+    }),
   ]);
+  const ratingByContractor = new Map(
+    ratings.map((r) => [r.contractorId as string, { avg: r._avg.customerRating!, count: r._count.customerRating }])
+  );
 
   return (
     <div>
@@ -42,11 +51,20 @@ export default async function ContractorsPage() {
           </p>
         )}
 
-        {contractors.map((c) => (
+        {contractors.map((c) => {
+          const rating = ratingByContractor.get(c.id);
+          return (
           <div key={c.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="font-semibold text-slate-900">{c.name}</p>
+                <p className="font-semibold text-slate-900">
+                  {c.name}
+                  {rating && (
+                    <span className="ml-2 text-xs font-normal text-amber-600">
+                      ★ {rating.avg.toFixed(1)} ({rating.count})
+                    </span>
+                  )}
+                </p>
                 <p className="text-sm text-slate-500">
                   {c.contactPerson ? `${c.contactPerson} · ` : ""}
                   {c.category} · {c.city} · {c.phone}
@@ -85,7 +103,8 @@ export default async function ContractorsPage() {
               />
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

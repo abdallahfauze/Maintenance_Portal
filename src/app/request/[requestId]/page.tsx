@@ -8,6 +8,7 @@ import {
   getTimeSlots,
   type BookingStatus,
 } from "@/lib/constants";
+import { JobRatingForm } from "./job-rating-form";
 
 function friendlyDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);
@@ -105,6 +106,15 @@ export default async function RequestStatusPage({
                     <span className="font-semibold">Technician notes:</span> {b.completionNotes}
                   </p>
                 )}
+                {status === "COMPLETED" &&
+                  (b.customerRating ? (
+                    <p className="mt-2 text-xs text-orange-700">
+                      You rated this job {"★".repeat(b.customerRating)}
+                      {"☆".repeat(5 - b.customerRating)}
+                    </p>
+                  ) : (
+                    <JobRatingForm bookingId={b.id} />
+                  ))}
               </div>
             );
           })}

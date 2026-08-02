@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { CITIES } from "@/lib/constants";
 import { QUALITY_TIERS, tierBrandAndPrice } from "@/lib/catalog";
@@ -139,4 +140,45 @@ export async function createBooking(
   );
 
   redirect(`/request/${requestId}`);
+}
+
+const RatingSchema = z.object({
+  rating: z.coerce.number().int().min(1).max(5),
+  comment: z.string().trim().max(1000).optional().or(z.literal("")),
+});
+
+export type RatingState = { error?: string; success?: boolean };
+
+// Public, unauthenticated (same trust model as the site feedback widget) —
+// a booking ID is a cuid, not guessable, and only completed jobs can be
+// rated, so this can't be used to review a job that hasn't happened.
+export async function submitJobRating(
+  bookingId: string,
+  rating: number,
+  comment: string
+): Promise<RatingState> {
+  const parsed = RatingSchema.safeParse({ rating, comment });
+  if (!parsed.success) {
+    return { error: "Please select a rating from 1 to 5 stars." };
+  }
+
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    select: { status: true, requestId: true },
+  });
+  if (!booking) return { error: "Booking not found." };
+  if (booking.status !== "COMPLETED") {
+    return { error: "You can only rate a job once it's marked completed." };
+  }
+
+  await prisma.booking.update({
+    where: { id: bookingId },
+    data: {
+      customerRating: parsed.data.rating,
+      customerFeedback: parsed.data.comment || null,
+      feedbackSubmittedAt: new Date(),
+    },
+  });
+  revalidatePath(`/request/${booking.requestId}`);
+  return { success: true };
 }
