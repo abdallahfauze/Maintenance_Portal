@@ -31,17 +31,25 @@ model Feedback {
 }
 
 model Booking {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   customerName  String
   phone         String
   city          String
   trade         String // Electrical | Plumbing | HVAC | Civil Finishes
   description   String
-  address       String
-  preferredTime String
-  status        String    @default("PENDING") // PENDING | ASSIGNED | IN_PROGRESS | COMPLETED | CANCELLED
+  // Location: captured either by dropping a pin (lat/lng) or pasting a
+  // Google Maps link — at least one of the two is required (enforced in
+  // the server action, not the schema).
+  locationLat     Float?
+  locationLng     Float?
+  locationMapLink String?
+  // Fine-grained detail a map pin can't capture.
+  addressDetails String
+  preferredDate     String // ISO date, e.g. "2026-08-10"
+  preferredTimeSlot String // e.g. "08:00 AM - 08:30 AM"
+  status        String      @default("PENDING") // PENDING | ASSIGNED | IN_PROGRESS | COMPLETED | CANCELLED
   contractorId  String?
   contractor    Contractor? @relation(fields: [contractorId], references: [id])
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }

@@ -1,38 +1,50 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { createBooking, type BookingFormState } from "@/app/actions/bookings";
-import { CITIES, TRADES } from "@/lib/constants";
+import { CITIES } from "@/lib/constants";
+import { TradeSelector } from "@/components/trade-selector";
+import { LocationPicker } from "@/components/location-picker";
+import { DateTimePicker } from "@/components/date-time-picker";
 
 const initialState: BookingFormState = {};
 
 export function BookingForm() {
   const [state, formAction, pending] = useActionState(createBooking, initialState);
 
+  const [trade, setTrade] = useState("");
+  const [lat, setLat] = useState<number | null>(null);
+  const [lng, setLng] = useState<number | null>(null);
+  const [mapLink, setMapLink] = useState("");
+  const [date, setDate] = useState("");
+  const [slot, setSlot] = useState("");
+
   return (
-    <form action={formAction} className="space-y-5">
+    <form action={formAction} className="space-y-6">
       {state.error && (
-        <p className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-700">{state.error}</p>
+        <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-red-100">
+          {state.error}
+        </p>
       )}
+
+      <div>
+        <span className="mb-2 block text-sm font-medium text-slate-700">
+          What do you need help with?
+        </span>
+        <TradeSelector value={trade} onChange={setTrade} />
+        <input type="hidden" name="trade" value={trade} />
+        {state.fieldErrors?.trade && (
+          <p className="mt-1 text-xs text-red-600">{state.fieldErrors.trade}</p>
+        )}
+      </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full name" error={state.fieldErrors?.customerName}>
-          <input
-            name="customerName"
-            required
-            className="input"
-            placeholder="e.g. Abdullah Al-Fauze"
-          />
+          <input name="customerName" required className="input" placeholder="e.g. Abdullah Al-Fauze" />
         </Field>
 
         <Field label="Phone number" error={state.fieldErrors?.phone}>
-          <input
-            name="phone"
-            required
-            type="tel"
-            className="input"
-            placeholder="05xxxxxxxx"
-          />
+          <input name="phone" required type="tel" className="input" placeholder="05xxxxxxxx" />
         </Field>
 
         <Field label="City" error={state.fieldErrors?.city}>
@@ -48,37 +60,53 @@ export function BookingForm() {
           </select>
         </Field>
 
-        <Field label="What do you need help with?" error={state.fieldErrors?.trade}>
-          <select name="trade" required className="input" defaultValue="">
-            <option value="" disabled>
-              Select a service
-            </option>
-            {TRADES.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+        <Field label="Additional address info" error={state.fieldErrors?.addressDetails}>
+          <input
+            name="addressDetails"
+            required
+            className="input"
+            placeholder="Building no., floor, apartment"
+          />
         </Field>
       </div>
 
-      <Field label="Address for the visit" error={state.fieldErrors?.address}>
-        <input
-          name="address"
-          required
-          className="input"
-          placeholder="Building, street, district, Jeddah"
+      <div className="rounded-2xl border border-slate-200 bg-orange-50/40 p-4">
+        <LocationPicker
+          lat={lat}
+          lng={lng}
+          mapLink={mapLink}
+          onPinChange={(newLat, newLng) => {
+            setLat(newLat);
+            setLng(newLng);
+          }}
+          onLinkChange={setMapLink}
         />
-      </Field>
+        <input type="hidden" name="locationLat" value={lat ?? ""} />
+        <input type="hidden" name="locationLng" value={lng ?? ""} />
+        <input type="hidden" name="locationMapLink" value={mapLink} />
+        {state.fieldErrors?.locationMapLink && (
+          <p className="mt-2 text-xs text-red-600">{state.fieldErrors.locationMapLink}</p>
+        )}
+      </div>
 
-      <Field label="Preferred date & time" error={state.fieldErrors?.preferredTime}>
-        <input
-          name="preferredTime"
-          required
-          className="input"
-          placeholder="e.g. Tomorrow morning, or Thu 4-6pm"
+      <div className="rounded-2xl border border-slate-200 p-4">
+        <DateTimePicker
+          selectedDate={date}
+          selectedSlot={slot}
+          onSelectDate={(iso) => {
+            setDate(iso);
+            setSlot("");
+          }}
+          onSelectSlot={setSlot}
         />
-      </Field>
+        <input type="hidden" name="preferredDate" value={date} />
+        <input type="hidden" name="preferredTimeSlot" value={slot} />
+        {(state.fieldErrors?.preferredDate || state.fieldErrors?.preferredTimeSlot) && (
+          <p className="mt-2 text-xs text-red-600">
+            {state.fieldErrors.preferredDate || state.fieldErrors.preferredTimeSlot}
+          </p>
+        )}
+      </div>
 
       <Field label="Describe the issue" error={state.fieldErrors?.description}>
         <textarea
@@ -93,7 +121,7 @@ export function BookingForm() {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-lg bg-slate-900 px-6 py-3 font-medium text-white transition hover:bg-slate-700 disabled:opacity-60"
+        className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:shadow-xl hover:shadow-orange-500/30 disabled:opacity-60"
       >
         {pending ? "Submitting…" : "Request a technician"}
       </button>

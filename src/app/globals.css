@@ -1,8 +1,9 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fef9f3;
+  --foreground: #1c1917;
 }
 
 @theme inline {
@@ -10,30 +11,74 @@
   --color-foreground: var(--foreground);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Soft, warm mesh-gradient backdrop behind every page — cheap (pure CSS,
+   no images) and gives the app some visual identity instead of flat white. */
+.app-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.app-backdrop::before,
+.app-backdrop::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.35;
+}
+
+.app-backdrop::before {
+  width: 32rem;
+  height: 32rem;
+  top: -8rem;
+  right: -8rem;
+  background: radial-gradient(circle, #fb923c, #f97316 60%, transparent 70%);
+}
+
+.app-backdrop::after {
+  width: 28rem;
+  height: 28rem;
+  bottom: -10rem;
+  left: -8rem;
+  background: radial-gradient(circle, #38bdf8, #0ea5e9 60%, transparent 70%);
 }
 
 .input {
   width: 100%;
-  border-radius: 0.5rem;
-  border: 1px solid #cbd5e1;
-  padding: 0.6rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid #e7e0d6;
+  padding: 0.65rem 0.85rem;
   font-size: 0.95rem;
   background: white;
-  color: #0f172a;
+  color: #1c1917;
+  transition: border-color 150ms, box-shadow 150ms;
 }
 
 .input:focus {
-  outline: 2px solid #0f172a;
-  outline-offset: 1px;
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+}
+
+.input::placeholder {
+  color: #a8a29e;
+}
+
+/* Leaflet map tiles render inside a plain div (no image alt text), so
+   nothing here needs additional accessibility overrides. */
+.leaflet-container {
+  font-family: inherit;
+  z-index: 0;
 }

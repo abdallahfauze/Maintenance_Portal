@@ -1,6 +1,16 @@
 import { prisma } from "@/lib/prisma";
-import { STATUS_COLORS, STATUS_LABELS, BOOKING_STATUSES, type BookingStatus } from "@/lib/constants";
+import {
+  STATUS_COLORS,
+  STATUS_LABELS,
+  BOOKING_STATUSES,
+  getTimeSlots,
+  type BookingStatus,
+} from "@/lib/constants";
 import { AssignForm, StatusForm } from "./booking-controls";
+
+function slotLabel(value: string): string {
+  return getTimeSlots().find((s) => s.value === value)?.label ?? value;
+}
 
 export default async function AdminDashboard({
   searchParams,
@@ -75,7 +85,33 @@ export default async function AdminDashboard({
 
               <p className="mt-3 text-sm text-slate-700">{b.description}</p>
               <p className="mt-1 text-xs text-slate-500">
-                Address: {b.address} · Preferred time: {b.preferredTime}
+                {b.addressDetails} · {b.preferredDate} · {slotLabel(b.preferredTimeSlot)}
+                {b.locationMapLink && (
+                  <>
+                    {" · "}
+                    <a
+                      href={b.locationMapLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-orange-600 underline"
+                    >
+                      Map link
+                    </a>
+                  </>
+                )}
+                {!b.locationMapLink && b.locationLat != null && b.locationLng != null && (
+                  <>
+                    {" · "}
+                    <a
+                      href={`https://www.google.com/maps?q=${b.locationLat},${b.locationLng}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-orange-600 underline"
+                    >
+                      View pin
+                    </a>
+                  </>
+                )}
               </p>
 
               <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">

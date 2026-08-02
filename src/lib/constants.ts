@@ -5,6 +5,70 @@ export const CITIES = ["Jeddah"] as const;
 
 export const TRADES = ["Electrical", "Plumbing", "HVAC", "Civil Finishes"] as const;
 
+export const TRADE_INFO: Record<
+  (typeof TRADES)[number],
+  { icon: string; description: string; gradient: string; ring: string }
+> = {
+  Electrical: {
+    icon: "⚡",
+    description: "Sockets, breakers, lighting, cabling",
+    gradient: "from-amber-400 to-orange-500",
+    ring: "ring-amber-400",
+  },
+  Plumbing: {
+    icon: "🔧",
+    description: "Leaks, fixtures, water heaters, drainage",
+    gradient: "from-sky-400 to-blue-500",
+    ring: "ring-sky-400",
+  },
+  HVAC: {
+    icon: "❄️",
+    description: "AC service, repair & installation",
+    gradient: "from-cyan-400 to-teal-500",
+    ring: "ring-cyan-400",
+  },
+  "Civil Finishes": {
+    icon: "🎨",
+    description: "Painting, tiling & finishing work",
+    gradient: "from-fuchsia-400 to-purple-500",
+    ring: "ring-fuchsia-400",
+  },
+};
+
+// Jeddah's approximate center — used as the default map view before a
+// customer drops a pin or grants location access.
+export const DEFAULT_MAP_CENTER = { lat: 21.5433, lng: 39.1728 };
+
+// Saudi Arabia's work week is Saturday–Thursday; Friday is the weekly rest
+// day. JS Date#getDay(): Sun=0 ... Fri=5 ... Sat=6.
+export const CLOSED_WEEKDAY = 5; // Friday
+
+export const BUSINESS_HOURS = { startHour: 8, endHour: 18 } as const;
+
+/** Half-hour slots from 8:00 AM to 6:00 PM, e.g. "08:00" -> "8:00 AM - 8:30 AM". */
+export function getTimeSlots(): { value: string; label: string }[] {
+  const slots: { value: string; label: string }[] = [];
+  const { startHour, endHour } = BUSINESS_HOURS;
+  for (let minutes = startHour * 60; minutes < endHour * 60; minutes += 30) {
+    const from = formatClock(minutes);
+    const to = formatClock(minutes + 30);
+    slots.push({ value: `${pad(Math.floor(minutes / 60))}:${pad(minutes % 60)}`, label: `${from} - ${to}` });
+  }
+  return slots;
+}
+
+function formatClock(totalMinutes: number): string {
+  const hour24 = Math.floor(totalMinutes / 60) % 24;
+  const minute = totalMinutes % 60;
+  const period = hour24 >= 12 ? "PM" : "AM";
+  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+  return `${hour12}:${pad(minute)} ${period}`;
+}
+
+function pad(n: number): string {
+  return n.toString().padStart(2, "0");
+}
+
 export const BOOKING_STATUSES = [
   "PENDING",
   "ASSIGNED",
