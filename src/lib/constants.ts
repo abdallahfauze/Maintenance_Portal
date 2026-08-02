@@ -13,13 +13,13 @@ export const CLOSED_WEEKDAY = 5; // Friday
 
 export const BUSINESS_HOURS = { startHour: 8, endHour: 18 } as const;
 
-/** Half-hour slots from 8:00 AM to 6:00 PM, e.g. "08:00" -> "8:00 AM - 8:30 AM". */
+/** Hourly slots from 8:00 AM to 6:00 PM, e.g. "08:00" -> "8:00 AM - 9:00 AM". */
 export function getTimeSlots(): { value: string; label: string }[] {
   const slots: { value: string; label: string }[] = [];
   const { startHour, endHour } = BUSINESS_HOURS;
-  for (let minutes = startHour * 60; minutes < endHour * 60; minutes += 30) {
+  for (let minutes = startHour * 60; minutes < endHour * 60; minutes += 60) {
     const from = formatClock(minutes);
-    const to = formatClock(minutes + 30);
+    const to = formatClock(minutes + 60);
     slots.push({ value: `${pad(Math.floor(minutes / 60))}:${pad(minutes % 60)}`, label: `${from} - ${to}` });
   }
   return slots;
