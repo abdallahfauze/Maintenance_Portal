@@ -7,6 +7,7 @@ import {
   LicenseVerifiedCheckbox,
   InsuranceVerifiedCheckbox,
 } from "./onboarding-controls";
+import { CommissionRateInput, AgreementControls } from "./commercial-terms-controls";
 import type { OnboardingStatus, ContractorTier } from "@/lib/constants";
 
 // Admin-only, low-traffic page whose data changes via mutations — always
@@ -73,6 +74,15 @@ export default async function ContractorsPage() {
               )}
               <LicenseVerifiedCheckbox contractorId={c.id} verified={c.licenseVerified} />
               <InsuranceVerifiedCheckbox contractorId={c.id} verified={c.insuranceVerified} />
+            </div>
+
+            <div className="mt-3 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-3">
+              <CommissionRateInput contractorId={c.id} rate={c.commissionRate} />
+              <AgreementControls
+                contractorId={c.id}
+                signed={c.agreementSigned}
+                signedDate={c.agreementSignedDate}
+              />
             </div>
           </div>
         ))}

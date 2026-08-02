@@ -95,6 +95,9 @@ async function seedContractors() {
         insuranceVerified: true,
         baladyLicenseNumber: `BLD-${c.phone.slice(-6)}`,
         baladyLicenseExpiry: "2027-06-01",
+        agreementSigned: true,
+        agreementSignedDate: "2026-01-15",
+        commissionRate: 18,
       },
     });
   }

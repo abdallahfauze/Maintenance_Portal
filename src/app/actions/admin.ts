@@ -172,3 +172,28 @@ export async function toggleInsuranceVerified(contractorId: string, verified: bo
   });
   revalidatePath("/admin/contractors");
 }
+
+const CommissionRateSchema = z.coerce.number().int().min(0).max(100);
+
+export async function updateCommissionRate(contractorId: string, rate: number) {
+  const parsed = CommissionRateSchema.safeParse(rate);
+  if (!parsed.success) return;
+
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: { commissionRate: parsed.data },
+  });
+  revalidatePath("/admin/contractors");
+  revalidatePath("/admin");
+}
+
+export async function updateAgreementStatus(contractorId: string, signed: boolean, date: string) {
+  await prisma.contractor.update({
+    where: { id: contractorId },
+    data: {
+      agreementSigned: signed,
+      agreementSignedDate: signed ? date || null : null,
+    },
+  });
+  revalidatePath("/admin/contractors");
+}

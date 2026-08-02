@@ -66,7 +66,11 @@ holds up, at a fraction of the cost and time of the full app.
   Active toggle is on — the toggle lets you temporarily pause an otherwise
   fully-onboarded partner (e.g. if they're overbooked) without re-running
   the whole funnel. Each partner also has a Bronze/Silver/Gold tier field
-  for future priority routing.
+  for future priority routing, plus commercial terms: a commission rate
+  (defaults to the Financial Plan's recommended 18%, adjustable 0-100% per
+  partner) and an agreement-signed checkbox + date (the agreement itself is
+  drafted/signed outside this tool, per the Partnership Framework doc — this
+  just tracks status).
 - **`/admin/feedback`** — review comments left via the floating "💬 Leave
   feedback" widget that appears on every page (public and admin). Anyone
   reviewing the site can leave a comment tied to the exact page it's about;

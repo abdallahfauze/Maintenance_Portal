@@ -78,7 +78,16 @@ model Contractor {
   civilDefenseLicenseNumber String?
   licenseVerified           Boolean @default(false)
   insuranceVerified         Boolean @default(false)
-  adminNotes                String? // internal notes, not shown to the contractor
+  // Commercial terms — see Partnership Framework §"Commission & payment
+  // terms" and Financial Plan §pricing. 18% is the recommended starting
+  // commission (adjustable 15-25% per contractor, e.g. lower for a partner
+  // doing mostly large jobs); the agreement itself is drafted/signed outside
+  // this tool (see business-plan/07-Partnership-Framework.md), we just track
+  // whether it's been signed and when.
+  commissionRate      Int     @default(18) // percent, 0-100
+  agreementSigned     Boolean @default(false)
+  agreementSignedDate String? // ISO date, e.g. "2026-08-01"
+  adminNotes          String? // internal notes, not shown to the contractor
   createdAt                 DateTime  @default(now())
   bookings                  Booking[]
 }
