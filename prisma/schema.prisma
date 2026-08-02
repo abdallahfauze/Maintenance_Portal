@@ -77,6 +77,12 @@ model Feedback {
 
 model Booking {
   id           String @id @default(cuid())
+  // Shared by every Booking created from the same form submission, so a
+  // customer requesting several different jobs in one visit (e.g. 2 taps +
+  // 1 AC) gets one combined request page and one shared visit slot, while
+  // each job is still dispatched, tracked, and priced independently (they
+  // may need different contractors and finish at different times).
+  requestId    String
   customerName String
   phone        String
   city         String
@@ -86,11 +92,12 @@ model Booking {
   subcategory String // e.g. "Lighting"
   accessory   String // e.g. "LED Spot / Downlight (recessed, ~12-24W)"
   qualityTier String // "Low" | "Medium" | "High"
+  quantity      Int    @default(1)
   selectedBrand String
-  selectedPrice Int // SAR — part/fixture cost only
-  laborFee      Int // SAR — technician labor/callout fee
-  totalPrice    Int // SAR — selectedPrice + laborFee, stored so historical
-  // invoices stay accurate even if catalog prices change later
+  selectedPrice Int // SAR — part/fixture cost, per unit
+  laborFee      Int // SAR — technician labor/callout fee, per unit
+  totalPrice    Int // SAR — quantity * (selectedPrice + laborFee), stored so
+  // historical invoices stay accurate even if catalog prices change later
   description String
   // Location: captured either by dropping a pin (lat/lng) or pasting a
   // Google Maps link — at least one of the two is required (enforced in
@@ -107,4 +114,6 @@ model Booking {
   contractor        Contractor? @relation(fields: [contractorId], references: [id])
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
+
+  @@index([requestId])
 }

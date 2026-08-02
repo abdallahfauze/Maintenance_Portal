@@ -34,20 +34,29 @@ holds up, at a fraction of the cost and time of the full app.
 - **`/`** — the public booking form. A customer cascades through the service
   catalog (Category → Sub-category → Item → Quality tier, e.g. Sanitary
   Fixtures → Mixers & Taps → Kitchen Sink Mixer Tap → Medium/Ideal Standard,
-  300 SAR), pins their location or pastes a Google Maps link, picks a
-  Saturday–Thursday appointment slot, and submits. They're redirected to a
-  booking status page (`/booking/[id]`) they can bookmark.
+  300 SAR), sets a quantity (e.g. 5 taps, 2 water heaters), and adds it to
+  their request. They can keep adding as many different services as they
+  need — even across categories — before filling in their contact info,
+  location, and one shared appointment slot once and submitting everything
+  together. They're redirected to a request status page (`/request/[id]`)
+  they can bookmark, showing every item's own price and status.
   - The catalog (6 categories, 24 sub-categories, 107 items, each with a
     Low/Medium/High brand + price, plus a market-researched technician labor
     fee per item — SR 100 floor for a quick swap up to SR 350-500 for a full
     split AC install) is seeded from `prisma/data/catalog.json`, generated
     from the client-supplied `Home_Maintenance_Fixtures_Master_KSA`
     spreadsheet — see `prisma/seed.ts`. The quoted price (part + labor,
-    all-inclusive) is re-derived server-side from the database at submission
-    time, never trusted from the client.
-- **`/admin`** — password-protected dispatch dashboard. Lists all bookings,
-  filterable by status, with inline controls to assign a contractor (filtered
-  to contractors in that category) and update job status.
+    all-inclusive, × quantity) is re-derived server-side from the database at
+    submission time, never trusted from the client.
+  - Each service in a request becomes its own `Booking` row (own status,
+    own contractor) so different trades in the same visit can be dispatched
+    independently, but all rows share a `requestId` generated once per
+    submission so the customer and admin both see them as one request.
+- **`/admin`** — password-protected dispatch dashboard. Lists bookings
+  grouped by request (shared customer/visit info shown once per group),
+  filterable by status, with inline controls to assign a contractor per item
+  (filtered to contractors in that item's category) and update its job status
+  independently of the rest of the request.
 - **`/admin/contractors`** — simple CRUD to add contractor partners and
   toggle them active/inactive. Only active contractors are offered for
   assignment.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useActionState, useState } from "react";
 import { createBooking, type BookingFormState } from "@/app/actions/bookings";
 import { CITIES } from "@/lib/constants";
 import type { CatalogCategory } from "@/lib/catalog-shared";
@@ -11,6 +11,21 @@ import { DateTimePicker } from "@/components/date-time-picker";
 
 const initialState: BookingFormState = {};
 
+type CartItem = {
+  key: string;
+  categoryName: string;
+  categoryIcon: string;
+  subcategoryName: string;
+  accessoryName: string;
+  qualityTier: QualityTier;
+  quantity: number;
+  description: string;
+  brand: string;
+  unitPrice: number;
+  unitLabor: number;
+  lineTotal: number;
+};
+
 export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
   const [state, formAction, pending] = useActionState(createBooking, initialState);
 
@@ -18,6 +33,11 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
   const [subcategoryId, setSubcategoryId] = useState("");
   const [accessoryId, setAccessoryId] = useState("");
   const [qualityTier, setQualityTier] = useState<QualityTier | "">("");
+  const [quantity, setQuantity] = useState(1);
+  const [itemDescription, setItemDescription] = useState("");
+  const [addError, setAddError] = useState("");
+
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
@@ -25,22 +45,65 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
 
-  const selection = useMemo(() => {
-    const category = catalog.find((c) => c.id === categoryId);
-    const subcategory = category?.subcategories.find((s) => s.id === subcategoryId);
-    const accessory = subcategory?.accessories.find((a) => a.id === accessoryId);
-    if (!category || !subcategory || !accessory || !qualityTier) return null;
-    const { brand, price, laborFee, total } = tierBrandAndPrice(accessory, qualityTier);
-    return {
-      categoryName: category.name,
-      subcategoryName: subcategory.name,
-      accessoryName: accessory.name,
-      brand,
-      price,
-      laborFee,
-      total,
-    };
-  }, [catalog, categoryId, subcategoryId, accessoryId, qualityTier]);
+  const category = catalog.find((c) => c.id === categoryId);
+  const subcategory = category?.subcategories.find((s) => s.id === subcategoryId);
+  const accessory = subcategory?.accessories.find((a) => a.id === accessoryId);
+  const currentSelection =
+    category && subcategory && accessory && qualityTier
+      ? { category, subcategory, accessory, ...tierBrandAndPrice(accessory, qualityTier) }
+      : null;
+
+  function handleAddToRequest() {
+    if (!currentSelection) {
+      setAddError("Please pick a category, sub-category, item, and quality first.");
+      return;
+    }
+    if (itemDescription.trim().length < 10) {
+      setAddError("Please describe the issue for this item (10+ characters).");
+      return;
+    }
+    setAddError("");
+    setCart((prev) => [
+      ...prev,
+      {
+        key: `${accessoryId}-${qualityTier}-${Date.now()}`,
+        categoryName: currentSelection.category.name,
+        categoryIcon: currentSelection.category.icon,
+        subcategoryName: currentSelection.subcategory.name,
+        accessoryName: currentSelection.accessory.name,
+        qualityTier: qualityTier as QualityTier,
+        quantity,
+        description: itemDescription.trim(),
+        brand: currentSelection.brand,
+        unitPrice: currentSelection.price,
+        unitLabor: currentSelection.laborFee,
+        lineTotal: quantity * currentSelection.total,
+      },
+    ]);
+    setCategoryId("");
+    setSubcategoryId("");
+    setAccessoryId("");
+    setQualityTier("");
+    setQuantity(1);
+    setItemDescription("");
+  }
+
+  function removeCartItem(key: string) {
+    setCart((prev) => prev.filter((item) => item.key !== key));
+  }
+
+  const grandTotal = cart.reduce((sum, item) => sum + item.lineTotal, 0);
+
+  const itemsJson = JSON.stringify(
+    cart.map((item) => ({
+      category: item.categoryName,
+      subcategory: item.subcategoryName,
+      accessory: item.accessoryName,
+      qualityTier: item.qualityTier,
+      quantity: item.quantity,
+      description: item.description,
+    }))
+  );
 
   return (
     <form action={formAction} className="space-y-6">
@@ -50,47 +113,135 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
         </p>
       )}
 
-      <ServiceSelector
-        catalog={catalog}
-        categoryId={categoryId}
-        subcategoryId={subcategoryId}
-        accessoryId={accessoryId}
-        qualityTier={qualityTier}
-        onChange={(next) => {
-          setCategoryId(next.categoryId);
-          setSubcategoryId(next.subcategoryId);
-          setAccessoryId(next.accessoryId);
-          setQualityTier(next.qualityTier);
-        }}
-      />
-      <input type="hidden" name="category" value={selection?.categoryName ?? ""} />
-      <input type="hidden" name="subcategory" value={selection?.subcategoryName ?? ""} />
-      <input type="hidden" name="accessory" value={selection?.accessoryName ?? ""} />
-      <input type="hidden" name="qualityTier" value={qualityTier} />
-      <input type="hidden" name="selectedBrand" value={selection?.brand ?? ""} />
-      <input type="hidden" name="selectedPrice" value={selection?.price ?? ""} />
-      {(state.fieldErrors?.category ||
-        state.fieldErrors?.subcategory ||
-        state.fieldErrors?.accessory ||
-        state.fieldErrors?.qualityTier) && (
-        <p className="text-xs text-red-600">
-          {state.fieldErrors.category ||
-            state.fieldErrors.subcategory ||
-            state.fieldErrors.accessory ||
-            state.fieldErrors.qualityTier}
-        </p>
-      )}
-
-      {selection && (
-        <div className="rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900 ring-1 ring-orange-100">
-          <span className="font-semibold">{selection.accessoryName}</span> ({selection.brand})
-          <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-lg font-bold">{selection.total} SAR</span>
-            <span className="text-xs text-orange-700">
-              ({selection.price} part + {selection.laborFee} labor — all-inclusive, no surprises)
-            </span>
+      {cart.length > 0 && (
+        <div className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4">
+          <span className="mb-1 block text-sm font-semibold text-slate-800">
+            Your request ({cart.length} {cart.length === 1 ? "item" : "items"})
+          </span>
+          {cart.map((item) => (
+            <div
+              key={item.key}
+              className="flex items-start justify-between gap-3 rounded-xl bg-orange-50/60 px-3 py-2 text-sm"
+            >
+              <div>
+                <p className="font-medium text-slate-800">
+                  <span className="mr-1">{item.categoryIcon}</span>
+                  {item.accessoryName} × {item.quantity}
+                </p>
+                <p className="text-xs text-slate-500">
+                  {item.categoryName} → {item.subcategoryName} · {item.qualityTier} ({item.brand})
+                </p>
+                <p className="text-xs text-orange-700">
+                  {item.quantity} × ({item.unitPrice} part + {item.unitLabor} labor)
+                </p>
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="font-bold text-slate-900">{item.lineTotal} SAR</span>
+                <button
+                  type="button"
+                  onClick={() => removeCartItem(item.key)}
+                  aria-label={`Remove ${item.accessoryName}`}
+                  className="rounded-full px-2 py-1 text-slate-400 hover:bg-red-50 hover:text-red-600"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-sm font-semibold text-slate-800">
+            <span>Total for this visit</span>
+            <span>{grandTotal} SAR</span>
           </div>
         </div>
+      )}
+
+      <div className="rounded-2xl border border-dashed border-orange-300 bg-orange-50/30 p-4">
+        <span className="mb-2 block text-sm font-semibold text-slate-800">
+          {cart.length > 0 ? "Add another service" : "What do you need help with?"}
+        </span>
+        <ServiceSelector
+          catalog={catalog}
+          categoryId={categoryId}
+          subcategoryId={subcategoryId}
+          accessoryId={accessoryId}
+          qualityTier={qualityTier}
+          onChange={(next) => {
+            setCategoryId(next.categoryId);
+            setSubcategoryId(next.subcategoryId);
+            setAccessoryId(next.accessoryId);
+            setQualityTier(next.qualityTier);
+          }}
+        />
+
+        {currentSelection && (
+          <div className="mt-4 space-y-3">
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium text-slate-700">
+                How many? (e.g. 3 water heaters, 5 taps)
+              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  className="h-9 w-9 rounded-lg border border-slate-300 text-lg font-semibold text-slate-600 hover:bg-slate-50"
+                >
+                  −
+                </button>
+                <span className="w-8 text-center text-lg font-semibold">{quantity}</span>
+                <button
+                  type="button"
+                  aria-label="Increase quantity"
+                  onClick={() => setQuantity((q) => Math.min(20, q + 1))}
+                  className="h-9 w-9 rounded-lg border border-slate-300 text-lg font-semibold text-slate-600 hover:bg-slate-50"
+                >
+                  +
+                </button>
+              </div>
+            </label>
+
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium text-slate-700">
+                Describe the issue for this item
+              </span>
+              <textarea
+                value={itemDescription}
+                onChange={(e) => setItemDescription(e.target.value)}
+                rows={2}
+                className="input"
+                placeholder="e.g. Kitchen socket stopped working after a power cut."
+              />
+            </label>
+
+            <div className="rounded-xl bg-orange-100 px-4 py-3 text-sm text-orange-900">
+              <span className="font-semibold">{currentSelection.accessory.name}</span> (
+              {currentSelection.brand})
+              <div className="mt-1 flex items-baseline gap-2">
+                <span className="text-lg font-bold">{quantity * currentSelection.total} SAR</span>
+                <span className="text-xs text-orange-700">
+                  ({quantity} × {currentSelection.price} part + {currentSelection.laborFee} labor —
+                  all-inclusive)
+                </span>
+              </div>
+            </div>
+
+            {addError && <p className="text-xs text-red-600">{addError}</p>}
+
+            <button
+              type="button"
+              onClick={handleAddToRequest}
+              className="w-full rounded-xl border-2 border-orange-500 bg-white px-4 py-2 font-semibold text-orange-600 transition hover:bg-orange-50"
+            >
+              + Add to request
+            </button>
+          </div>
+        )}
+        {!currentSelection && addError && <p className="mt-2 text-xs text-red-600">{addError}</p>}
+      </div>
+
+      <input type="hidden" name="items" value={itemsJson} />
+      {state.fieldErrors?.items && (
+        <p className="text-xs text-red-600">{state.fieldErrors.items}</p>
       )}
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -163,27 +314,21 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
         )}
       </div>
 
-      <Field label="Describe the issue" error={state.fieldErrors?.description}>
-        <textarea
-          name="description"
-          required
-          rows={4}
-          className="input"
-          placeholder="e.g. Kitchen socket stopped working after a power cut."
-        />
-      </Field>
-
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || cart.length === 0}
         className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:shadow-xl hover:shadow-orange-500/30 disabled:opacity-60"
       >
-        {pending ? "Submitting…" : "Request a technician"}
+        {pending
+          ? "Submitting…"
+          : cart.length === 0
+            ? "Add at least one service above"
+            : `Request a technician — ${grandTotal} SAR`}
       </button>
 
       <p className="text-center text-xs text-slate-500">
         We&apos;ll confirm your booking and be in touch to schedule a visit. No payment is taken
-        yet — you&apos;ll get an upfront price estimate before anyone is dispatched.
+        yet — the price shown is all-inclusive, with nothing more to confirm before dispatch.
       </p>
     </form>
   );

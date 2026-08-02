@@ -34,6 +34,21 @@ export default async function AdminDashboard({
   ]);
   const countByStatus = Object.fromEntries(counts.map((c) => [c.status, c._count]));
 
+  // Bookings created from the same customer submission share a requestId —
+  // group them so the dashboard reads as one request per visit, even though
+  // each item is still dispatched and tracked independently.
+  const groups: (typeof bookings)[] = [];
+  const groupIndex = new Map<string, number>();
+  for (const b of bookings) {
+    const idx = groupIndex.get(b.requestId);
+    if (idx === undefined) {
+      groupIndex.set(b.requestId, groups.length);
+      groups.push([b]);
+    } else {
+      groups[idx].push(b);
+    }
+  }
+
   return (
     <div>
       <h1 className="mb-1 text-2xl font-bold text-slate-900">Bookings</h1>
@@ -62,43 +77,35 @@ export default async function AdminDashboard({
           </p>
         )}
 
-        {bookings.map((b) => {
-          const status = b.status as BookingStatus;
-          const eligibleContractors = contractors.filter((c) => c.category === b.category);
+        {groups.map((group) => {
+          const first = group[0];
+          const requestTotal = group.reduce((sum, b) => sum + b.totalPrice, 0);
           return (
-            <div key={b.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div key={first.requestId} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold text-slate-900">
-                    {b.category} — {b.customerName}
+                    {first.customerName}
+                    {group.length > 1 && (
+                      <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                        {group.length} items
+                      </span>
+                    )}
                   </p>
                   <p className="text-sm text-slate-500">
-                    {b.city} · {b.phone} · Ref {b.id.slice(0, 8)}
+                    {first.city} · {first.phone} · Ref {first.requestId.slice(0, 8)}
                   </p>
                 </div>
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-medium ${STATUS_COLORS[status]}`}
-                >
-                  {STATUS_LABELS[status]}
-                </span>
+                <span className="text-sm font-semibold text-slate-800">{requestTotal} SAR</span>
               </div>
 
-              <p className="mt-2 text-xs font-medium text-orange-700">
-                {b.category} → {b.subcategory} → {b.accessory} — {b.qualityTier} ({b.selectedBrand}) ·{" "}
-                <span className="font-bold">{b.totalPrice} SAR</span>{" "}
-                <span className="font-normal text-orange-600">
-                  ({b.selectedPrice} part + {b.laborFee} labor)
-                </span>
-              </p>
-
-              <p className="mt-3 text-sm text-slate-700">{b.description}</p>
               <p className="mt-1 text-xs text-slate-500">
-                {b.addressDetails} · {b.preferredDate} · {slotLabel(b.preferredTimeSlot)}
-                {b.locationMapLink && (
+                {first.addressDetails} · {first.preferredDate} · {slotLabel(first.preferredTimeSlot)}
+                {first.locationMapLink && (
                   <>
                     {" · "}
                     <a
-                      href={b.locationMapLink}
+                      href={first.locationMapLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-orange-600 underline"
@@ -107,11 +114,11 @@ export default async function AdminDashboard({
                     </a>
                   </>
                 )}
-                {!b.locationMapLink && b.locationLat != null && b.locationLng != null && (
+                {!first.locationMapLink && first.locationLat != null && first.locationLng != null && (
                   <>
                     {" · "}
                     <a
-                      href={`https://www.google.com/maps?q=${b.locationLat},${b.locationLng}`}
+                      href={`https://www.google.com/maps?q=${first.locationLat},${first.locationLng}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-orange-600 underline"
@@ -122,18 +129,46 @@ export default async function AdminDashboard({
                 )}
               </p>
 
-              <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">
-                <AssignForm
-                  bookingId={b.id}
-                  currentContractorId={b.contractorId}
-                  contractors={eligibleContractors}
-                />
-                <StatusForm bookingId={b.id} currentStatus={status} />
-                {b.contractor && (
-                  <span className="text-xs text-slate-500">
-                    Assigned to {b.contractor.name} ({b.contractor.phone})
-                  </span>
-                )}
+              <div className="mt-3 space-y-3">
+                {group.map((b) => {
+                  const status = b.status as BookingStatus;
+                  const eligibleContractors = contractors.filter((c) => c.category === b.category);
+                  return (
+                    <div key={b.id} className="rounded-lg border border-slate-100 bg-slate-50/60 p-3">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <p className="text-xs font-medium text-orange-700">
+                          {b.category} → {b.subcategory} → {b.accessory} × {b.quantity} —{" "}
+                          {b.qualityTier} ({b.selectedBrand}) ·{" "}
+                          <span className="font-bold">{b.totalPrice} SAR</span>{" "}
+                          <span className="font-normal text-orange-600">
+                            ({b.quantity} × {b.selectedPrice} part + {b.laborFee} labor)
+                          </span>
+                        </p>
+                        <span
+                          className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium ${STATUS_COLORS[status]}`}
+                        >
+                          {STATUS_LABELS[status]}
+                        </span>
+                      </div>
+
+                      <p className="mt-2 text-sm text-slate-700">{b.description}</p>
+
+                      <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-3">
+                        <AssignForm
+                          bookingId={b.id}
+                          currentContractorId={b.contractorId}
+                          contractors={eligibleContractors}
+                        />
+                        <StatusForm bookingId={b.id} currentStatus={status} />
+                        {b.contractor && (
+                          <span className="text-xs text-slate-500">
+                            Assigned to {b.contractor.name} ({b.contractor.phone})
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           );

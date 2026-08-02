@@ -1,12 +1,26 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { CITIES } from "@/lib/constants";
 import { QUALITY_TIERS, tierBrandAndPrice } from "@/lib/catalog";
+import type { Prisma } from "@/generated/prisma/client";
 
-const BookingSchema = z
+const ItemSchema = z.object({
+  category: z.string().trim().min(1, "Please select a service category."),
+  subcategory: z.string().trim().min(1, "Please select a sub-category."),
+  accessory: z.string().trim().min(1, "Please select an item."),
+  qualityTier: z.enum(QUALITY_TIERS, { error: "Please choose a quality tier." }),
+  quantity: z.coerce.number().int().min(1).max(20),
+  description: z
+    .string()
+    .trim()
+    .min(10, "Please describe the issue in a bit more detail (10+ characters)."),
+});
+
+const BookingRequestSchema = z
   .object({
     customerName: z.string().trim().min(2, "Please enter your full name."),
     phone: z
@@ -15,14 +29,7 @@ const BookingSchema = z
       .min(9, "Please enter a valid phone number.")
       .max(20, "Please enter a valid phone number."),
     city: z.enum(CITIES, { error: "Please select a city." }),
-    category: z.string().trim().min(1, "Please select a service category."),
-    subcategory: z.string().trim().min(1, "Please select a sub-category."),
-    accessory: z.string().trim().min(1, "Please select an item."),
-    qualityTier: z.enum(QUALITY_TIERS, { error: "Please choose a quality tier." }),
-    description: z
-      .string()
-      .trim()
-      .min(10, "Please describe the issue in a bit more detail (10+ characters)."),
+    items: z.array(ItemSchema).min(1, "Please add at least one service to your request."),
     locationLat: z.coerce.number().optional(),
     locationLng: z.coerce.number().optional(),
     locationMapLink: z.string().trim().max(500).optional().or(z.literal("")),
@@ -55,15 +62,18 @@ export async function createBooking(
   const rawLat = formData.get("locationLat");
   const rawLng = formData.get("locationLng");
 
+  let items: unknown = [];
+  try {
+    items = JSON.parse(String(formData.get("items") ?? "[]"));
+  } catch {
+    items = [];
+  }
+
   const raw = {
     customerName: formData.get("customerName"),
     phone: formData.get("phone"),
     city: formData.get("city"),
-    category: formData.get("category"),
-    subcategory: formData.get("subcategory"),
-    accessory: formData.get("accessory"),
-    qualityTier: formData.get("qualityTier"),
-    description: formData.get("description"),
+    items,
     locationLat: rawLat ? rawLat : undefined,
     locationLng: rawLng ? rawLng : undefined,
     locationMapLink: formData.get("locationMapLink") ?? "",
@@ -72,7 +82,7 @@ export async function createBooking(
     preferredTimeSlot: formData.get("preferredTimeSlot"),
   };
 
-  const parsed = BookingSchema.safeParse(raw);
+  const parsed = BookingRequestSchema.safeParse(raw);
 
   if (!parsed.success) {
     const fieldErrors: BookingFormState["fieldErrors"] = {};
@@ -83,36 +93,50 @@ export async function createBooking(
     return { error: "Please fix the highlighted fields.", fieldErrors };
   }
 
+  const { locationMapLink, items: parsedItems, ...shared } = parsed.data;
+
   // Re-derive brand & price from the database rather than trusting the
   // client's hidden fields — never trust a submitted price.
-  const accessoryRecord = await prisma.serviceAccessory.findFirst({
-    where: {
-      name: parsed.data.accessory,
-      subcategory: { name: parsed.data.subcategory, category: { name: parsed.data.category } },
-    },
-  });
+  const bookingsData: Prisma.BookingCreateInput[] = [];
+  const requestId = randomUUID();
 
-  if (!accessoryRecord) {
-    return {
-      error: "That selection is no longer available — please pick again.",
-      fieldErrors: { accessory: "This item couldn't be found in the catalog." },
-    };
-  }
+  for (const item of parsedItems) {
+    const accessoryRecord = await prisma.serviceAccessory.findFirst({
+      where: {
+        name: item.accessory,
+        subcategory: { name: item.subcategory, category: { name: item.category } },
+      },
+    });
 
-  const { brand, price, laborFee, total } = tierBrandAndPrice(accessoryRecord, parsed.data.qualityTier);
-  const { locationMapLink, qualityTier, ...rest } = parsed.data;
+    if (!accessoryRecord) {
+      return {
+        error: "One of your selections is no longer available — please pick again.",
+        fieldErrors: { items: `"${item.accessory}" couldn't be found in the catalog.` },
+      };
+    }
 
-  const booking = await prisma.booking.create({
-    data: {
-      ...rest,
-      qualityTier,
+    const { brand, price, laborFee } = tierBrandAndPrice(accessoryRecord, item.qualityTier);
+
+    bookingsData.push({
+      ...shared,
+      requestId,
+      category: item.category,
+      subcategory: item.subcategory,
+      accessory: item.accessory,
+      qualityTier: item.qualityTier,
+      quantity: item.quantity,
+      description: item.description,
       selectedBrand: brand,
       selectedPrice: price,
       laborFee,
-      totalPrice: total,
+      totalPrice: item.quantity * (price + laborFee),
       locationMapLink: locationMapLink || null,
-    },
-  });
+    });
+  }
 
-  redirect(`/booking/${booking.id}`);
+  await prisma.$transaction(
+    bookingsData.map((data) => prisma.booking.create({ data }))
+  );
+
+  redirect(`/request/${requestId}`);
 }
