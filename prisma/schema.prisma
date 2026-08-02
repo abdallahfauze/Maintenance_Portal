@@ -141,6 +141,19 @@ model Booking {
   preferredDate     String // ISO date, e.g. "2026-08-10"
   preferredTimeSlot String // e.g. "08:00 AM - 08:30 AM"
   status            String      @default("PENDING") // PENDING | ASSIGNED | IN_PROGRESS | COMPLETED | CANCELLED
+  // Lifecycle timestamps, set as the job passes through each status — see
+  // the Contractor-facing SLA doc (arrival-window compliance is derived from
+  // startedAt vs. preferredDate/preferredTimeSlot, not stored separately).
+  assignedAt   DateTime?
+  startedAt    DateTime? // set when status -> IN_PROGRESS (arrival proxy)
+  completedAt  DateTime?
+  cancelledAt  DateTime?
+  completionNotes String?
+  // Delay/escalation flag a contractor or admin can raise mid-job — see
+  // SLA Templates §"Late-arrival penalty... repeated lateness triggers review".
+  isEscalated      Boolean   @default(false)
+  escalationReason String?
+  escalatedAt      DateTime?
   contractorId      String?
   contractor        Contractor? @relation(fields: [contractorId], references: [id])
   createdAt         DateTime    @default(now())

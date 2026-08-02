@@ -5,9 +5,20 @@ import {
   BOOKING_STATUSES,
   BOOKING_FEE_SAR,
   getTimeSlots,
+  getSlaStatus,
   type BookingStatus,
 } from "@/lib/constants";
-import { AssignForm, StatusForm } from "./booking-controls";
+import {
+  AssignForm,
+  StatusForm,
+  CompletionNotesField,
+  EscalationControls,
+} from "./booking-controls";
+
+const SLA_BADGE: Record<"on-time" | "late", string> = {
+  "on-time": "bg-green-100 text-green-800",
+  late: "bg-red-100 text-red-800",
+};
 
 function slotLabel(value: string): string {
   return getTimeSlots().find((s) => s.value === value)?.label ?? value;
@@ -149,6 +160,7 @@ export default async function AdminDashboard({
                 {group.map((b) => {
                   const status = b.status as BookingStatus;
                   const eligibleContractors = contractors.filter((c) => c.category === b.category);
+                  const sla = getSlaStatus(b.preferredDate, b.preferredTimeSlot, b.startedAt);
                   return (
                     <div key={b.id} className="rounded-lg border border-slate-100 bg-slate-50/60 p-3">
                       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -160,11 +172,20 @@ export default async function AdminDashboard({
                             ({b.quantity} × {b.selectedPrice} part + {b.laborFee} labor)
                           </span>
                         </p>
-                        <span
-                          className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium ${STATUS_COLORS[status]}`}
-                        >
-                          {STATUS_LABELS[status]}
-                        </span>
+                        <div className="flex shrink-0 items-center gap-1.5">
+                          {sla !== "pending" && (
+                            <span
+                              className={`rounded-full px-2.5 py-1 text-xs font-medium ${SLA_BADGE[sla]}`}
+                            >
+                              {sla === "on-time" ? "On time" : "Late"}
+                            </span>
+                          )}
+                          <span
+                            className={`rounded-full px-3 py-1 text-xs font-medium ${STATUS_COLORS[status]}`}
+                          >
+                            {STATUS_LABELS[status]}
+                          </span>
+                        </div>
                       </div>
 
                       <p className="mt-2 text-sm text-slate-700">{b.description}</p>
@@ -174,6 +195,14 @@ export default async function AdminDashboard({
                           platform commission ({b.contractor?.commissionRate}%)
                         </p>
                       )}
+
+                      <div className="mt-2">
+                        <EscalationControls
+                          bookingId={b.id}
+                          isEscalated={b.isEscalated}
+                          escalationReason={b.escalationReason}
+                        />
+                      </div>
 
                       <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-3">
                         <AssignForm
@@ -187,6 +216,10 @@ export default async function AdminDashboard({
                             Assigned to {b.contractor.name} ({b.contractor.phone})
                           </span>
                         )}
+                      </div>
+
+                      <div className="mt-3 border-t border-slate-200 pt-3">
+                        <CompletionNotesField bookingId={b.id} notes={b.completionNotes} />
                       </div>
                     </div>
                   );

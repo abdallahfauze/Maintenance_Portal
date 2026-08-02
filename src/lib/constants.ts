@@ -42,6 +42,21 @@ function pad(n: number): string {
   return n.toString().padStart(2, "0");
 }
 
+/** SLA compliance per the Contractor-facing SLA doc: did work start
+ * (proxy for arrival) within the promised hourly slot? "pending" until the
+ * job has actually started. */
+export function getSlaStatus(
+  preferredDate: string,
+  preferredTimeSlot: string,
+  startedAt: Date | null
+): "pending" | "on-time" | "late" {
+  if (!startedAt) return "pending";
+  const [y, m, d] = preferredDate.split("-").map(Number);
+  const [hh, mm] = preferredTimeSlot.split(":").map(Number);
+  const windowEnd = new Date(y, m - 1, d, hh + 1, mm);
+  return startedAt <= windowEnd ? "on-time" : "late";
+}
+
 export const BOOKING_STATUSES = [
   "PENDING",
   "ASSIGNED",

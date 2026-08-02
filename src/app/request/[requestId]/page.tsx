@@ -94,6 +94,17 @@ export default async function RequestStatusPage({
                   </p>
                 )}
                 <p className="mt-1 text-xs text-orange-800/80">{b.description}</p>
+                {b.isEscalated && (
+                  <p className="mt-2 rounded-lg bg-amber-100 px-3 py-2 text-xs font-medium text-amber-900">
+                    ⚠ This job may be running behind schedule — our team is on it and will update
+                    you shortly.
+                  </p>
+                )}
+                {b.completionNotes && (
+                  <p className="mt-2 rounded-lg bg-white/60 px-3 py-2 text-xs text-orange-800">
+                    <span className="font-semibold">Technician notes:</span> {b.completionNotes}
+                  </p>
+                )}
               </div>
             );
           })}

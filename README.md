@@ -61,7 +61,13 @@ holds up, at a fraction of the cost and time of the full app.
   independently of the rest of the request. Assigning a contractor computes
   and snapshots the price split for that item — using that contractor's
   commission rate *at the moment of assignment* — showing the platform's
-  commission and the contractor's payout per job and per request.
+  commission and the contractor's payout per job and per request. Each job
+  also tracks its own lifecycle: timestamps for assigned/started/completed/
+  cancelled, an on-time/late badge (comparing when work actually started to
+  the promised hourly slot, per the Contractor-facing SLA doc), free-text
+  completion notes, and a delay/escalation flag with a reason — visible to
+  admin, with a soft "may be running behind schedule" notice (no internal
+  reason text) shown to the customer on their request page while it's open.
 - **`/admin/contractors`** — contractor onboarding funnel per the Partnership
   Framework doc: add an applicant (company, contact person, category,
   license numbers), then move them through Applied → Under Review → Active

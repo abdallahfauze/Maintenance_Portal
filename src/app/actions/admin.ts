@@ -51,20 +51,68 @@ export async function assignContractor(bookingId: string, contractorId: string) 
 
   await prisma.booking.update({
     where: { id: bookingId },
-    data: { contractorId, status: "ASSIGNED", platformCommission, contractorPayout },
+    data: {
+      contractorId,
+      status: "ASSIGNED",
+      platformCommission,
+      contractorPayout,
+      assignedAt: new Date(),
+    },
   });
   revalidatePath("/admin");
 }
 
 const StatusEnum = z.enum(BOOKING_STATUSES);
 
+// Timestamp field to stamp with "now" whenever a booking enters that status
+// (re-entering a status, e.g. IN_PROGRESS after a correction, refreshes it).
+const STATUS_TIMESTAMP_FIELD = {
+  PENDING: null,
+  ASSIGNED: "assignedAt",
+  IN_PROGRESS: "startedAt",
+  COMPLETED: "completedAt",
+  CANCELLED: "cancelledAt",
+} as const;
+
 export async function updateBookingStatus(bookingId: string, status: string) {
   const parsed = StatusEnum.safeParse(status);
   if (!parsed.success) return;
 
+  const timestampField = STATUS_TIMESTAMP_FIELD[parsed.data];
+
   await prisma.booking.update({
     where: { id: bookingId },
-    data: { status: parsed.data },
+    data: {
+      status: parsed.data,
+      ...(timestampField ? { [timestampField]: new Date() } : {}),
+    },
+  });
+  revalidatePath("/admin");
+}
+
+export async function updateCompletionNotes(bookingId: string, notes: string) {
+  await prisma.booking.update({
+    where: { id: bookingId },
+    data: { completionNotes: notes.trim() || null },
+  });
+  revalidatePath("/admin");
+}
+
+export async function escalateBooking(bookingId: string, reason: string) {
+  const trimmed = reason.trim();
+  if (!trimmed) return;
+
+  await prisma.booking.update({
+    where: { id: bookingId },
+    data: { isEscalated: true, escalationReason: trimmed, escalatedAt: new Date() },
+  });
+  revalidatePath("/admin");
+}
+
+export async function resolveEscalation(bookingId: string) {
+  await prisma.booking.update({
+    where: { id: bookingId },
+    data: { isEscalated: false },
   });
   revalidatePath("/admin");
 }
