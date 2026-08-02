@@ -11,6 +11,7 @@ export type CatalogAccessory = {
   mediumPrice: number;
   highBrand: string;
   highPrice: number;
+  laborFee: number;
 };
 
 export type CatalogSubcategory = {
@@ -30,13 +31,16 @@ export type CatalogCategory = {
 export const QUALITY_TIERS = ["Low", "Medium", "High"] as const;
 export type QualityTier = (typeof QUALITY_TIERS)[number];
 
+/** Part/fixture brand + price for a tier, the technician labor fee (flat
+ * across tiers — installing a budget or premium tap takes the same effort),
+ * and the total the customer is quoted. */
 export function tierBrandAndPrice(accessory: CatalogAccessory, tier: QualityTier) {
-  switch (tier) {
-    case "Low":
-      return { brand: accessory.lowBrand, price: accessory.lowPrice };
-    case "Medium":
-      return { brand: accessory.mediumBrand, price: accessory.mediumPrice };
-    case "High":
-      return { brand: accessory.highBrand, price: accessory.highPrice };
-  }
+  const { brand, price } =
+    tier === "Low"
+      ? { brand: accessory.lowBrand, price: accessory.lowPrice }
+      : tier === "Medium"
+        ? { brand: accessory.mediumBrand, price: accessory.mediumPrice }
+        : { brand: accessory.highBrand, price: accessory.highPrice };
+  const laborFee = accessory.laborFee;
+  return { brand, price, laborFee, total: price + laborFee };
 }

@@ -41,7 +41,7 @@ export function ServiceSelector({
   const priceByTier = accessory
     ? (Object.fromEntries(
         QUALITY_TIERS.map((tier) => [tier, tierBrandAndPrice(accessory, tier)])
-      ) as Record<QualityTier, { brand: string; price: number }>)
+      ) as Record<QualityTier, { brand: string; price: number; laborFee: number; total: number }>)
     : null;
 
   return (
@@ -143,7 +143,7 @@ export function ServiceSelector({
           </span>
           <div className="grid gap-3 sm:grid-cols-3">
             {QUALITY_TIERS.map((tier) => {
-              const { brand, price } = priceByTier[tier];
+              const { brand, price, laborFee, total } = priceByTier[tier];
               const selected = tier === qualityTier;
               return (
                 <button
@@ -167,7 +167,10 @@ export function ServiceSelector({
                     {brand}
                   </span>
                   <span className={`mt-1 block text-lg font-bold ${selected ? "text-white" : "text-slate-900"}`}>
-                    {price} SAR
+                    {total} SAR
+                  </span>
+                  <span className={`block text-[11px] ${selected ? "text-white/80" : "text-slate-400"}`}>
+                    {price} part + {laborFee} labor
                   </span>
                 </button>
               );

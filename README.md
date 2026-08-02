@@ -38,11 +38,13 @@ holds up, at a fraction of the cost and time of the full app.
   Saturday–Thursday appointment slot, and submits. They're redirected to a
   booking status page (`/booking/[id]`) they can bookmark.
   - The catalog (6 categories, 24 sub-categories, 107 items, each with a
-    Low/Medium/High brand + price) is seeded from
-    `prisma/data/catalog.json`, generated from the client-supplied
-    `Home_Maintenance_Fixtures_Master_KSA` spreadsheet — see
-    `prisma/seed.ts`. The price shown is re-derived server-side from the
-    database at submission time, never trusted from the client.
+    Low/Medium/High brand + price, plus a market-researched technician labor
+    fee per item — SR 100 floor for a quick swap up to SR 350-500 for a full
+    split AC install) is seeded from `prisma/data/catalog.json`, generated
+    from the client-supplied `Home_Maintenance_Fixtures_Master_KSA`
+    spreadsheet — see `prisma/seed.ts`. The quoted price (part + labor,
+    all-inclusive) is re-derived server-side from the database at submission
+    time, never trusted from the client.
 - **`/admin`** — password-protected dispatch dashboard. Lists all bookings,
   filterable by status, with inline controls to assign a contractor (filtered
   to contractors in that category) and update job status.

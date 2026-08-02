@@ -17,7 +17,8 @@
             "mediumBrand": "Philips Meson / Basic",
             "mediumPrice": 80,
             "highBrand": "Philips Hue / Premium",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 100
           },
           {
             "name": "LED Tube Light (T8, 1.2m / 4ft)",
@@ -27,7 +28,8 @@
             "mediumBrand": "Osram / Philips LED tube",
             "mediumPrice": 50,
             "highBrand": "Philips / Osram Premium",
-            "highPrice": 80
+            "highPrice": 80,
+            "laborFee": 100
           },
           {
             "name": "Ceiling / Pendant Light Fixture",
@@ -37,7 +39,8 @@
             "mediumBrand": "Philips / Local branded",
             "mediumPrice": 250,
             "highBrand": "Philips Hue / Designer",
-            "highPrice": 1500
+            "highPrice": 1500,
+            "laborFee": 140
           },
           {
             "name": "Wall Sconce / Decorative Light",
@@ -47,7 +50,8 @@
             "mediumBrand": "Philips / Local",
             "mediumPrice": 180,
             "highBrand": "Premium designer brands",
-            "highPrice": 800
+            "highPrice": 800,
+            "laborFee": 120
           },
           {
             "name": "Outdoor / Porch / Security Light",
@@ -57,7 +61,8 @@
             "mediumBrand": "Philips / Osram outdoor",
             "mediumPrice": 250,
             "highBrand": "Philips / Schneider outdoor",
-            "highPrice": 700
+            "highPrice": 700,
+            "laborFee": 140
           },
           {
             "name": "LED Strip Light (per meter / kit)",
@@ -67,7 +72,8 @@
             "mediumBrand": "Philips / Local branded",
             "mediumPrice": 100,
             "highBrand": "Philips Hue Lightstrip",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 110
           }
         ]
       },
@@ -83,7 +89,8 @@
             "mediumBrand": "Alfanar / Panasonic",
             "mediumPrice": 25,
             "highBrand": "Legrand / Schneider",
-            "highPrice": 60
+            "highPrice": 60,
+            "laborFee": 100
           },
           {
             "name": "2-Way / Intermediate Switch",
@@ -93,7 +100,8 @@
             "mediumBrand": "Alfanar / Panasonic",
             "mediumPrice": 35,
             "highBrand": "Legrand / Schneider",
-            "highPrice": 80
+            "highPrice": 80,
+            "laborFee": 100
           },
           {
             "name": "Dimmer Switch",
@@ -103,7 +111,8 @@
             "mediumBrand": "Alfanar / Panasonic",
             "mediumPrice": 80,
             "highBrand": "Legrand / Schneider",
-            "highPrice": 180
+            "highPrice": 180,
+            "laborFee": 110
           },
           {
             "name": "Fan Regulator / Speed Controller",
@@ -113,7 +122,8 @@
             "mediumBrand": "Alfanar / Panasonic",
             "mediumPrice": 70,
             "highBrand": "Legrand / Schneider",
-            "highPrice": 150
+            "highPrice": 150,
+            "laborFee": 100
           },
           {
             "name": "Smart / Wi-Fi Switch",
@@ -123,7 +133,8 @@
             "mediumBrand": "Local smart brands",
             "mediumPrice": 120,
             "highBrand": "Schneider Wiser / Legrand Netatmo",
-            "highPrice": 350
+            "highPrice": 350,
+            "laborFee": 140
           }
         ]
       },
@@ -139,7 +150,8 @@
             "mediumBrand": "Alfanar / Panasonic",
             "mediumPrice": 30,
             "highBrand": "Legrand Mallia / Schneider",
-            "highPrice": 70
+            "highPrice": 70,
+            "laborFee": 100
           },
           {
             "name": "13A Double Socket (switched)",
@@ -149,7 +161,8 @@
             "mediumBrand": "Alfanar / Panasonic",
             "mediumPrice": 45,
             "highBrand": "Legrand / Schneider",
-            "highPrice": 100
+            "highPrice": 100,
+            "laborFee": 100
           },
           {
             "name": "USB Charging Socket",
@@ -159,7 +172,8 @@
             "mediumBrand": "Alfanar / Panasonic",
             "mediumPrice": 80,
             "highBrand": "Legrand / Schneider",
-            "highPrice": 180
+            "highPrice": 180,
+            "laborFee": 110
           },
           {
             "name": "Outdoor / Weatherproof Socket (IP44+)",
@@ -169,7 +183,8 @@
             "mediumBrand": "Alfanar outdoor / Panasonic",
             "mediumPrice": 120,
             "highBrand": "Legrand / Schneider IP rated",
-            "highPrice": 250
+            "highPrice": 250,
+            "laborFee": 130
           }
         ]
       },
@@ -185,7 +200,8 @@
             "mediumBrand": "Schneider Easy9 / Hager entry",
             "mediumPrice": 50,
             "highBrand": "Schneider Acti9 / ABB / Hager",
-            "highPrice": 120
+            "highPrice": 120,
+            "laborFee": 110
           },
           {
             "name": "MCB 2-Pole / 3-Pole",
@@ -195,7 +211,8 @@
             "mediumBrand": "Schneider Easy9 / Hager",
             "mediumPrice": 90,
             "highBrand": "Schneider Acti9 / ABB",
-            "highPrice": 250
+            "highPrice": 250,
+            "laborFee": 130
           },
           {
             "name": "RCCB / ELCB (30mA, 2P/4P)",
@@ -205,7 +222,8 @@
             "mediumBrand": "Schneider Easy9 / Hager",
             "mediumPrice": 180,
             "highBrand": "Schneider Acti9 / ABB / Hager",
-            "highPrice": 450
+            "highPrice": 450,
+            "laborFee": 150
           },
           {
             "name": "Distribution Board / DB Box (consumer unit)",
@@ -215,7 +233,8 @@
             "mediumBrand": "Schneider / Hager / Alfanar",
             "mediumPrice": 450,
             "highBrand": "Schneider / ABB / Hager premium",
-            "highPrice": 1200
+            "highPrice": 1200,
+            "laborFee": 300
           },
           {
             "name": "Main Isolator / Switch Disconnector",
@@ -225,7 +244,8 @@
             "mediumBrand": "Schneider / Hager",
             "mediumPrice": 160,
             "highBrand": "Schneider / ABB",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 200
           }
         ]
       },
@@ -241,7 +261,8 @@
             "mediumBrand": "Local / Alfanar / Basic brands",
             "mediumPrice": 350,
             "highBrand": "Premium (KDK / National / designer)",
-            "highPrice": 900
+            "highPrice": 900,
+            "laborFee": 150
           },
           {
             "name": "Ceiling Fan Capacitor / Regulator",
@@ -251,7 +272,8 @@
             "mediumBrand": "Branded capacitor",
             "mediumPrice": 40,
             "highBrand": "OEM / Premium",
-            "highPrice": 80
+            "highPrice": 80,
+            "laborFee": 100
           },
           {
             "name": "Exhaust Fan (bathroom/kitchen)",
@@ -261,7 +283,8 @@
             "mediumBrand": "Local branded / Panasonic",
             "mediumPrice": 180,
             "highBrand": "Premium silent models",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 130
           }
         ]
       },
@@ -277,7 +300,8 @@
             "mediumBrand": "Panasonic / Local",
             "mediumPrice": 120,
             "highBrand": "Premium / Smart doorbell",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 100
           },
           {
             "name": "Geyser / Water Heater Thermostat & Controls",
@@ -287,7 +311,8 @@
             "mediumBrand": "Branded (Ariston etc. related)",
             "mediumPrice": 150,
             "highBrand": "OEM premium",
-            "highPrice": 300
+            "highPrice": 300,
+            "laborFee": 140
           },
           {
             "name": "Inverter / UPS Changeover Switch",
@@ -297,7 +322,8 @@
             "mediumBrand": "Schneider / Local",
             "mediumPrice": 250,
             "highBrand": "Schneider / ABB automatic",
-            "highPrice": 700
+            "highPrice": 700,
+            "laborFee": 200
           },
           {
             "name": "Motion / PIR Sensor",
@@ -307,7 +333,8 @@
             "mediumBrand": "Local / basic branded",
             "mediumPrice": 100,
             "highBrand": "Schneider / Legrand / Philips",
-            "highPrice": 250
+            "highPrice": 250,
+            "laborFee": 110
           },
           {
             "name": "Junction Box / Conduit Accessories",
@@ -317,7 +344,8 @@
             "mediumBrand": "Alfanar / local quality",
             "mediumPrice": 25,
             "highBrand": "Premium / metal / IP rated",
-            "highPrice": 60
+            "highPrice": 60,
+            "laborFee": 100
           }
         ]
       },
@@ -333,7 +361,8 @@
             "mediumBrand": "Mid-range wallbox brands",
             "mediumPrice": 4000,
             "highBrand": "Schneider / ABB / premium",
-            "highPrice": 9000
+            "highPrice": 9000,
+            "laborFee": 400
           },
           {
             "name": "Water Pump Starter / Control Panel",
@@ -343,7 +372,8 @@
             "mediumBrand": "Schneider / Local",
             "mediumPrice": 450,
             "highBrand": "Schneider / ABB soft starter",
-            "highPrice": 1500
+            "highPrice": 1500,
+            "laborFee": 220
           }
         ]
       },
@@ -359,7 +389,8 @@
             "mediumBrand": "System Sensor / Notifier entry / Local",
             "mediumPrice": 90,
             "highBrand": "Notifier / Siemens / Honeywell / Hochiki",
-            "highPrice": 220
+            "highPrice": 220,
+            "laborFee": 110
           },
           {
             "name": "Heat Detector (fixed / rate-of-rise)",
@@ -369,7 +400,8 @@
             "mediumBrand": "System Sensor / Local branded",
             "mediumPrice": 80,
             "highBrand": "Notifier / Siemens / Honeywell",
-            "highPrice": 200
+            "highPrice": 200,
+            "laborFee": 110
           },
           {
             "name": "Manual Call Point / Break Glass",
@@ -379,7 +411,8 @@
             "mediumBrand": "Local / mid brands",
             "mediumPrice": 60,
             "highBrand": "Notifier / Siemens / Cooper",
-            "highPrice": 150
+            "highPrice": 150,
+            "laborFee": 100
           },
           {
             "name": "Fire Alarm Control Panel (small conventional 2-4 zone)",
@@ -389,7 +422,8 @@
             "mediumBrand": "Local / mid-range conventional",
             "mediumPrice": 900,
             "highBrand": "Notifier / Siemens / Honeywell",
-            "highPrice": 2500
+            "highPrice": 2500,
+            "laborFee": 320
           },
           {
             "name": "Fire Alarm Control Panel Battery (12V sealed lead-acid)",
@@ -399,7 +433,8 @@
             "mediumBrand": "CSB / Local good quality",
             "mediumPrice": 120,
             "highBrand": "Yuasa / Power-Sonic / OEM",
-            "highPrice": 250
+            "highPrice": 250,
+            "laborFee": 100
           },
           {
             "name": "Fire Alarm Sounder / Bell / Strobe",
@@ -409,7 +444,8 @@
             "mediumBrand": "Local / mid brands",
             "mediumPrice": 90,
             "highBrand": "Notifier / Siemens / Hochiki",
-            "highPrice": 200
+            "highPrice": 200,
+            "laborFee": 110
           },
           {
             "name": "Fire Alarm Cable / Detector Base",
@@ -419,7 +455,8 @@
             "mediumBrand": "Local branded",
             "mediumPrice": 25,
             "highBrand": "OEM / premium base",
-            "highPrice": 60
+            "highPrice": 60,
+            "laborFee": 100
           }
         ]
       }
@@ -443,7 +480,8 @@
             "mediumBrand": "Ideal Standard / Roca / American Standard",
             "mediumPrice": 900,
             "highBrand": "Grohe / Duravit / Kohler / TOTO",
-            "highPrice": 2500
+            "highPrice": 2500,
+            "laborFee": 220
           },
           {
             "name": "Wall-hung Toilet + Concealed Cistern",
@@ -453,7 +491,8 @@
             "mediumBrand": "Ideal Standard / Roca",
             "mediumPrice": 1500,
             "highBrand": "Grohe / Duravit / Geberit",
-            "highPrice": 3500
+            "highPrice": 3500,
+            "laborFee": 350
           },
           {
             "name": "Soft-close Toilet Seat",
@@ -463,7 +502,8 @@
             "mediumBrand": "Ideal Standard / Roca",
             "mediumPrice": 180,
             "highBrand": "Grohe / Duravit / TOTO",
-            "highPrice": 450
+            "highPrice": 450,
+            "laborFee": 100
           }
         ]
       },
@@ -479,7 +519,8 @@
             "mediumBrand": "Ideal Standard / Roca",
             "mediumPrice": 450,
             "highBrand": "Duravit / Kohler / Villeroy & Boch",
-            "highPrice": 1200
+            "highPrice": 1200,
+            "laborFee": 180
           },
           {
             "name": "Countertop / Vessel Basin",
@@ -489,7 +530,8 @@
             "mediumBrand": "Ideal Standard / Local good",
             "mediumPrice": 350,
             "highBrand": "Duravit / Kohler",
-            "highPrice": 900
+            "highPrice": 900,
+            "laborFee": 200
           }
         ]
       },
@@ -505,7 +547,8 @@
             "mediumBrand": "Ideal Standard / Roca / Local",
             "mediumPrice": 250,
             "highBrand": "Grohe / Hansgrohe / Kohler",
-            "highPrice": 700
+            "highPrice": 700,
+            "laborFee": 120
           },
           {
             "name": "Kitchen Sink Mixer Tap",
@@ -515,7 +558,8 @@
             "mediumBrand": "Ideal Standard / Roca",
             "mediumPrice": 300,
             "highBrand": "Grohe / Hansgrohe",
-            "highPrice": 850
+            "highPrice": 850,
+            "laborFee": 130
           },
           {
             "name": "Shower Mixer (thermostatic)",
@@ -525,7 +569,8 @@
             "mediumBrand": "Ideal Standard / Roca",
             "mediumPrice": 450,
             "highBrand": "Grohe / Hansgrohe",
-            "highPrice": 1200
+            "highPrice": 1200,
+            "laborFee": 160
           }
         ]
       },
@@ -541,7 +586,8 @@
             "mediumBrand": "Ideal Standard / Local",
             "mediumPrice": 200,
             "highBrand": "Grohe / Hansgrohe",
-            "highPrice": 600
+            "highPrice": 600,
+            "laborFee": 100
           },
           {
             "name": "Handheld Shower + Hose Set",
@@ -551,7 +597,8 @@
             "mediumBrand": "Ideal Standard / Roca",
             "mediumPrice": 150,
             "highBrand": "Grohe / Hansgrohe",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 110
           },
           {
             "name": "Shower Enclosure / Cabin (typical)",
@@ -561,7 +608,8 @@
             "mediumBrand": "Local mid-range / Ideal",
             "mediumPrice": 1800,
             "highBrand": "Premium framed/frameless",
-            "highPrice": 4500
+            "highPrice": 4500,
+            "laborFee": 380
           }
         ]
       },
@@ -577,7 +625,8 @@
             "mediumBrand": "Ideal Standard / Local",
             "mediumPrice": 120,
             "highBrand": "Grohe / Hansgrohe",
-            "highPrice": 350
+            "highPrice": 350,
+            "laborFee": 110
           }
         ]
       },
@@ -593,7 +642,8 @@
             "mediumBrand": "Local branded / Ideal",
             "mediumPrice": 70,
             "highBrand": "Premium stainless / Grohe",
-            "highPrice": 180
+            "highPrice": 180,
+            "laborFee": 130
           },
           {
             "name": "Towel Rail / Soap Dish Set",
@@ -603,7 +653,8 @@
             "mediumBrand": "Ideal Standard / Local",
             "mediumPrice": 150,
             "highBrand": "Grohe / Hansgrohe accessories",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 100
           },
           {
             "name": "Bathroom Mirror Cabinet",
@@ -613,7 +664,8 @@
             "mediumBrand": "Local mid-range",
             "mediumPrice": 500,
             "highBrand": "Premium with LED / storage",
-            "highPrice": 1500
+            "highPrice": 1500,
+            "laborFee": 150
           }
         ]
       }
@@ -637,7 +689,8 @@
             "mediumBrand": "Yale / Union / Local branded",
             "mediumPrice": 120,
             "highBrand": "ASSA ABLOY / Mul-T-Lock / high-sec",
-            "highPrice": 350
+            "highPrice": 350,
+            "laborFee": 110
           },
           {
             "name": "Lever Door Handle Set",
@@ -647,7 +700,8 @@
             "mediumBrand": "Yale / Local mid-range",
             "mediumPrice": 90,
             "highBrand": "Hafele / premium designer",
-            "highPrice": 280
+            "highPrice": 280,
+            "laborFee": 100
           },
           {
             "name": "Door Hinges (pair, heavy duty)",
@@ -657,7 +711,8 @@
             "mediumBrand": "Local branded / Yale",
             "mediumPrice": 40,
             "highBrand": "Hafele / stainless premium",
-            "highPrice": 100
+            "highPrice": 100,
+            "laborFee": 100
           },
           {
             "name": "Door Closer (hydraulic)",
@@ -667,7 +722,8 @@
             "mediumBrand": "Yale / Local good",
             "mediumPrice": 150,
             "highBrand": "Dorma / Hafele / ASSA",
-            "highPrice": 400
+            "highPrice": 400,
+            "laborFee": 140
           },
           {
             "name": "Digital / Smart Door Lock",
@@ -677,7 +733,8 @@
             "mediumBrand": "Yale / Local smart",
             "mediumPrice": 600,
             "highBrand": "ASSA ABLOY / premium smart",
-            "highPrice": 1800
+            "highPrice": 1800,
+            "laborFee": 180
           },
           {
             "name": "Deadbolt / Security Bolt",
@@ -687,7 +744,8 @@
             "mediumBrand": "Yale / Union",
             "mediumPrice": 100,
             "highBrand": "Mul-T-Lock / high-security",
-            "highPrice": 300
+            "highPrice": 300,
+            "laborFee": 110
           }
         ]
       },
@@ -703,7 +761,8 @@
             "mediumBrand": "Local mid-range",
             "mediumPrice": 50,
             "highBrand": "Hafele / premium",
-            "highPrice": 120
+            "highPrice": 120,
+            "laborFee": 100
           },
           {
             "name": "Window Hinges / Friction Stay",
@@ -713,7 +772,8 @@
             "mediumBrand": "Local branded",
             "mediumPrice": 40,
             "highBrand": "Hafele / stainless",
-            "highPrice": 90
+            "highPrice": 90,
+            "laborFee": 100
           }
         ]
       },
@@ -729,7 +789,8 @@
             "mediumBrand": "Local / mid brands",
             "mediumPrice": 30,
             "highBrand": "Hafele / Blum",
-            "highPrice": 80
+            "highPrice": 80,
+            "laborFee": 100
           },
           {
             "name": "Drawer Slides (pair)",
@@ -739,7 +800,8 @@
             "mediumBrand": "Local mid-range",
             "mediumPrice": 45,
             "highBrand": "Hafele / Blum soft-close",
-            "highPrice": 120
+            "highPrice": 120,
+            "laborFee": 100
           },
           {
             "name": "Cabinet Handles / Knobs (set)",
@@ -749,7 +811,8 @@
             "mediumBrand": "Local good quality",
             "mediumPrice": 60,
             "highBrand": "Hafele / designer",
-            "highPrice": 150
+            "highPrice": 150,
+            "laborFee": 100
           }
         ]
       },
@@ -765,7 +828,8 @@
             "mediumBrand": "Local / Yale type",
             "mediumPrice": 200,
             "highBrand": "Dorma / Hafele",
-            "highPrice": 500
+            "highPrice": 500,
+            "laborFee": 160
           },
           {
             "name": "Door Stopper / Buffer",
@@ -775,7 +839,8 @@
             "mediumBrand": "Local branded",
             "mediumPrice": 25,
             "highBrand": "Premium stainless",
-            "highPrice": 60
+            "highPrice": 60,
+            "laborFee": 100
           },
           {
             "name": "Padlock (heavy duty)",
@@ -785,7 +850,8 @@
             "mediumBrand": "Yale / Union",
             "mediumPrice": 60,
             "highBrand": "ABUS / high-security",
-            "highPrice": 180
+            "highPrice": 180,
+            "laborFee": 100
           }
         ]
       },
@@ -801,7 +867,8 @@
             "mediumBrand": "Tyco / Viking entry / Local",
             "mediumPrice": 60,
             "highBrand": "Tyco / Viking / Reliable / Victaulic",
-            "highPrice": 150
+            "highPrice": 150,
+            "laborFee": 120
           },
           {
             "name": "Sprinkler Head (quick response / residential)",
@@ -811,7 +878,8 @@
             "mediumBrand": "Tyco / Local mid",
             "mediumPrice": 80,
             "highBrand": "Tyco / Viking / Reliable",
-            "highPrice": 180
+            "highPrice": 180,
+            "laborFee": 120
           },
           {
             "name": "Sprinkler Spare (glass bulb / fusible link kit)",
@@ -821,7 +889,8 @@
             "mediumBrand": "Branded mid",
             "mediumPrice": 35,
             "highBrand": "OEM Tyco / Viking",
-            "highPrice": 70
+            "highPrice": 70,
+            "laborFee": 100
           },
           {
             "name": "Fire Hose Reel / Cabinet (basic)",
@@ -831,7 +900,8 @@
             "mediumBrand": "Local mid-range",
             "mediumPrice": 700,
             "highBrand": "Premium / approved brands",
-            "highPrice": 1500
+            "highPrice": 1500,
+            "laborFee": 280
           },
           {
             "name": "Portable Fire Extinguisher ABC 6 kg",
@@ -841,7 +911,8 @@
             "mediumBrand": "NAFFCO / Local approved / Gloria entry",
             "mediumPrice": 150,
             "highBrand": "Amerex / Ansul / Gloria premium",
-            "highPrice": 300
+            "highPrice": 300,
+            "laborFee": 100
           },
           {
             "name": "Portable Fire Extinguisher ABC 9–12 kg",
@@ -851,7 +922,8 @@
             "mediumBrand": "NAFFCO / Local approved",
             "mediumPrice": 220,
             "highBrand": "Amerex / Ansul / Gloria",
-            "highPrice": 450
+            "highPrice": 450,
+            "laborFee": 110
           },
           {
             "name": "CO2 Fire Extinguisher 5 kg",
@@ -861,7 +933,8 @@
             "mediumBrand": "NAFFCO / Local approved",
             "mediumPrice": 280,
             "highBrand": "Amerex / Ansul / Gloria",
-            "highPrice": 500
+            "highPrice": 500,
+            "laborFee": 110
           },
           {
             "name": "CO2 Fire Extinguisher 10 kg",
@@ -871,7 +944,8 @@
             "mediumBrand": "NAFFCO / Local approved",
             "mediumPrice": 400,
             "highBrand": "Amerex / Ansul",
-            "highPrice": 700
+            "highPrice": 700,
+            "laborFee": 130
           },
           {
             "name": "Foam / Wet Chemical Extinguisher (kitchen)",
@@ -881,7 +955,8 @@
             "mediumBrand": "NAFFCO / Local approved",
             "mediumPrice": 320,
             "highBrand": "Amerex / Ansul / Gloria",
-            "highPrice": 550
+            "highPrice": 550,
+            "laborFee": 120
           },
           {
             "name": "Fire Extinguisher Bracket / Cabinet",
@@ -891,7 +966,8 @@
             "mediumBrand": "Local mid-range",
             "mediumPrice": 70,
             "highBrand": "Premium cabinet / stainless",
-            "highPrice": 180
+            "highPrice": 180,
+            "laborFee": 100
           },
           {
             "name": "Fire Extinguisher Refill / Service (typical)",
@@ -901,7 +977,8 @@
             "mediumBrand": "Authorized mid service",
             "mediumPrice": 80,
             "highBrand": "OEM / certified service",
-            "highPrice": 150
+            "highPrice": 150,
+            "laborFee": 100
           }
         ]
       }
@@ -925,7 +1002,8 @@
             "mediumBrand": "Gree / Midea / Local good",
             "mediumPrice": 1600,
             "highBrand": "LG / Samsung / Carrier / York",
-            "highPrice": 2500
+            "highPrice": 2500,
+            "laborFee": 150
           },
           {
             "name": "1.5 Ton (approx 18,000 BTU)",
@@ -935,7 +1013,8 @@
             "mediumBrand": "Gree / Midea / Zamil / Oscar",
             "mediumPrice": 2000,
             "highBrand": "LG / Samsung / Carrier / York",
-            "highPrice": 3200
+            "highPrice": 3200,
+            "laborFee": 150
           },
           {
             "name": "2 Ton (approx 24,000 BTU)",
@@ -945,7 +1024,8 @@
             "mediumBrand": "Gree / Midea / Local",
             "mediumPrice": 2600,
             "highBrand": "LG / Samsung / Carrier / York",
-            "highPrice": 4000
+            "highPrice": 4000,
+            "laborFee": 170
           },
           {
             "name": "Window AC Remote / Control Board",
@@ -955,7 +1035,8 @@
             "mediumBrand": "Brand compatible",
             "mediumPrice": 150,
             "highBrand": "OEM original",
-            "highPrice": 300
+            "highPrice": 300,
+            "laborFee": 100
           },
           {
             "name": "Window AC Compressor (replacement)",
@@ -965,7 +1046,8 @@
             "mediumBrand": "GMCC / branded mid",
             "mediumPrice": 700,
             "highBrand": "OEM (LG/Samsung/Carrier)",
-            "highPrice": 1200
+            "highPrice": 1200,
+            "laborFee": 220
           },
           {
             "name": "Window AC Capacitor / Fan Motor",
@@ -975,7 +1057,8 @@
             "mediumBrand": "Branded mid-range",
             "mediumPrice": 120,
             "highBrand": "OEM parts",
-            "highPrice": 250
+            "highPrice": 250,
+            "laborFee": 120
           }
         ]
       }
@@ -999,7 +1082,8 @@
             "mediumBrand": "Gree / Midea / Hisense",
             "mediumPrice": 2000,
             "highBrand": "LG / Samsung / Carrier",
-            "highPrice": 3000
+            "highPrice": 3000,
+            "laborFee": 350
           },
           {
             "name": "1 Ton Split – Inverter",
@@ -1009,7 +1093,8 @@
             "mediumBrand": "Gree / Midea inverter",
             "mediumPrice": 2600,
             "highBrand": "LG Dual Inverter / Samsung / Daikin",
-            "highPrice": 4200
+            "highPrice": 4200,
+            "laborFee": 350
           },
           {
             "name": "1.5 Ton Split (18,000 BTU) – Non-Inverter",
@@ -1019,7 +1104,8 @@
             "mediumBrand": "Gree / Midea / Hisense",
             "mediumPrice": 2400,
             "highBrand": "LG / Samsung / Carrier",
-            "highPrice": 3600
+            "highPrice": 3600,
+            "laborFee": 400
           },
           {
             "name": "1.5 Ton Split – Inverter",
@@ -1029,7 +1115,8 @@
             "mediumBrand": "Gree / Midea / Carrier mid",
             "mediumPrice": 3200,
             "highBrand": "LG / Samsung / Daikin / Mitsubishi",
-            "highPrice": 5500
+            "highPrice": 5500,
+            "laborFee": 400
           },
           {
             "name": "2 Ton Split (24,000 BTU) – Non-Inverter",
@@ -1039,7 +1126,8 @@
             "mediumBrand": "Gree / Midea",
             "mediumPrice": 3200,
             "highBrand": "LG / Samsung / Carrier",
-            "highPrice": 4800
+            "highPrice": 4800,
+            "laborFee": 450
           },
           {
             "name": "2 Ton Split – Inverter",
@@ -1049,7 +1137,8 @@
             "mediumBrand": "Gree / Midea / Carrier",
             "mediumPrice": 4200,
             "highBrand": "LG / Samsung / Daikin / Mitsubishi",
-            "highPrice": 7000
+            "highPrice": 7000,
+            "laborFee": 450
           },
           {
             "name": "2.5–3 Ton Split / Cassette (higher capacity)",
@@ -1059,7 +1148,8 @@
             "mediumBrand": "Gree / Midea / Carrier",
             "mediumPrice": 5500,
             "highBrand": "Daikin / Mitsubishi / LG premium",
-            "highPrice": 10000
+            "highPrice": 10000,
+            "laborFee": 500
           }
         ]
       },
@@ -1075,7 +1165,8 @@
             "mediumBrand": "Brand mid-range",
             "mediumPrice": 300,
             "highBrand": "OEM original",
-            "highPrice": 600
+            "highPrice": 600,
+            "laborFee": 180
           },
           {
             "name": "Outdoor Compressor (1.5–2 Ton)",
@@ -1085,7 +1176,8 @@
             "mediumBrand": "GMCC / branded",
             "mediumPrice": 1000,
             "highBrand": "OEM (LG/Daikin/Samsung)",
-            "highPrice": 2000
+            "highPrice": 2000,
+            "laborFee": 320
           },
           {
             "name": "Remote Control (original type)",
@@ -1095,7 +1187,8 @@
             "mediumBrand": "Brand compatible",
             "mediumPrice": 80,
             "highBrand": "OEM original",
-            "highPrice": 150
+            "highPrice": 150,
+            "laborFee": 100
           },
           {
             "name": "Copper Pipe Set + Installation Kit",
@@ -1105,7 +1198,8 @@
             "mediumBrand": "Standard quality kit",
             "mediumPrice": 350,
             "highBrand": "Premium insulated kit",
-            "highPrice": 600
+            "highPrice": 600,
+            "laborFee": 250
           }
         ]
       }
@@ -1129,7 +1223,8 @@
             "mediumBrand": "Samsung / LG mid / Whirlpool",
             "mediumPrice": 1600,
             "highBrand": "LG / Samsung premium / Bosch",
-            "highPrice": 2800
+            "highPrice": 2800,
+            "laborFee": 150
           },
           {
             "name": "Top Load 10–12 kg",
@@ -1139,7 +1234,8 @@
             "mediumBrand": "Samsung / LG / Hisense good",
             "mediumPrice": 2000,
             "highBrand": "LG / Samsung / Bosch",
-            "highPrice": 3500
+            "highPrice": 3500,
+            "laborFee": 170
           },
           {
             "name": "Front Load 7–8 kg (basic)",
@@ -1149,7 +1245,8 @@
             "mediumBrand": "Samsung / LG / Whirlpool",
             "mediumPrice": 2200,
             "highBrand": "Bosch / Siemens / LG premium",
-            "highPrice": 3800
+            "highPrice": 3800,
+            "laborFee": 180
           },
           {
             "name": "Front Load 9–10 kg (inverter / mid)",
@@ -1159,7 +1256,8 @@
             "mediumBrand": "Samsung / LG / Bosch entry",
             "mediumPrice": 2800,
             "highBrand": "LG AI DD / Samsung / Bosch Serie",
-            "highPrice": 4800
+            "highPrice": 4800,
+            "laborFee": 190
           },
           {
             "name": "Front Load 12+ kg / Premium features",
@@ -1169,7 +1267,8 @@
             "mediumBrand": "Samsung / LG good models",
             "mediumPrice": 3800,
             "highBrand": "LG WashTower / Samsung / Bosch premium",
-            "highPrice": 7000
+            "highPrice": 7000,
+            "laborFee": 210
           },
           {
             "name": "Washer-Dryer Combo 8–10 kg",
@@ -1179,7 +1278,8 @@
             "mediumBrand": "Samsung / LG combo",
             "mediumPrice": 4200,
             "highBrand": "LG / Samsung / Bosch premium combo",
-            "highPrice": 7500
+            "highPrice": 7500,
+            "laborFee": 220
           },
           {
             "name": "Twin Tub 10–14 kg",
@@ -1189,7 +1289,8 @@
             "mediumBrand": "Local / mid brands",
             "mediumPrice": 1000,
             "highBrand": "Branded twin tub",
-            "highPrice": 1600
+            "highPrice": 1600,
+            "laborFee": 150
           }
         ]
       },
@@ -1205,7 +1306,8 @@
             "mediumBrand": "Brand compatible",
             "mediumPrice": 150,
             "highBrand": "OEM (LG/Samsung/Bosch)",
-            "highPrice": 280
+            "highPrice": 280,
+            "laborFee": 140
           },
           {
             "name": "Door Boot Seal / Gasket (front load)",
@@ -1215,7 +1317,8 @@
             "mediumBrand": "Compatible mid",
             "mediumPrice": 120,
             "highBrand": "OEM original",
-            "highPrice": 250
+            "highPrice": 250,
+            "laborFee": 150
           },
           {
             "name": "Control Board / PCB",
@@ -1225,7 +1328,8 @@
             "mediumBrand": "Compatible board",
             "mediumPrice": 300,
             "highBrand": "OEM original",
-            "highPrice": 600
+            "highPrice": 600,
+            "laborFee": 160
           },
           {
             "name": "Inverter Motor / Drive",
@@ -1235,7 +1339,8 @@
             "mediumBrand": "Compatible mid",
             "mediumPrice": 450,
             "highBrand": "OEM (LG Direct Drive / Samsung)",
-            "highPrice": 900
+            "highPrice": 900,
+            "laborFee": 200
           },
           {
             "name": "Shock Absorbers / Suspension (pair)",
@@ -1245,7 +1350,8 @@
             "mediumBrand": "Compatible",
             "mediumPrice": 100,
             "highBrand": "OEM",
-            "highPrice": 200
+            "highPrice": 200,
+            "laborFee": 180
           },
           {
             "name": "Water Inlet Valve",
@@ -1255,7 +1361,8 @@
             "mediumBrand": "Compatible",
             "mediumPrice": 80,
             "highBrand": "OEM",
-            "highPrice": 150
+            "highPrice": 150,
+            "laborFee": 110
           }
         ]
       }

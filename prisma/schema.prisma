@@ -42,11 +42,16 @@ model ServiceAccessory {
   subcategoryId String
   subcategory   ServiceSubcategory @relation(fields: [subcategoryId], references: [id])
   lowBrand      String
-  lowPrice      Int // SAR
+  lowPrice      Int // SAR — part/fixture cost only
   mediumBrand   String
   mediumPrice   Int // SAR
   highBrand     String
   highPrice     Int // SAR
+  // Technician labor/callout fee for this specific job, same across quality
+  // tiers (installing a cheap or expensive tap takes the same effort).
+  // Market-researched: SR 100 floor for quick swaps, scaling up to SR 350-500
+  // for heavy jobs like split AC installs. See prisma/data/catalog.json.
+  laborFee      Int // SAR
 
   @@unique([subcategoryId, name])
 }
@@ -82,7 +87,10 @@ model Booking {
   accessory   String // e.g. "LED Spot / Downlight (recessed, ~12-24W)"
   qualityTier String // "Low" | "Medium" | "High"
   selectedBrand String
-  selectedPrice Int // SAR
+  selectedPrice Int // SAR — part/fixture cost only
+  laborFee      Int // SAR — technician labor/callout fee
+  totalPrice    Int // SAR — selectedPrice + laborFee, stored so historical
+  // invoices stay accurate even if catalog prices change later
   description String
   // Location: captured either by dropping a pin (lat/lng) or pasting a
   // Google Maps link — at least one of the two is required (enforced in

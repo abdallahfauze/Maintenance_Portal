@@ -37,6 +37,7 @@ export async function getCatalog(): Promise<CatalogCategory[]> {
               mediumPrice: true,
               highBrand: true,
               highPrice: true,
+              laborFee: true,
             },
           },
         },

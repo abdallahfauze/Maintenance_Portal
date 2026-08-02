@@ -30,13 +30,15 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
     const subcategory = category?.subcategories.find((s) => s.id === subcategoryId);
     const accessory = subcategory?.accessories.find((a) => a.id === accessoryId);
     if (!category || !subcategory || !accessory || !qualityTier) return null;
-    const { brand, price } = tierBrandAndPrice(accessory, qualityTier);
+    const { brand, price, laborFee, total } = tierBrandAndPrice(accessory, qualityTier);
     return {
       categoryName: category.name,
       subcategoryName: subcategory.name,
       accessoryName: accessory.name,
       brand,
       price,
+      laborFee,
+      total,
     };
   }, [catalog, categoryId, subcategoryId, accessoryId, qualityTier]);
 
@@ -81,11 +83,13 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
 
       {selection && (
         <div className="rounded-xl bg-orange-50 px-4 py-3 text-sm text-orange-900 ring-1 ring-orange-100">
-          <span className="font-semibold">{selection.accessoryName}</span> ({selection.brand}) —{" "}
-          <span className="font-bold">{selection.price} SAR</span>
-          <span className="ml-1 text-xs text-orange-700">
-            (labor/callout fee shown separately at confirmation)
-          </span>
+          <span className="font-semibold">{selection.accessoryName}</span> ({selection.brand})
+          <div className="mt-1 flex items-baseline gap-2">
+            <span className="text-lg font-bold">{selection.total} SAR</span>
+            <span className="text-xs text-orange-700">
+              ({selection.price} part + {selection.laborFee} labor — all-inclusive, no surprises)
+            </span>
+          </div>
         </div>
       )}
 

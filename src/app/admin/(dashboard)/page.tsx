@@ -85,7 +85,10 @@ export default async function AdminDashboard({
 
               <p className="mt-2 text-xs font-medium text-orange-700">
                 {b.category} → {b.subcategory} → {b.accessory} — {b.qualityTier} ({b.selectedBrand}) ·{" "}
-                <span className="font-bold">{b.selectedPrice} SAR</span>
+                <span className="font-bold">{b.totalPrice} SAR</span>{" "}
+                <span className="font-normal text-orange-600">
+                  ({b.selectedPrice} part + {b.laborFee} labor)
+                </span>
               </p>
 
               <p className="mt-3 text-sm text-slate-700">{b.description}</p>

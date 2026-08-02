@@ -66,7 +66,10 @@ export default async function BookingStatusPage({
           <p className="text-xs text-orange-700">
             {booking.qualityTier} quality — {booking.selectedBrand}
           </p>
-          <p className="mt-1 text-lg font-bold">{booking.selectedPrice} SAR</p>
+          <p className="mt-1 text-lg font-bold">{booking.totalPrice} SAR</p>
+          <p className="text-xs text-orange-700">
+            {booking.selectedPrice} part + {booking.laborFee} labor
+          </p>
         </div>
 
         <dl className="mt-6 space-y-3 text-sm">
@@ -92,9 +95,7 @@ export default async function BookingStatusPage({
         </dl>
 
         <p className="mt-6 text-xs text-slate-500">
-          We&apos;ll contact you at {booking.phone} to confirm the visit. The price above covers
-          the part/fixture — a labor or callout fee is confirmed with you before dispatch.
-          Bookmark this page to check status any time.
+          {`We'll contact you at ${booking.phone} to confirm the visit. The price above is all-inclusive — part and labor — so there's nothing more to confirm before dispatch. Bookmark this page to check status any time.`}
         </p>
 
         <Link href="/" className="mt-6 inline-block text-sm font-medium text-orange-600 underline">

@@ -12,6 +12,7 @@ type CatalogAccessory = {
   mediumPrice: number;
   highBrand: string;
   highPrice: number;
+  laborFee: number;
 };
 type CatalogSubcategory = { name: string; order: number; accessories: CatalogAccessory[] };
 type CatalogCategory = {
@@ -52,6 +53,7 @@ async function seedCatalog() {
           mediumPrice: a.mediumPrice,
           highBrand: a.highBrand,
           highPrice: a.highPrice,
+          laborFee: a.laborFee,
         })),
       });
       accessoryCount += sub.accessories.length;

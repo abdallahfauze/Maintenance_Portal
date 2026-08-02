@@ -99,7 +99,7 @@ export async function createBooking(
     };
   }
 
-  const { brand, price } = tierBrandAndPrice(accessoryRecord, parsed.data.qualityTier);
+  const { brand, price, laborFee, total } = tierBrandAndPrice(accessoryRecord, parsed.data.qualityTier);
   const { locationMapLink, qualityTier, ...rest } = parsed.data;
 
   const booking = await prisma.booking.create({
@@ -108,6 +108,8 @@ export async function createBooking(
       qualityTier,
       selectedBrand: brand,
       selectedPrice: price,
+      laborFee,
+      totalPrice: total,
       locationMapLink: locationMapLink || null,
     },
   });
