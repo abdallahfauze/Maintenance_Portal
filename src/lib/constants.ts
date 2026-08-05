@@ -42,6 +42,19 @@ function pad(n: number): string {
   return n.toString().padStart(2, "0");
 }
 
+/** Combines an ISO date ("YYYY-MM-DD") with a slot's "HH:MM" start time into
+ * a real Date — shared by the date/time picker (UI) and the booking server
+ * action (authoritative check), so "at least 24 hours' notice" is enforced
+ * the same way in both places. */
+export function getSlotStart(dateISO: string, slotValue: string): Date {
+  const [y, m, d] = dateISO.split("-").map(Number);
+  const [hh, mm] = slotValue.split(":").map(Number);
+  return new Date(y, m - 1, d, hh, mm);
+}
+
+// Minimum lead time between booking and the earliest offered slot.
+export const MIN_BOOKING_LEAD_HOURS = 24;
+
 /** SLA compliance per the Contractor-facing SLA doc: did work start
  * (proxy for arrival) within the promised hourly slot? "pending" until the
  * job has actually started. */
