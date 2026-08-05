@@ -183,9 +183,11 @@ export function BookingForm({ catalog }: { catalog: CatalogCategory[] }) {
         ref={addPanelRef}
         className="scroll-mt-4 rounded-2xl border border-dashed border-orange-300 bg-orange-50/30 p-4"
       >
-        <span className="mb-2 block text-sm font-semibold text-slate-800">
-          {cart.length > 0 ? "Add another service" : "What do you need help with?"}
-        </span>
+        {cart.length > 0 && (
+          <span className="mb-2 block text-sm font-semibold text-slate-800">
+            Add another service
+          </span>
+        )}
         <ServiceSelector
           catalog={catalog}
           categoryId={categoryId}
