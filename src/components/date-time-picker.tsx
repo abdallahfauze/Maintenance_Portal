@@ -1,7 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CLOSED_WEEKDAY, getTimeSlots } from "@/lib/constants";
+import {
+  CLOSED_WEEKDAY,
+  getTimeSlots,
+  getSlotStart,
+  MIN_BOOKING_LEAD_HOURS,
+} from "@/lib/constants";
 
 type Props = {
   selectedDate: string; // ISO "YYYY-MM-DD", "" if none
@@ -28,9 +33,19 @@ function startOfDay(d: Date): Date {
 
 export function DateTimePicker({ selectedDate, selectedSlot, onSelectDate, onSelectSlot }: Props) {
   const today = useMemo(() => startOfDay(new Date()), []);
+  // Bookings need at least 24 hours' notice — no slot earlier than this is
+  // offered, which in practice rules out same-day and sometimes part of
+  // the next day too, depending on what time it is right now.
+  const minAllowed = useMemo(
+    () => new Date(new Date().getTime() + MIN_BOOKING_LEAD_HOURS * 60 * 60 * 1000),
+    []
+  );
   const [viewMonth, setViewMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
 
   const slots = useMemo(() => getTimeSlots(), []);
+
+  const dateHasAvailableSlot = (iso: string) =>
+    slots.some((slot) => getSlotStart(iso, slot.value) >= minAllowed);
 
   const weeks = useMemo(() => {
     const firstOfMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), 1);
@@ -49,7 +64,8 @@ export function DateTimePicker({ selectedDate, selectedSlot, onSelectDate, onSel
     return rows;
   }, [viewMonth]);
 
-  const isPastOrClosed = (d: Date) => d < today || d.getDay() === CLOSED_WEEKDAY;
+  const isPastOrClosed = (d: Date) =>
+    d.getDay() === CLOSED_WEEKDAY || !dateHasAvailableSlot(toISODate(d));
   const canGoPrev =
     viewMonth.getFullYear() > today.getFullYear() ||
     (viewMonth.getFullYear() === today.getFullYear() && viewMonth.getMonth() > today.getMonth());
@@ -115,7 +131,9 @@ export function DateTimePicker({ selectedDate, selectedSlot, onSelectDate, onSel
             })}
           </div>
         ))}
-        <p className="mt-2 text-[11px] text-slate-400">Open Saturday–Thursday, 8:00 AM – 6:00 PM.</p>
+        <p className="mt-2 text-[11px] text-slate-400">
+          Open Saturday–Thursday, 8:00 AM – 6:00 PM. Bookings need at least 24 hours&apos; notice.
+        </p>
       </div>
 
       {selectedDate && (
@@ -124,15 +142,19 @@ export function DateTimePicker({ selectedDate, selectedSlot, onSelectDate, onSel
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {slots.map((slot) => {
               const isSelected = slot.value === selectedSlot;
+              const tooSoon = getSlotStart(selectedDate, slot.value) < minAllowed;
               return (
                 <button
                   type="button"
                   key={slot.value}
+                  disabled={tooSoon}
                   onClick={() => onSelectSlot(slot.value)}
                   className={`rounded-lg border px-2 py-1.5 text-xs font-medium transition ${
-                    isSelected
-                      ? "border-orange-500 bg-orange-500 text-white shadow"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-orange-300 hover:bg-orange-50"
+                    tooSoon
+                      ? "cursor-not-allowed border-slate-100 text-slate-300 line-through"
+                      : isSelected
+                        ? "border-orange-500 bg-orange-500 text-white shadow"
+                        : "border-slate-200 bg-white text-slate-600 hover:border-orange-300 hover:bg-orange-50"
                   }`}
                 >
                   {slot.label}
