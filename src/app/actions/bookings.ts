@@ -5,7 +5,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
-import { CITIES } from "@/lib/constants";
+import { CITIES, getSlotStart, MIN_BOOKING_LEAD_HOURS } from "@/lib/constants";
 import { QUALITY_TIERS, computeQuote } from "@/lib/catalog";
 import type { Prisma } from "@/generated/prisma/client";
 
@@ -48,6 +48,17 @@ const BookingRequestSchema = z
     {
       message: "Please pin your location on the map or paste a Google Maps link.",
       path: ["locationMapLink"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (!data.preferredDate || !data.preferredTimeSlot) return true; // caught by the field-level checks above
+      const minAllowed = new Date(Date.now() + MIN_BOOKING_LEAD_HOURS * 60 * 60 * 1000);
+      return getSlotStart(data.preferredDate, data.preferredTimeSlot) >= minAllowed;
+    },
+    {
+      message: `Please choose a time at least ${MIN_BOOKING_LEAD_HOURS} hours from now.`,
+      path: ["preferredTimeSlot"],
     }
   );
 
